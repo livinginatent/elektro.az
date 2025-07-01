@@ -1,6 +1,6 @@
 import { Calculator, MapPin, DollarSign } from "lucide-react";
-import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { Card } from "@/app/components/ui/card";
+import { Button } from "@/app/components/ui/button";
 
 export default function EVToolsSection() {
   return (

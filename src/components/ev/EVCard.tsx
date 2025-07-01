@@ -1,37 +1,33 @@
+"use client";
+
 import Image from "next/image";
+import { MapPin, Battery, Clock, Zap } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { MapPin, Battery, Clock, Zap } from "lucide-react";
+import { colors } from "@/utils/colors";
+import { EVCars } from "@/app/types";
 
-export interface EVCar {
-  id: number;
-  make: string;
-  model: string;
-  image: string;
-  price: number;
-  range: number;
-  batteryCapacity: number;
-  chargingTime: string;
-  acceleration: string;
-  topSpeed: number;
-  available: boolean;
+interface EVCarCardProps {
+  car: EVCars;
+  onViewDetails?: (car: EVCars) => void;
+  onCompare?: (car: EVCars) => void;
 }
 
-export default function EVCard({ car }: { car: EVCar }) {
+export function EVCarCard({ car, onViewDetails, onCompare }: EVCarCardProps) {
   return (
-    <Card className="group hover:shadow-xl transition-all duration-300 border-0 shadow-lg overflow-hidden">
+    <Card className="group hover:shadow-xl transition-all duration-300 border-0 shadow-lg overflow-hidden w-full">
       <CardHeader className="p-0">
         <div className="relative">
           <Image
-            src={car.image || "/placeholder.svg"}
-            alt={`${car.make} ${car.model}`}
-            width={300}
-            height={200}
-            className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+            src={car.brand_image || "/placeholder.svg"}
+            alt={`${car.brand} ${car.model}`}
+            width={340}
+            height={260}
+            className="w-full h-40 object-cover group-hover:scale-105 transition-transform duration-300"
           />
           <div className="absolute top-4 right-4">
-            {car.available ? (
+            {car.availability ? (
               <Badge className="bg-green-500 hover:bg-green-600">
                 Available
               </Badge>
@@ -41,36 +37,37 @@ export default function EVCard({ car }: { car: EVCar }) {
           </div>
         </div>
       </CardHeader>
-      <CardContent className="p-6">
-        <div className="space-y-4">
+      <CardContent className="p-4">
+        <div className="space-y-3">
           <div>
-            <h3 className="text-xl font-bold text-gray-900">
-              {car.make} {car.model}
+            <h3 className="text-lg font-bold text-gray-900">
+              {car.brand} {car.model}
             </h3>
-            <p className="text-2xl font-bold text-blue-600">
-              ${car.price.toLocaleString()}
+            <p className="text-xl font-bold text-blue-600">
+              ${car?.price?.toLocaleString()}
             </p>
           </div>
-          <div className="grid grid-cols-2 gap-4">
-            <div className="flex items-center space-x-2">
+
+          <div className="grid grid-cols-2 gap-3">
+            <div className="flex items-center  space-x-2">
               <MapPin className="h-4 w-4 text-gray-500" />
-              <div>
+              <div className="">
                 <p className="text-sm text-gray-500">Range</p>
-                <p className="font-semibold">{car.range} mi</p>
+                <p className="font-semibold">{car.range_km} mi</p>
               </div>
             </div>
             <div className="flex items-center space-x-2">
               <Battery className="h-4 w-4 text-gray-500" />
               <div>
                 <p className="text-sm text-gray-500">Battery</p>
-                <p className="font-semibold">{car.batteryCapacity} kWh</p>
+                <p className="font-semibold">{car.battery_capacity} kWh</p>
               </div>
             </div>
             <div className="flex items-center space-x-2">
               <Clock className="h-4 w-4 text-gray-500" />
               <div>
                 <p className="text-sm text-gray-500">Charging</p>
-                <p className="font-semibold">{car.chargingTime}h</p>
+                <p className="font-semibold">{car.charging_time}h</p>
               </div>
             </div>
             <div className="flex items-center space-x-2">
@@ -81,9 +78,21 @@ export default function EVCard({ car }: { car: EVCar }) {
               </div>
             </div>
           </div>
+
           <div className="flex gap-2 pt-2">
-            <Button className="flex-1">View Details</Button>
-            <Button variant="outline" className="flex-1 bg-transparent">
+            <Button
+              className="flex-1"
+              style={{ background: colors.primary.blue }}
+              onClick={() => onViewDetails?.(car)}
+            >
+              View Details
+            </Button>
+            <Button
+              variant="outline"
+              style={{ background: colors.primary.lightBlue }}
+              className="flex-1"
+              onClick={() => onCompare?.(car)}
+            >
               Compare
             </Button>
           </div>

@@ -1,5 +1,6 @@
-import EVCard, { EVCar } from "./EVCard";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/app/components/ui/button";
+import { EVCarCard } from "./EVCard";
+import { EVCar } from "@/app/types";
 
 export default function EVFeaturedSection({ cars }: { cars: EVCar[] }) {
   return (
@@ -12,7 +13,7 @@ export default function EVFeaturedSection({ cars }: { cars: EVCar[] }) {
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {cars.map((car) => (
-          <EVCard key={car.id} car={car} />
+          <EVCarCard key={car.id} car={car} />
         ))}
       </div>
     </section>
