@@ -67,7 +67,7 @@ export function EVCarCard({ car, onViewDetails, onCompare }: EVCarCardProps) {
               <Clock className="h-4 w-4 text-gray-500" />
               <div>
                 <p className="text-sm text-gray-500">Charging</p>
-                <p className="font-semibold">{car.charging_time}h</p>
+                <p className="font-semibold">{car.charging_time}</p>
               </div>
             </div>
             <div className="flex items-center space-x-2">
