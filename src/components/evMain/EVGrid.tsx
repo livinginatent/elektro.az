@@ -1,8 +1,9 @@
 "use client";
 
-import {  EVCars } from "@/app/types";
+import { EVCars } from "@/app/types";
 import { Button } from "../ui/button";
 import { EVCarCard } from "./EVCard";
+import { useRouter } from "next/navigation";
 
 interface EVGridProps {
   cars: EVCars[] | null;
@@ -18,9 +19,14 @@ export function EVGrid({
   title = "Featured Electric Vehicles",
   showViewAll = true,
   onViewAll,
-  onViewDetails,
   onCompare,
 }: EVGridProps) {
+  const router = useRouter();
+  const handleViewDetails = (car: EVCars) => {
+    // Navigate to the car's detail page using the car's ID
+    router.push(`/${car.id}`);
+  };
+
   return (
     <section className="container px-8 pb-16">
       <div className="flex items-center justify-between mb-8">
@@ -37,7 +43,7 @@ export function EVGrid({
           <EVCarCard
             key={car.id}
             car={car}
-            onViewDetails={onViewDetails}
+            onViewDetails={handleViewDetails}
             onCompare={onCompare}
           />
         ))}

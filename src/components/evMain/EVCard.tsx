@@ -20,7 +20,7 @@ export function EVCarCard({ car, onViewDetails, onCompare }: EVCarCardProps) {
       <CardHeader className="p-0">
         <div className="relative">
           <Image
-            src={car.brand_image || "/placeholder.svg"}
+            src={car.mainImage || "/placeholder.svg"}
             alt={`${car.brand} ${car.model}`}
             width={340}
             height={260}

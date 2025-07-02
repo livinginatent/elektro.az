@@ -38,7 +38,7 @@ export function QuickTools({
   title = "EV Tools & Resources",
 }: QuickToolsProps) {
   return (
-    <section className="container px-4 pb-16">
+    <section className="container mt-6 px-4 pb-16">
       <h2 className="text-3xl font-bold text-gray-900 text-center mb-12">
         {title}
       </h2>
