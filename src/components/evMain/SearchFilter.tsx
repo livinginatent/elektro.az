@@ -21,7 +21,7 @@ export function SearchFilter({ value, onChange }: SearchFilterProps) {
           <div className="flex-1 relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2  h-5 w-5" />
             <Input
-              placeholder="Search by make, model, or features..."
+              placeholder="Marka, model üzrə axtarış..."
               style={{
                 borderWidth: 2,
                 borderColor: colors.primary.slate,

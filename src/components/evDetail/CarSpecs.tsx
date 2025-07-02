@@ -54,7 +54,7 @@ export function CarSpecs({ car }: CarSpecsProps) {
     {
       title: "Vehicle Details",
       icon: Car,
-      specs: [
+      /* specs: [
         { label: "Year", value: car.year_model.toString(), icon: "📅" },
         { label: "Body Type", value: car.bodyType, icon: "🚗" },
         { label: "Seating", value: `${car.seatingCapacity} seats`, icon: "👥" },
@@ -64,7 +64,7 @@ export function CarSpecs({ car }: CarSpecsProps) {
           value: `${car.dimensions.curbWeight.toLocaleString()} lbs`,
           icon: "⚖️",
         },
-      ],
+      ], */
     },
     {
       title: "Dimensions",

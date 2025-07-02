@@ -11,31 +11,32 @@ interface QuickToolsProps {
 const defaultTools: QuickTool[] = [
   {
     icon: Calculator,
-    title: "Range Calculator",
+    title: "Yürüş məsafəsi kalkulyatoru",
     description:
-      "Calculate your EV's range based on driving conditions and habits.",
-    buttonText: "Try Calculator",
+      "Yol vəziyyəti və sürüş vərdişinizə əsasən elektromobilinizin sürüş məsafəsini hesablayın.",
+    buttonText: "Kalkulyatoru yoxlayın",
     href: "/calculator",
   },
   {
     icon: MapPin,
-    title: "Charging Stations",
-    description: "Find charging stations near you with real-time availability.",
-    buttonText: "Find Stations",
+    title: "Elektrik doldurma məntəqələri",
+    description:
+      "Sizə yaxın olan elektrik doldurma məntəqələrini xəritədən tapın.",
+    buttonText: "EDM tapın",
     href: "/charging",
   },
   {
     icon: DollarSign,
-    title: "Cost Calculator",
-    description: "Compare EV ownership costs vs traditional vehicles.",
-    buttonText: "Calculate Savings",
+    title: "Maliyyət kalkulyatoru",
+    description: "Elektromobil sahiblik xərclərini ənənəvi avtomobillərlə müqayisə edin.",
+    buttonText: "Qənaətinizi hesablayın",
     href: "/cost",
   },
 ];
 
 export function QuickTools({
   tools = defaultTools,
-  title = "EV Tools & Resources",
+  title = "Elektrikli avtomobil alətləri & Resurslar",
 }: QuickToolsProps) {
   return (
     <section className="container mt-6 px-4 pb-16">
@@ -51,7 +52,9 @@ export function QuickTools({
             <tool.icon className="h-12 w-12 text-blue-600 mx-auto mb-4" />
             <h3 className="text-xl font-bold mb-2">{tool.title}</h3>
             <p className="text-gray-600 mb-4">{tool.description}</p>
-            <Button variant="outline">{tool.buttonText}</Button>
+            <Button className="cursor-pointer" variant="outline">
+              {tool.buttonText}
+            </Button>
           </Card>
         ))}
       </div>

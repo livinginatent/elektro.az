@@ -7,10 +7,10 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 export function Header() {
   const navItems = [
-    { href: "/cars", icon: Car, label: "Browse EVs" },
-    { href: "/calculator", icon: Calculator, label: "Range Calculator" },
-    { href: "/news", icon: Newspaper, label: "News" },
-    { href: "/blog", icon: BookOpen, label: "Blog" },
+    { href: "/cars", icon: Car, label: "Elektromobillərə bax" },
+    { href: "/calculator", icon: Calculator, label: "Yürüş məsafəsi hesabla" },
+    { href: "/news", icon: Newspaper, label: "Yeniliklər" },
+    { href: "/blog", icon: BookOpen, label: "Bloq" },
   ];
 
   return (
@@ -40,10 +40,10 @@ export function Header() {
         </nav>
 
         <div className="flex items-center space-x-4">
-          <Button variant="outline" className="hidden sm:flex bg-transparent">
+        {/*   <Button variant="outline" className="hidden sm:flex bg-transparent">
             Sign In
           </Button>
-          <Button className="hidden sm:flex">Get Started</Button>
+          <Button className="hidden sm:flex">Get Started</Button> */}
 
           {/* Mobile Menu */}
           <Sheet>

@@ -1,3 +1,4 @@
+import { StaticImport } from "next/dist/shared/lib/get-img-props";
 import { StaticImageData } from "next/image";
 import type React from "react";
 export interface EVCars {
@@ -15,7 +16,7 @@ export interface EVCars {
   price: number | null;
   availability: "Avaialable" | "Pre-order" | "Not avaialble";
   brand_image: string | null | StaticImageData;
-  mainImage: string | string[];
+  mainImage: string | StaticImport;
   warranty: never;
   engine_power: string | null;
   torque: number | null;

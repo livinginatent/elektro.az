@@ -16,7 +16,7 @@ interface EVGridProps {
 
 export function EVGrid({
   cars,
-  title = "Featured Electric Vehicles",
+  title = " Seçilmiş Elektrikli Avtomobillər",
   showViewAll = true,
   onViewAll,
   onCompare,
@@ -33,7 +33,7 @@ export function EVGrid({
         <h2 className="text-3xl font-bold text-gray-900">{title}</h2>
         {showViewAll && (
           <Button variant="outline" onClick={onViewAll}>
-            View All
+            Hamısını göstər
           </Button>
         )}
       </div>
