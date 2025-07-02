@@ -41,7 +41,7 @@ export function HeroSection({
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
           <Button
             size="lg"
-            className="text-lg px-8 cursor-pointer"
+            className="text-lg px-8 hover:bg-blue-700 transition-colors cursor-pointer"
             onClick={onPrimaryClick}
           >
             {primaryButtonText}
