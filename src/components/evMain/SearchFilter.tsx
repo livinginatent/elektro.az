@@ -14,7 +14,7 @@ interface SearchFilterProps {
 
 export function SearchFilter({ value, onChange }: SearchFilterProps) {
   return (
-    <section className="container w-1/2 px-4 pb-8">
+    <section className="flex justify-center items-center w-screen px-4 pb-8">
       <div className="rounded-sm p-2">
         {" "}
         <div className="flex flex-col lg:flex-row gap-4 items-center">
@@ -23,11 +23,11 @@ export function SearchFilter({ value, onChange }: SearchFilterProps) {
             <Input
               placeholder="Marka, model üzrə axtarış..."
               style={{
-                borderWidth: 2,
+                borderWidth: 1.5,
                 borderColor: colors.primary.slate,
                 borderRadius: 5,
               }}
-              className="pl-10 border border-red h-12 text-black text-lg"
+              className="pl-10 py-6 border border-red h-12 text-black text-lg min-w-4xl"
               value={value}
               onChange={(e) => onChange(e.target.value)}
             />

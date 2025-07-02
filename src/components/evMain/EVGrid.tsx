@@ -28,25 +28,27 @@ export function EVGrid({
   };
 
   return (
-    <section className="container px-8 pb-16">
-      <div className="flex items-center justify-between mb-8">
-        <h2 className="text-3xl font-bold text-gray-900">{title}</h2>
-        {showViewAll && (
-          <Button variant="outline" onClick={onViewAll}>
-            Hamısını göstər
-          </Button>
-        )}
-      </div>
+    <section className=" px-8 pb-16">
+      <div className=" ">
+        <div className="flex items-center justify-between mb-8">
+          <h2 className="text-3xl font-bold text-gray-900">{title}</h2>
+          {showViewAll && (
+            <Button variant="outline" onClick={onViewAll}>
+              Hamısını göstər
+            </Button>
+          )}
+        </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        {cars?.map((car) => (
-          <EVCarCard
-            key={car.id}
-            car={car}
-            onViewDetails={handleViewDetails}
-            onCompare={onCompare}
-          />
-        ))}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {cars?.map((car) => (
+            <EVCarCard
+              key={car.id}
+              car={car}
+              onViewDetails={handleViewDetails}
+              onCompare={onCompare}
+            />
+          ))}
+        </div>
       </div>
     </section>
   );

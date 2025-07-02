@@ -16,7 +16,7 @@ interface EVCarCardProps {
 
 export function EVCarCard({ car, onViewDetails, onCompare }: EVCarCardProps) {
   return (
-    <Card className="group hover:shadow-xl transition-all duration-300 border-0 shadow-lg overflow-hidden w-full">
+    <Card className="group hover:shadow-xl transition-all duration-300 border-0 shadow-lg overflow-hidden max-w-md">
       <CardHeader className="p-0">
         <div className="relative">
           <Image
@@ -29,10 +29,10 @@ export function EVCarCard({ car, onViewDetails, onCompare }: EVCarCardProps) {
           <div className="absolute top-4 right-4">
             {car.availability ? (
               <Badge className="bg-green-500 hover:bg-green-600">
-                Available
+                Satışda var
               </Badge>
             ) : (
-              <Badge variant="secondary">Coming Soon</Badge>
+              <Badge variant="secondary">Tezlikə</Badge>
             )}
           </div>
         </div>

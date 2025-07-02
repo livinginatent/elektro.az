@@ -15,7 +15,7 @@ const car = await supabase
   .single();
   console.log(car);
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
+    <div className="min-h-screen  justify-center items-center w-screen bg-gradient-to-br from-slate-50 to-blue-50">
       <Header />
       <HeroSection />
       <QuickTools />

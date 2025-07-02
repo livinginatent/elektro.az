@@ -28,7 +28,8 @@ const defaultTools: QuickTool[] = [
   {
     icon: DollarSign,
     title: "Maliyyət kalkulyatoru",
-    description: "Elektromobil sahiblik xərclərini ənənəvi avtomobillərlə müqayisə edin.",
+    description:
+      "Elektromobil sahiblik xərclərini ənənəvi avtomobillərlə müqayisə edin.",
     buttonText: "Qənaətinizi hesablayın",
     href: "/cost",
   },
@@ -39,20 +40,20 @@ export function QuickTools({
   title = "Elektrikli avtomobil alətləri & Resurslar",
 }: QuickToolsProps) {
   return (
-    <section className="container mt-6 px-4 pb-16">
+    <section className="mt-6 px-4 pb-16">
       <h2 className="text-3xl font-bold text-gray-900 text-center mb-12">
         {title}
       </h2>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
         {tools.map((tool, index) => (
           <Card
             key={index}
-            className="text-center p-8 hover:shadow-lg transition-shadow"
+            className="text-center p-6 hover:shadow-lg transition-shadow flex flex-col h-full"
           >
             <tool.icon className="h-12 w-12 text-blue-600 mx-auto mb-4" />
             <h3 className="text-xl font-bold mb-2">{tool.title}</h3>
-            <p className="text-gray-600 mb-4">{tool.description}</p>
-            <Button className="cursor-pointer" variant="outline">
+            <p className="text-gray-600 mb-4 flex-grow">{tool.description}</p>
+            <Button className="cursor-pointer mt-auto" variant="outline">
               {tool.buttonText}
             </Button>
           </Card>

@@ -24,7 +24,7 @@ export function HeroSection({
   return (
     <section
       style={{ background: colors.primary.slate }}
-      className="container  px-4 py-16 md:py-24"
+      className="  px-4 py-16 md:py-24"
     >
       <div className="text-center space-y-6">
         <h1 className="text-4xl md:text-6xl font-bold text-white leading-tight">
