@@ -68,12 +68,12 @@ export function Header() {
                     <span>{item.label}</span>
                   </Link>
                 ))}
-                <div className="pt-4 space-y-2">
+            {/*     <div className="pt-4 space-y-2">
                   <Button variant="outline" className="w-full bg-transparent">
                     Sign In
                   </Button>
                   <Button className="w-full">Get Started</Button>
-                </div>
+                </div> */}
               </div>
             </SheetContent>
           </Sheet>

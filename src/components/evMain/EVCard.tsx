@@ -2,11 +2,11 @@
 
 import Image from "next/image";
 import { MapPin, Battery, Clock, Zap } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { colors } from "@/utils/colors";
 import { EVCars } from "@/app/types";
+import { getAvailabilityLabel } from "@/utils/getAvailabilityLabel";
 
 interface EVCarCardProps {
   car: EVCars;
@@ -15,19 +15,7 @@ interface EVCarCardProps {
 }
 
 export function EVCarCard({ car, onViewDetails, onCompare }: EVCarCardProps) {
-  const availabilityLabel = (availability: string) => {
-    if (availability === "In Stock") {
-      return (
-        <Badge className="bg-green-500 hover:bg-green-600">Satışda var</Badge>
-      );
-    } else if (availability === "Out of stock") {
-      return <Badge className="bg-red-500 hover:bg-red-600">Satışda yoxdur</Badge>;
-    }else{
-      return (
-        <Badge className="bg-orange-500 hover:bg-orange-600">Sifarişlə</Badge>
-      );
-    }
-  };
+  
   return (
     <Card className="group hover:shadow-xl transition-all duration-300 border-0 shadow-lg overflow-hidden max-w-md">
       <CardHeader className="p-0">
@@ -40,7 +28,7 @@ export function EVCarCard({ car, onViewDetails, onCompare }: EVCarCardProps) {
             className="w-full h-40 object-cover group-hover:scale-105 transition-transform duration-300"
           />
           <div className="absolute top-4 right-4">
-            {availabilityLabel(car.availability)}
+            {getAvailabilityLabel(car.availability)}
           </div>
         </div>
       </CardHeader>
@@ -66,8 +54,8 @@ export function EVCarCard({ car, onViewDetails, onCompare }: EVCarCardProps) {
             <div className="flex items-center space-x-2">
               <Battery className="h-4 w-4 text-gray-500" />
               <div>
-                <p className="text-sm text-gray-500">Batareya</p>
-                <p className="font-semibold">{car.battery_capacity} kWh</p>
+                <p className="text-sm text-gray-500">Mühərrik gücü</p>
+                <p className="font-semibold">{car.engine_power} a.g</p>
               </div>
             </div>
             <div className="flex items-center space-x-2">

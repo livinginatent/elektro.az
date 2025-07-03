@@ -24,6 +24,7 @@ export interface EVCars {
   efficiency_city: number;
   efficiency_highway: number;
   year_model: string;
+  carousel_images:string[]
   id: string | null | number; // UUIDs are typically represented as strings in TypeScript
 }
 

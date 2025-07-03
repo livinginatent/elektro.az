@@ -1,11 +1,12 @@
 "use client";
 
-import { ArrowLeft, Heart, Share2, Calculator, MapPin } from "lucide-react";
+import { ArrowLeft,  Share2, Calculator, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { EVCars } from "@/app/types";
 import { CarSpecs } from "./CarSpecs";
+import { ImageCarousel } from "./ImageCarousel";
+import { getAvailabilityLabel } from "@/utils/getAvailabilityLabel";
 interface CarDetailPageProps {
   car: EVCars;
   onBack?: () => void;
@@ -25,16 +26,16 @@ export function CarDetailPage({
         {/* Back Button */}
         <Button variant="outline" onClick={onBack} className="mb-6 bg-white">
           <ArrowLeft className="h-4 w-4 mr-2" />
-          Back to Browse
+          Geri qayıt
         </Button>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
           {/* Image Carousel */}
           <div>
-           {/*  <ImageCarousel
-              images={car.mainImage}
+            <ImageCarousel
+              images={car.carousel_images}
               alt={`${car.brand} ${car.model}`}
-            /> */}
+            />
           </div>
 
           {/* Car Info */}
@@ -44,17 +45,9 @@ export function CarDetailPage({
                 <h1 className="text-3xl font-bold text-gray-900">
                   {car.brand} {car.model}
                 </h1>
-                {car.availability ? (
-                  <Badge className="bg-green-500 hover:bg-green-600">
-                    Available
-                  </Badge>
-                ) : (
-                  <Badge variant="secondary">Coming Soon</Badge>
-                )}
+                {getAvailabilityLabel(car.availability)}
               </div>
-              <p className="text-4xl font-bold text-blue-600 mb-4">
-                ${car.price}
-              </p>
+
               <p className="text-gray-600 text-lg leading-relaxed">
                 {car.description}
               </p>
@@ -64,50 +57,53 @@ export function CarDetailPage({
             <Card>
               <CardContent className="p-6">
                 <h3 className="text-lg font-semibold mb-4">
-                  Key Specifications
+                  Əsas Spesifikasiyalar
                 </h3>
                 <div className="grid grid-cols-2 gap-4">
                   <div className="text-center p-4 bg-blue-50 rounded-lg">
                     <div className="text-2xl font-bold text-blue-600">
-                      {car.range_km}
+                      {car.range_km} km
                     </div>
-                    <div className="text-sm text-gray-600">Miles Range</div>
+                    <div className="text-sm text-gray-600">Yürüş məsafəsi</div>
                   </div>
                   <div className="text-center p-4 bg-green-50 rounded-lg">
                     <div className="text-2xl font-bold text-green-600">
-                      {car.acceleration}s
+                      {car.acceleration}sn
                     </div>
-                    <div className="text-sm text-gray-600">0-60 mph</div>
+                    <div className="text-sm text-gray-600">0-100 km/saat</div>
                   </div>
                   <div className="text-center p-4 bg-purple-50 rounded-lg">
                     <div className="text-2xl font-bold text-purple-600">
-                      {car.battery_capacity}
+                      {car.engine_power} a.g
                     </div>
-                    <div className="text-sm text-gray-600">kWh Battery</div>
+                    <div className="text-sm text-gray-600">Mühərrik</div>
                   </div>
                   <div className="text-center p-4 bg-orange-50 rounded-lg">
                     <div className="text-2xl font-bold text-orange-600">
-                      {car.charging_time}h
+                      {car.charging_time} dəqiqə
                     </div>
-                    <div className="text-sm text-gray-600">Fast Charging</div>
+                    <div className="text-sm text-gray-600">Şarj vaxtı</div>
                   </div>
                 </div>
               </CardContent>
             </Card>
+            <p className="text-4xl font-bold text-blue-600 mb-4">
+              ${car.price}
+            </p>
 
             {/* Action Buttons */}
             <div className="space-y-3">
               <div className="flex gap-3">
-                <Button className="flex-1" size="lg">
-                  Request Test Drive
+                <Button className="flex-1 hover:bg-blue-700" size="lg">
+                  Dilerlə əlaqə saxla
                 </Button>
-                <Button variant="outline" size="lg">
+                {/* <Button variant="outline" size="lg">
                   <Heart className="h-4 w-4 mr-2" />
                   Save
-                </Button>
+                </Button> */}
                 <Button variant="outline" size="lg">
                   <Share2 className="h-4 w-4 mr-2" />
-                  Share
+                  Paylaş
                 </Button>
               </div>
 
@@ -148,7 +144,7 @@ export function CarDetailPage({
           <h2 className="text-2xl font-bold text-gray-900 mb-6">
             Detailed Specifications
           </h2>
-          <CarSpecs car={car}/>
+          <CarSpecs car={car} />
         </div>
       </div>
     </div>
