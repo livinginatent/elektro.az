@@ -71,7 +71,7 @@ export function EVGrid({
           {title}
         </h2>
         {showViewAll && (
-          <Button className="mt-4" variant="outline" onClick={handleViewAll}>
+          <Button className="mt-4 cursor-pointer" variant="outline" onClick={handleViewAll}>
             {showAll ? "Daha az" : "Hamısını göstər"}
           </Button>
         )}
@@ -80,7 +80,7 @@ export function EVGrid({
         {sortFilters.map((filter) => (
           <Button
             key={filter.key}
-            className={`px-4 py-2 rounded-xs transition-all duration-200 ${
+            className={`px-4 py-2 rounded-xs transition-all duration-200 cursor-pointer ${
               activeFilter === filter.key
                 ? "bg-[#023e8a] hover:bg-sky-600 text-white shadow-lg"
                 : "bg-[#1d242a] text-white hover:bg-slate-700"
@@ -94,7 +94,7 @@ export function EVGrid({
         {/* Clear Filter Button */}
         {activeFilter && (
           <Button
-            className=" bg-red-100 text-red-700 hover:bg-red-200 rounded-xs"
+            className=" bg-red-100 text-red-700 hover:bg-red-200 rounded-xs cursor-pointer"
             onClick={() => setActiveFilter(null)}
           >
             ✕ Filtri təmizlə

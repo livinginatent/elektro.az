@@ -38,7 +38,7 @@ export function CarSpecs({ car }: CarSpecsProps) {
           value: car.charging_ports.join(", "),
           icon: "🔌",
         },
-        
+
         {
           label: "City Efficiency",
           value: `${car.efficiency_city} MPGe`,
@@ -54,17 +54,21 @@ export function CarSpecs({ car }: CarSpecsProps) {
     {
       title: "Vehicle Details",
       icon: Car,
-      /* specs: [
+      specs: [
         { label: "Year", value: car.year_model.toString(), icon: "📅" },
-        { label: "Body Type", value: car.bodyType, icon: "🚗" },
-        { label: "Seating", value: `${car.seatingCapacity} seats`, icon: "👥" },
-        { label: "Drivetrain", value: car.drivetrain, icon: "⚙️" },
+        { label: "Body Type", value: car.body_type, icon: "🚗" },
+        {
+          label: "Seating",
+          value: `${car.seating_capacity} seats`,
+          icon: "👥",
+        },
+        { label: "Drivetrain", value: car.battery_type, icon: "⚙️" },
         {
           label: "Curb Weight",
-          value: `${car.dimensions.curbWeight.toLocaleString()} lbs`,
+          value: `${car?.dimensions?.curb_weight?.toLocaleString()} kq`,
           icon: "⚖️",
         },
-      ], */
+      ],
     },
     {
       title: "Dimensions",
@@ -86,7 +90,7 @@ export function CarSpecs({ car }: CarSpecsProps) {
     <div className="space-y-6">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {specSections.map((section, index) => (
-          <Card key={index}>
+          <Card className=" rounded-sm" key={index}>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <section.icon className="h-5 w-5 text-blue-600" />
@@ -95,7 +99,7 @@ export function CarSpecs({ car }: CarSpecsProps) {
             </CardHeader>
             <CardContent>
               <div className="space-y-3">
-               {/*  {section.specs.map((spec, specIndex) => (
+                {section.specs?.map((spec, specIndex) => (
                   <div
                     key={specIndex}
                     className="flex justify-between items-center"
@@ -106,7 +110,7 @@ export function CarSpecs({ car }: CarSpecsProps) {
                     </span>
                     <span className="font-semibold">{spec.value}</span>
                   </div>
-                ))} */}
+                ))}
               </div>
             </CardContent>
           </Card>
@@ -114,7 +118,7 @@ export function CarSpecs({ car }: CarSpecsProps) {
       </div>
 
       {/* Safety Rating */}
-      <Card>
+      <Card className=" rounded-sm">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Shield className="h-5 w-5 text-blue-600" />
@@ -125,7 +129,7 @@ export function CarSpecs({ car }: CarSpecsProps) {
           <div className="space-y-4">
             <div className="flex items-center gap-2">
               <span className="text-gray-600">Safety Rating:</span>
-             {/*  <div className="flex">
+              {/*  <div className="flex">
                 {[...Array(5)].map((_, i) => (
                   <span
                     key={i}
@@ -139,7 +143,7 @@ export function CarSpecs({ car }: CarSpecsProps) {
                   </span>
                 ))}
               </div> */}
-            {/*   <span className="font-semibold">{car.safety.rating}/5</span> */}
+              {/*   <span className="font-semibold">{car.safety.rating}/5</span> */}
             </div>
 
             <div>

@@ -37,7 +37,7 @@ export function EVCarCard({ car, onViewDetails, onCompare }: EVCarCardProps) {
               {car.brand} {car.model}
             </h3>
             <p className="text-xl font-bold text-blue-600">
-              ${car?.price?.toLocaleString()}
+              ₼{car?.price?.toLocaleString()}
             </p>
           </div>
 
@@ -90,7 +90,7 @@ export function EVCarCard({ car, onViewDetails, onCompare }: EVCarCardProps) {
             </Button>
             <Button
               variant="outline"
-              className="flex-1 bg-[#caf0f8] hover:bg-blue-200"
+              className="flex-1 bg-[#caf0f8] hover:bg-blue-200 cursor-pointer"
               onClick={() => onCompare?.(car)}
             >
               Müqayisə et

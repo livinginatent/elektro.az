@@ -4,6 +4,8 @@ import { useRouter } from "next/navigation";
 import { EVCars } from "../types";
 import { createClient } from "../utils/supabase/client";
 import { CarDetailPage } from "@/components/evDetail/CarDetailPage";
+import { FadeLoader } from "react-spinners";
+import { colors } from "@/utils/colors";
 
 // CarPageProps definition with params as a promise
 interface CarPageProps {
@@ -70,7 +72,7 @@ console.log(unwrappedParams)
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <p>Loading...</p>
+        <FadeLoader color={colors.primary.blue} />
       </div>
     );
   }

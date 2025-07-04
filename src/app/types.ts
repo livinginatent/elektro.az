@@ -1,6 +1,12 @@
 import { StaticImport } from "next/dist/shared/lib/get-img-props";
 import { StaticImageData } from "next/image";
 import type React from "react";
+export interface CarDimensions {
+  length: number | null;
+  width: number | null;
+  curb_weight: number | null;
+}
+
 export interface EVCars {
   brand: string | null;
   model: string | null;
@@ -24,7 +30,10 @@ export interface EVCars {
   efficiency_city: number;
   efficiency_highway: number;
   year_model: string;
-  carousel_images:string[]
+  carousel_images: string[];
+  body_type: "Sedan" | "SUV" | "Minivan" | "Sport";
+  seating_capacity:number
+  dimensions:CarDimensions
   id: string | null | number; // UUIDs are typically represented as strings in TypeScript
 }
 
