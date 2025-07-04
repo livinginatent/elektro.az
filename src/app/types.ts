@@ -18,7 +18,7 @@ export interface EVCars {
   brand_image: string | null | StaticImageData;
   mainImage: string | StaticImport;
   warranty: never;
-  engine_power: string | null;
+  engine_power: number | null;
   torque: number | null;
   charging_ports: string[];
   efficiency_city: number;

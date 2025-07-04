@@ -37,7 +37,7 @@ export function HeroSection({
             </span>
           ))}
         </h1>
-        <p className="text-xl text-white max-w-3xl mx-auto">{subtitle}</p>
+        <h2 className="text-xl text-white max-w-3xl mx-auto">{subtitle}</h2>
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
           <Button
             size="lg"
