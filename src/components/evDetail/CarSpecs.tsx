@@ -1,7 +1,12 @@
 import { Battery, Zap, Car, Shield, Ruler } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { EVCars } from "@/app/types";
-
+import { GiPowerLightning } from "react-icons/gi";
+import { IoCarSport } from "react-icons/io5";
+import { IoSpeedometer } from "react-icons/io5";
+import { PiGearDuotone } from "react-icons/pi";
+import { FaRoadBridge } from "react-icons/fa6";
+import { colors } from "@/utils/colors";
 interface CarSpecsProps {
   car: EVCars;
 }
@@ -9,43 +14,63 @@ interface CarSpecsProps {
 export function CarSpecs({ car }: CarSpecsProps) {
   const specSections = [
     {
-      title: "Performance",
+      title: "Performans",
       icon: Zap,
       specs: [
-        { label: "Range", value: `${car.range_km} miles`, icon: "🔋" },
-        { label: "0-60 mph", value: `${car.acceleration}s`, icon: "⚡" },
-        { label: "Top Speed", value: `${car.speed_km} mph`, icon: "🏎️" },
-        { label: "Motor Power", value: `${car.engine_power} hp`, icon: "⚙️" },
-        { label: "Torque", value: `${car.torque} lb-ft`, icon: "🔧" },
+        {
+          label: "Yürüş məsafəsi",
+          value: `${car.range_km} kilometr`,
+          icon: <FaRoadBridge color={colors.primary.blue} />,
+        },
+        {
+          label: "0-100 km/saat",
+          value: `${car.acceleration}sn`,
+          icon: <IoCarSport color={colors.primary.blue} />,
+        },
+        {
+          label: "Maksima sürət",
+          value: `${car.speed_km} km/saat`,
+          icon: <IoSpeedometer color={colors.primary.blue} />,
+        },
+        {
+          label: "Mühərrik gücü",
+          value: `${car.engine_power} a.g`,
+          icon: <GiPowerLightning color={colors.primary.blue} />,
+        },
+        {
+          label: "Mühərrik tork",
+          value: `${car.torque} n/metr`,
+          icon: <PiGearDuotone color={colors.primary.blue} />,
+        },
       ],
     },
     {
-      title: "Battery & Charging",
+      title: "Batareya & Şarj",
       icon: Battery,
       specs: [
         {
-          label: "Battery Capacity",
+          label: "Bataraye tutumu",
           value: `${car.battery_capacity} kWh`,
           icon: "🔋",
         },
         {
-          label: "Charging Time",
+          label: "Şarj müddəti",
           value: `${car.charging_time}h (DC Fast)`,
           icon: "⚡",
         },
         {
-          label: "Charging Ports",
+          label: "Şarj portları",
           value: car.charging_ports.join(", "),
           icon: "🔌",
         },
 
         {
-          label: "City Efficiency",
-          value: `${car.efficiency_city} MPGe`,
+          label: "Şəhəriçi sərfiyyat",
+          value: `${car.efficiency_city} 100`,
           icon: "🏙️",
         },
         {
-          label: "Highway Efficiency",
+          label: "Magistral sərfiyyatı",
           value: `${car.efficiency_highway} MPGe`,
           icon: "🛣️",
         },

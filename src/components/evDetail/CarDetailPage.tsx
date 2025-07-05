@@ -10,6 +10,7 @@ import { getAvailabilityLabel } from "@/utils/getAvailabilityLabel";
 import { colors } from "@/utils/colors";
 import { Header } from "@/layout/Header";
 import { Footer } from "@/layout/Footer";
+import { GiPathDistance } from "react-icons/gi";
 interface CarDetailPageProps {
   car: EVCars;
   onBack?: () => void;
@@ -27,7 +28,7 @@ export function CarDetailPage({
     <>
     <Header/>
       <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
-        <div className="container px-4 py-8">
+        <div className=" px-4 py-8">
           {/* Back Button */}
           <Button
             variant="outline"
