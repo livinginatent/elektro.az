@@ -63,7 +63,7 @@ export function ImageCarousel({
             <Button
               variant="outline"
               size="icon"
-              className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white"
+              className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white cursor-pointer"
               onClick={goToPrevious}
             >
               <ChevronLeft className="h-4 w-4" />
@@ -71,7 +71,7 @@ export function ImageCarousel({
             <Button
               variant="outline"
               size="icon"
-              className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white"
+              className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white cursor-pointer"
               onClick={goToNext}
             >
               <ChevronRight className="h-4 w-4" />

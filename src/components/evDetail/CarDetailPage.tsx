@@ -25,7 +25,7 @@ export function CarDetailPage({
 }: CarDetailPageProps) {
   return (
     <>
-    <Header/>
+      <Header />
       <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
         <div className=" px-4 py-8">
           {/* Back Button */}
@@ -105,7 +105,7 @@ export function CarDetailPage({
                 style={{ color: colors.primary.blue }}
                 className="text-4xl font-bold  mb-4"
               >
-                ${car.price}
+                ₼{car.price}
               </p>
 
               {/* Action Buttons */}
@@ -172,7 +172,7 @@ export function CarDetailPage({
           </div>
         </div>
       </div>
-      <Footer/>
+      <Footer />
     </>
   );
 }

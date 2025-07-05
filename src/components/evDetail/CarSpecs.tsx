@@ -4,9 +4,12 @@ import { EVCars } from "@/app/types";
 import { GiPowerLightning } from "react-icons/gi";
 import { IoCarSport } from "react-icons/io5";
 import { IoSpeedometer } from "react-icons/io5";
-import { PiGearDuotone } from "react-icons/pi";
-import { FaRoadBridge } from "react-icons/fa6";
+import { PiCityBold } from "react-icons/pi";
+import { FaPlugCircleBolt, FaRoad, FaRoadBridge } from "react-icons/fa6";
+import { FaCarBattery } from "react-icons/fa6";
 import { colors } from "@/utils/colors";
+import { RiTimerFlashFill } from "react-icons/ri";
+import { BsGearFill } from "react-icons/bs";
 interface CarSpecsProps {
   car: EVCars;
 }
@@ -40,7 +43,7 @@ export function CarSpecs({ car }: CarSpecsProps) {
         {
           label: "Mühərrik tork",
           value: `${car.torque} n/metr`,
-          icon: <PiGearDuotone color={colors.primary.blue} />,
+          icon: <BsGearFill color={colors.primary.blue} />,
         },
       ],
     },
@@ -49,30 +52,30 @@ export function CarSpecs({ car }: CarSpecsProps) {
       icon: Battery,
       specs: [
         {
-          label: "Bataraye tutumu",
+          label: "Batareya tutumu",
           value: `${car.battery_capacity} kWh`,
-          icon: "🔋",
+          icon: <FaCarBattery color={colors.primary.blue} />,
         },
         {
           label: "Şarj müddəti",
           value: `${car.charging_time}h (DC Fast)`,
-          icon: "⚡",
+          icon: <RiTimerFlashFill color={colors.primary.blue} />,
         },
         {
           label: "Şarj portları",
           value: car.charging_ports.join(", "),
-          icon: "🔌",
+          icon: <FaPlugCircleBolt color={colors.primary.blue} />,
         },
 
         {
           label: "Şəhəriçi sərfiyyat",
           value: `${car.efficiency_city} 100`,
-          icon: "🏙️",
+          icon: <PiCityBold color={colors.primary.blue} />,
         },
         {
           label: "Magistral sərfiyyatı",
           value: `${car.efficiency_highway} MPGe`,
-          icon: "🛣️",
+          icon: <FaRoad color={colors.primary.blue} />,
         },
       ],
     },
