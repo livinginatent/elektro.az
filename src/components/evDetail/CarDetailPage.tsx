@@ -10,7 +10,6 @@ import { getAvailabilityLabel } from "@/utils/getAvailabilityLabel";
 import { colors } from "@/utils/colors";
 import { Header } from "@/layout/Header";
 import { Footer } from "@/layout/Footer";
-import { GiPathDistance } from "react-icons/gi";
 interface CarDetailPageProps {
   car: EVCars;
   onBack?: () => void;

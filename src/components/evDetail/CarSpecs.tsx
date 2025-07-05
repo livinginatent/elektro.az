@@ -24,7 +24,7 @@ export function CarSpecs({ car }: CarSpecsProps) {
         },
         {
           label: "0-100 km/saat",
-          value: `${car.acceleration}sn`,
+          value: `${car.acceleration} sn`,
           icon: <IoCarSport color={colors.primary.blue} />,
         },
         {
