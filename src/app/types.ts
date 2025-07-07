@@ -14,7 +14,11 @@ export interface Engine {
   engine_power: number | null;
   engine_displacement: number | null;
 }
-
+export interface Dealership {
+  name: string;
+  phone_number: string;
+  address: string;
+}
 export interface EVCars {
   brand: string | null;
   model: string | null;
@@ -43,7 +47,8 @@ export interface EVCars {
   seating_capacity: number;
   dimensions: CarDimensions;
   safety: string[];
-  id: string | null | number; // UUIDs are typically represented as strings in TypeScript
+  id: string | null | number; 
+  dealership: Dealership;
 }
 
 export interface QuickTool {

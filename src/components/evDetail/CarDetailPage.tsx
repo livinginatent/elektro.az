@@ -1,15 +1,19 @@
 "use client";
 
+import { useState } from "react";
 import { ArrowLeft, Share2, Calculator, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { EVCars } from "@/app/types";
+import type { EVCars } from "@/app/types";
 import { CarSpecs } from "./CarSpecs";
 import { ImageCarousel } from "./ImageCarousel";
 import { getAvailabilityLabel } from "@/utils/getAvailabilityLabel";
 import { colors } from "@/utils/colors";
 import { Header } from "@/layout/Header";
 import { Footer } from "@/layout/Footer";
+import { DealershipModal } from "../modals/DealershipModal";
+import { ShareModal } from "../modals/ShareModal";
+
 interface CarDetailPageProps {
   car: EVCars;
   onBack?: () => void;
@@ -23,6 +27,23 @@ export function CarDetailPage({
   onCalculateRange,
   onFindCharging,
 }: CarDetailPageProps) {
+  const [isDealershipModalOpen, setIsDealershipModalOpen] = useState(false);
+  const [isShareModalOpen, setIsShareModalOpen] = useState(false);
+
+  const handleContactDealer = () => {
+    setIsDealershipModalOpen(true);
+  };
+
+  const handleCloseDealershipModal = () => {
+    setIsDealershipModalOpen(false);
+  };
+  const handleShare = () => {
+    setIsShareModalOpen(true);
+  };
+
+  const handleCloseShareModal = () => {
+    setIsShareModalOpen(false);
+  };
   return (
     <>
       <Header />
@@ -37,7 +58,6 @@ export function CarDetailPage({
             <ArrowLeft className="h-4 w-4 mr-2" />
             Geri qayıt
           </Button>
-
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
             {/* Image Carousel */}
             <div>
@@ -46,7 +66,6 @@ export function CarDetailPage({
                 alt={`${car.brand} ${car.model}`}
               />
             </div>
-
             {/* Car Info */}
             <div className="space-y-6">
               <div>
@@ -56,12 +75,10 @@ export function CarDetailPage({
                   </h1>
                   {getAvailabilityLabel(car.availability)}
                 </div>
-
                 <p className="text-gray-600 text-lg leading-relaxed">
                   {car.description}
                 </p>
               </div>
-
               {/* Key Stats */}
               <Card className="rounded-sm">
                 <CardContent className="p-6">
@@ -107,22 +124,19 @@ export function CarDetailPage({
               >
                 ₼{car.price}
               </p>
-
               {/* Action Buttons */}
               <div className="space-y-3">
                 <div className="flex  gap-3">
                   <Button
+                    onClick={handleContactDealer}
                     className="flex-1 hover:bg-blue-700 cursor-pointer rounded-sm"
                     size="lg"
                   >
                     Dilerlə əlaqə saxla
                   </Button>
-                  {/* <Button variant="outline" size="lg">
-                  <Heart className="h-4 w-4 mr-2" />
-                  Save
-                </Button> */}
                   <Button
-                    className="cursor-pointer rounded-sm"
+                    onClick={handleShare}
+                    className="cursor-pointer rounded-sm bg-transparent"
                     variant="outline"
                     size="lg"
                   >
@@ -130,7 +144,6 @@ export function CarDetailPage({
                     Paylaş
                   </Button>
                 </div>
-
                 <div className="flex flex-col md:flex-row lg:flex-row gap-3">
                   <Button
                     variant="outline"
@@ -150,7 +163,6 @@ export function CarDetailPage({
                   </Button>
                 </div>
               </div>
-
               {/* Warranty Info */}
               <Card className=" rounded-sm">
                 <CardContent className="p-4">
@@ -162,7 +174,6 @@ export function CarDetailPage({
               </Card>
             </div>
           </div>
-
           {/* Detailed Specifications */}
           <div>
             <h2 className="text-2xl text-center md:text-left lg:text-left font-bold text-gray-900 mb-6">
@@ -172,6 +183,23 @@ export function CarDetailPage({
           </div>
         </div>
       </div>
+
+      {/* Dealership Modal */}
+      <DealershipModal
+        isOpen={isDealershipModalOpen}
+        onClose={handleCloseDealershipModal}
+        dealership={car.dealership}
+        carBrand={car.brand}
+        carModel={car.model}
+      />
+      <ShareModal
+        isOpen={isShareModalOpen}
+        onClose={handleCloseShareModal}
+        carBrand={car.brand}
+        carModel={car.model}
+        carPrice={car.price}
+        carUrl={`elektro-az.vercel.app/${car.id}`}
+      />
       <Footer />
     </>
   );
