@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { ArrowLeft, Share2, Calculator, MapPin } from "lucide-react";
+import { ArrowLeft, Share2, ChartColumnStacked } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import type { EVCars } from "@/app/types";
@@ -25,7 +25,6 @@ export function CarDetailPage({
   car,
   onBack,
   onCalculateRange,
-  onFindCharging,
 }: CarDetailPageProps) {
   const [isDealershipModalOpen, setIsDealershipModalOpen] = useState(false);
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
@@ -134,32 +133,23 @@ export function CarDetailPage({
                   >
                     Dilerlə əlaqə saxla
                   </Button>
-                  <Button
-                    onClick={handleShare}
-                    className="cursor-pointer rounded-sm bg-transparent"
-                    variant="outline"
-                    size="lg"
-                  >
-                    <Share2 className="h-4 w-4 mr-2" />
-                    Paylaş
-                  </Button>
                 </div>
-                <div className="flex flex-col md:flex-row lg:flex-row gap-3">
+                <div className="flex w-full flex-col md:flex-row lg:flex-row  gap-3">
                   <Button
                     variant="outline"
                     className="flex-1 bg-transparent cursor-pointer rounded-sm"
                     onClick={onCalculateRange}
                   >
-                    <Calculator className="h-4 w-4 mr-2" />
-                    Yürüş məsafəsi hesabla
+                    <ChartColumnStacked className="h-4 w-4 mr-2" />
+                    Müqayisə et
                   </Button>
                   <Button
+                    onClick={handleShare}
+                    className="flex-1 cursor-pointer rounded-sm bg-transparent"
                     variant="outline"
-                    className="flex-1 bg-transparent cursor-pointer rounded-sm"
-                    onClick={onFindCharging}
                   >
-                    <MapPin className="h-4 w-4 mr-2" />
-                    Elektrik doldurma məntəqəsi tap
+                    <Share2 className="h-4 w-4 mr-2" />
+                    Paylaş
                   </Button>
                 </div>
               </div>

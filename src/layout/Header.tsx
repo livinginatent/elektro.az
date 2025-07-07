@@ -15,7 +15,8 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60">
-      <div className="container flex h-16 items-center justify-between px-4">
+      <div className=" flex h-16 items-center justify-between px-4">
+        {/* Icon on the left */}
         <div className="flex items-center space-x-4">
           <Link href="/" className="flex items-center space-x-2">
             <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-600">
@@ -26,26 +27,21 @@ export function Header() {
         </div>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center space-x-6">
+        <nav className="ml-auto hidden md:flex items-center space-x-6">
           {navItems.map((item) => (
             <Link
               key={item.href}
               href={item.href}
-              className="flex items-center space-x-1 text-sm font-medium text-gray-700 hover:text-blue-600"
+              className="flex items-center space-x-1 text-md font-medium text-gray-700 hover:text-blue-600"
             >
-              <item.icon className="h-4 w-4" />
+              <item.icon className="h-5 w-5" />
               <span>{item.label}</span>
             </Link>
           ))}
         </nav>
 
+        {/* Mobile Menu */}
         <div className="flex items-center space-x-4">
-        {/*   <Button variant="outline" className="hidden sm:flex bg-transparent">
-            Sign In
-          </Button>
-          <Button className="hidden sm:flex">Get Started</Button> */}
-
-          {/* Mobile Menu */}
           <Sheet>
             <SheetTrigger asChild>
               <Button
@@ -68,12 +64,6 @@ export function Header() {
                     <span>{item.label}</span>
                   </Link>
                 ))}
-            {/*     <div className="pt-4 space-y-2">
-                  <Button variant="outline" className="w-full bg-transparent">
-                    Sign In
-                  </Button>
-                  <Button className="w-full">Get Started</Button>
-                </div> */}
               </div>
             </SheetContent>
           </Sheet>
