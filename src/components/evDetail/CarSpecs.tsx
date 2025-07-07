@@ -1,21 +1,57 @@
-import { Battery, Zap, Car, Shield, Ruler } from "lucide-react";
+import {
+  Battery,
+  Zap,
+  Car,
+  Shield,
+  Ruler,
+  ChevronDown,
+  ChevronUp,
+} from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { EVCars } from "@/app/types";
 import { GiPowerLightning, GiWeight } from "react-icons/gi";
 import { IoCalendarNumber, IoCarSport } from "react-icons/io5";
 import { IoSpeedometer } from "react-icons/io5";
 import { PiCityBold, PiTireBold } from "react-icons/pi";
-import { FaCar, FaPlugCircleBolt, FaRoad, FaRoadBridge, FaRulerHorizontal, FaRulerVertical } from "react-icons/fa6";
+import {
+  FaCar,
+  FaPlugCircleBolt,
+  FaRoad,
+  FaRoadBridge,
+  FaRulerHorizontal,
+  FaRulerVertical,
+} from "react-icons/fa6";
 import { FaCarBattery } from "react-icons/fa6";
 import { colors } from "@/utils/colors";
-import { RiCustomSize, RiExpandWidthLine, RiTimerFlashFill } from "react-icons/ri";
+import {
+  RiCustomSize,
+  RiExpandWidthLine,
+  RiTimerFlashFill,
+} from "react-icons/ri";
 import { BsGearFill } from "react-icons/bs";
 import { MdAirlineSeatReclineNormal } from "react-icons/md";
+import { useState } from "react";
+
 interface CarSpecsProps {
   car: EVCars;
 }
 
 export function CarSpecs({ car }: CarSpecsProps) {
+  const [showAllSafety, setShowAllSafety] = useState(false);
+
+  // Helper function to handle null/undefined values
+  const formatValue = (
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    value: any,
+    unit: string = "",
+    fallback: string = "Mövcud deyil"
+  ) => {
+    if (value === null || value === undefined || value === "" || value === 0) {
+      return fallback;
+    }
+    return `${value}${unit}`;
+  };
+
   const specSections = [
     {
       title: "Performans",
@@ -23,27 +59,27 @@ export function CarSpecs({ car }: CarSpecsProps) {
       specs: [
         {
           label: "Yürüş məsafəsi",
-          value: `${car.range_km} kilometr`,
+          value: formatValue(car.range_km, " kilometr"),
           icon: <FaRoadBridge color={colors.primary.blue} />,
         },
         {
           label: "0-100 km/saat",
-          value: `${car.acceleration} sn`,
+          value: formatValue(car.acceleration, " sn"),
           icon: <IoCarSport color={colors.primary.blue} />,
         },
         {
           label: "Maksimal sürət",
-          value: `${car.speed_km} km/saat`,
+          value: formatValue(car.speed_km, " km/saat"),
           icon: <IoSpeedometer color={colors.primary.blue} />,
         },
         {
           label: "Mühərrik gücü",
-          value: `${car.engine_power} a.g`,
+          value: formatValue(car.engine.engine_power, " a.g"),
           icon: <GiPowerLightning color={colors.primary.blue} />,
         },
         {
           label: "Mühərrik tork",
-          value: `${car.torque} n/metr`,
+          value: formatValue(car.torque, " n/metr"),
           icon: <BsGearFill color={colors.primary.blue} />,
         },
       ],
@@ -54,28 +90,30 @@ export function CarSpecs({ car }: CarSpecsProps) {
       specs: [
         {
           label: "Batareya tutumu",
-          value: `${car.battery_capacity} kWh`,
+          value: formatValue(car.battery_capacity, " kWh"),
           icon: <FaCarBattery color={colors.primary.blue} />,
         },
         {
           label: "Şarj müddəti",
-          value: `${car.charging_time}h (DC Fast)`,
+          value: formatValue(car.charging_time, "h (DC Fast)"),
           icon: <RiTimerFlashFill color={colors.primary.blue} />,
         },
         {
           label: "Şarj portları",
-          value: car.charging_ports.join(", "),
+          value:
+            car.charging_ports && car.charging_ports.length > 0
+              ? car.charging_ports.join(", ")
+              : "Mövcud deyil",
           icon: <FaPlugCircleBolt color={colors.primary.blue} />,
         },
-
         {
           label: "Şəhəriçi sərfiyyat",
-          value: `${car.efficiency_city} 100`,
+          value: formatValue(car.efficiency_city, " 100"),
           icon: <PiCityBold color={colors.primary.blue} />,
         },
         {
           label: "Magistral sərfiyyatı",
-          value: `${car.efficiency_highway} MPGe`,
+          value: formatValue(car.efficiency_highway, " MPGe"),
           icon: <FaRoad color={colors.primary.blue} />,
         },
       ],
@@ -86,27 +124,29 @@ export function CarSpecs({ car }: CarSpecsProps) {
       specs: [
         {
           label: "Buraxılış ili",
-          value: car.year_model.toString(),
+          value: car.year_model ? car.year_model.toString() : "Mövcud deyil",
           icon: <IoCalendarNumber color={colors.primary.blue} />,
         },
         {
           label: "Ban növü",
-          value: car.body_type,
+          value: car.body_type || "Mövcud deyil",
           icon: <FaCar color={colors.primary.blue} />,
         },
         {
           label: "Oturacaq sayı",
-          value: `${car.seating_capacity} oturacaq`,
+          value: formatValue(car.seating_capacity, " oturacaq"),
           icon: <MdAirlineSeatReclineNormal color={colors.primary.blue} />,
         },
         {
           label: "Batareya növü",
-          value: car.battery_type,
+          value: car.battery_type || "Mövcud deyil",
           icon: <FaCarBattery color={colors.primary.blue} />,
         },
         {
           label: "Çəki",
-          value: `${car?.dimensions?.curb_weight?.toLocaleString()} kq`,
+          value: car?.dimensions?.curb_weight
+            ? `${car.dimensions.curb_weight.toLocaleString()} kq`
+            : "Mövcud deyil",
           icon: <GiWeight color={colors.primary.blue} />,
         },
       ],
@@ -117,32 +157,38 @@ export function CarSpecs({ car }: CarSpecsProps) {
       specs: [
         {
           label: "Uzunluq",
-          value: `${car.dimensions.length}`,
+          value: car.dimensions?.length || "Mövcud deyil",
           icon: <FaRulerHorizontal color={colors.primary.blue} />,
         },
         {
           label: "En",
-          value: `${car.dimensions.width}`,
+          value: car.dimensions?.width || "Mövcud deyil",
           icon: <RiExpandWidthLine color={colors.primary.blue} />,
         },
         {
           label: "Hündürlük",
-          value: `${car.dimensions.height}`,
+          value: car.dimensions?.height || "Mövcud deyil",
           icon: <FaRulerVertical color={colors.primary.blue} />,
         },
         {
           label: "Təkər bazası",
-          value: `${car.dimensions.wheelbase}`,
+          value: car.dimensions?.wheelbase || "Mövcud deyil",
           icon: <PiTireBold color={colors.primary.blue} />,
         },
         {
           label: "Bagaj həcmi",
-          value: `${car.dimensions.trunk_size}`,
+          value: car.dimensions?.trunk_size || "Mövcud deyil",
           icon: <RiCustomSize color={colors.primary.blue} />,
         },
       ],
     },
   ];
+
+  // Display logic for safety features
+  const visibleSafetyFeatures = showAllSafety
+    ? car.safety
+    : car.safety?.slice(0, 3);
+  const hasMoreSafetyFeatures = car.safety && car.safety.length > 3;
 
   return (
     <div className="space-y-6">
@@ -185,45 +231,44 @@ export function CarSpecs({ car }: CarSpecsProps) {
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
-            <div className="flex items-center gap-2">
-              <span className="text-gray-600">Təhlükəsizlik</span>
-              {/*  <div className="flex">
-                {[...Array(5)].map((_, i) => (
-                  <span
-                    key={i}
-                    className={
-                      i < car.safety.rating
-                        ? "text-yellow-400"
-                        : "text-gray-300"
-                    }
+            {/* Safety Features Section */}
+            <div>
+              <h4 className="font-semibold mb-3 text-gray-800">
+                Təhlükəsizlik xüsusiyyətləri:
+              </h4>
+              <div className="space-y-2">
+                {visibleSafetyFeatures?.map((safety, index) => (
+                  <div
+                    key={index}
+                    className="flex items-start gap-3 p-2 rounded-lg bg-gray-50 hover:bg-gray-100 transition-colors"
                   >
-                    ⭐
-                  </span>
+                    <div className="w-2 h-2 bg-blue-600 rounded-full mt-2 flex-shrink-0"></div>
+                    <span className="text-gray-700 text-sm leading-relaxed">
+                      {safety}
+                    </span>
+                  </div>
                 ))}
-              </div> */}
-              {/*   <span className="font-semibold">{car.safety.rating}/5</span> */}
-            </div>
-
-            <div>
-              <h4 className="font-semibold mb-2">Key Features:</h4>
-              <div className="flex flex-wrap gap-2">
-                {/* {car.features.map((feature, index) => (
-                  <Badge key={index} variant="secondary">
-                    {feature}
-                  </Badge>
-                ))} */}
               </div>
-            </div>
 
-            <div>
-              <h4 className="font-semibold mb-2">Safety Features:</h4>
-              <div className="flex flex-wrap gap-2">
-                {/* {car.safety.features.map((feature, index) => (
-                  <Badge key={index} variant="outline">
-                    {feature}
-                  </Badge>
-                ))} */}
-              </div>
+              {/* Show More/Less Button */}
+              {hasMoreSafetyFeatures && (
+                <button
+                  onClick={() => setShowAllSafety(!showAllSafety)}
+                  className="mt-3 flex items-center gap-2 text-blue-600 hover:text-blue-800 text-sm font-medium transition-colors cursor-pointer"
+                >
+                  {showAllSafety ? (
+                    <>
+                      <ChevronUp className="h-4 w-4" />
+                      Daha az göstər
+                    </>
+                  ) : (
+                    <>
+                      <ChevronDown className="h-4 w-4 " />
+                      Hamısını göstər ({car.safety?.length - 3} daha)
+                    </>
+                  )}
+                </button>
+              )}
             </div>
           </div>
         </CardContent>

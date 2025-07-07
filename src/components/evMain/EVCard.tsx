@@ -1,11 +1,12 @@
 "use client";
-
 import Image from "next/image";
 import { MapPin, Battery, Clock, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { EVCars } from "@/app/types";
 import { getAvailabilityLabel } from "@/utils/getAvailabilityLabel";
+import { formatPrice } from "@/utils/formatPrice";
+import { formatValue } from "@/utils/formatValue";
 
 interface EVCarCardProps {
   car: EVCars;
@@ -20,7 +21,7 @@ export function EVCarCard({ car, onViewDetails, onCompare }: EVCarCardProps) {
         <div className="relative p-1">
           <Image
             src={car.mainImage || "/placeholder.svg"}
-            alt={`${car.brand} ${car.model}`}
+            alt={`${car.brand || "Avtomobil"} ${car.model || ""}`}
             width={340}
             height={260}
             className="w-full h-40 object-cover group-hover:scale-105 transition-transform duration-300"
@@ -34,31 +35,35 @@ export function EVCarCard({ car, onViewDetails, onCompare }: EVCarCardProps) {
         <div className="space-y-3">
           <div>
             <h3 className="text-lg font-bold text-gray-900">
-              {car.brand} {car.model}
+              {car.brand || "Naməlum marka"} {car.model || ""}
             </h3>
             <p className="text-xl font-bold text-blue-600">
-              ₼{car?.price?.toLocaleString()}
+              {formatPrice(car?.price)}
             </p>
           </div>
-
           <div className="grid grid-cols-2 gap-3">
-            <div className="flex items-center  space-x-2">
+            <div className="flex items-center space-x-2">
               <div>
                 <div className="flex gap-1 items-center">
                   <MapPin className="h-4 w-4 text-gray-500" />
                   <p className="text-sm text-gray-500">Məsafə</p>
                 </div>
-                <p className="font-semibold ml-1">{car.range_km} km</p>
+                <p className="font-semibold ml-1">
+                  {formatValue(car.range_km, " km")}
+                </p>
               </div>
             </div>
             <div className="flex items-center space-x-2">
               <div>
                 <div className="flex gap-1 items-center">
                   <Battery className="h-4 w-4 text-gray-500" />
-
-                  <p className="text-sm text-gray-500">Mühərrik gücü</p>
+                  <p className="text-sm text-gray-500">Mühərrik</p>
                 </div>
-                <p className="font-semibold">{car.engine_power} a.g</p>
+                <p className="font-semibold">
+                  {car.engine?.engine_type
+                    ? `${car.engine.engine_type}`
+                    : "Mövcud deyil"}
+                </p>
               </div>
             </div>
             <div className="flex items-center space-x-2">
@@ -67,7 +72,9 @@ export function EVCarCard({ car, onViewDetails, onCompare }: EVCarCardProps) {
                   <Clock className="h-4 w-4 text-gray-500" />
                   <p className="text-sm text-gray-500">Şarj vaxtı</p>
                 </div>
-                <p className="font-semibold">{car.charging_time} saat</p>
+                <p className="font-semibold">
+                  {formatValue(car.charging_time, " saat")}
+                </p>
               </div>
             </div>
             <div className="flex items-center space-x-2">
@@ -76,14 +83,15 @@ export function EVCarCard({ car, onViewDetails, onCompare }: EVCarCardProps) {
                   <Zap className="h-4 w-4 text-gray-500" />
                   <p className="text-sm text-gray-500">0-100 km/saat</p>
                 </div>
-                <p className="font-semibold">{car.acceleration} sn</p>
+                <p className="font-semibold">
+                  {formatValue(car.acceleration, " sn")}
+                </p>
               </div>
             </div>
           </div>
-
           <div className="flex gap-2 pt-2">
             <Button
-              className={`flex-1 bg-[#1d242a]  cursor-pointer hover:bg-slate-700`}
+              className={`flex-1 bg-[#1d242a] cursor-pointer hover:bg-slate-700`}
               onClick={() => onViewDetails?.(car)}
             >
               Ətraflı

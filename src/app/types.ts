@@ -9,6 +9,11 @@ export interface CarDimensions {
   curb_weight: number | null;
   trunk_size: number | null;
 }
+export interface Engine {
+  engine_type: "Plug-in Hibrid" | "Tam Elektrik";
+  engine_power: number | null;
+  engine_displacement: number | null;
+}
 
 export interface EVCars {
   brand: string | null;
@@ -27,7 +32,7 @@ export interface EVCars {
   brand_image: string | null | StaticImageData;
   mainImage: string | StaticImport;
   warranty: never;
-  engine_power: number | null;
+  engine: Engine;
   torque: number | null;
   charging_ports: string[];
   efficiency_city: number;
@@ -35,8 +40,9 @@ export interface EVCars {
   year_model: string;
   carousel_images: string[];
   body_type: "Sedan" | "SUV" | "Minivan" | "Sport";
-  seating_capacity:number
-  dimensions:CarDimensions
+  seating_capacity: number;
+  dimensions: CarDimensions;
+  safety: string[];
   id: string | null | number; // UUIDs are typically represented as strings in TypeScript
 }
 

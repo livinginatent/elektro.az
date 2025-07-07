@@ -88,9 +88,9 @@ export function CarDetailPage({
                     </div>
                     <div className="text-center p-4 bg-purple-50 rounded-sm">
                       <div className="text-2xl font-bold text-purple-600">
-                        {car.engine_power} a.g
+                        {car.engine.engine_power} a.g
                       </div>
-                      <div className="text-sm text-gray-600">Mühərrik</div>
+                      <div className="text-sm text-gray-600">Mühərrik gücü</div>
                     </div>
                     <div className="text-center p-4 bg-orange-50 rounded-sm">
                       <div className="text-2xl font-bold text-orange-600">

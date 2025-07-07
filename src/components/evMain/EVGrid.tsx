@@ -47,7 +47,7 @@ export function EVGrid({
         case "most_range":
           return (b.range_km || 0) - (a.range_km || 0);
         case "most_power":
-          return (b.engine_power || 0) - (a.engine_power || 0);
+          return (b.engine.engine_power || 0) - (a.engine.engine_power || 0);
 
         default:
           return 0;
