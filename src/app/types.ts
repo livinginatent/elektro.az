@@ -4,7 +4,10 @@ import type React from "react";
 export interface CarDimensions {
   length: number | null;
   width: number | null;
+  height: number | null;
+  wheelbase: number | null;
   curb_weight: number | null;
+  trunk_size: number | null;
 }
 
 export interface EVCars {

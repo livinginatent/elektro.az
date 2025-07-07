@@ -1,15 +1,16 @@
 import { Battery, Zap, Car, Shield, Ruler } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { EVCars } from "@/app/types";
-import { GiPowerLightning } from "react-icons/gi";
-import { IoCarSport } from "react-icons/io5";
+import { GiPowerLightning, GiWeight } from "react-icons/gi";
+import { IoCalendarNumber, IoCarSport } from "react-icons/io5";
 import { IoSpeedometer } from "react-icons/io5";
-import { PiCityBold } from "react-icons/pi";
-import { FaPlugCircleBolt, FaRoad, FaRoadBridge } from "react-icons/fa6";
+import { PiCityBold, PiTireBold } from "react-icons/pi";
+import { FaCar, FaPlugCircleBolt, FaRoad, FaRoadBridge, FaRulerHorizontal, FaRulerVertical } from "react-icons/fa6";
 import { FaCarBattery } from "react-icons/fa6";
 import { colors } from "@/utils/colors";
-import { RiTimerFlashFill } from "react-icons/ri";
+import { RiCustomSize, RiExpandWidthLine, RiTimerFlashFill } from "react-icons/ri";
 import { BsGearFill } from "react-icons/bs";
+import { MdAirlineSeatReclineNormal } from "react-icons/md";
 interface CarSpecsProps {
   car: EVCars;
 }
@@ -31,7 +32,7 @@ export function CarSpecs({ car }: CarSpecsProps) {
           icon: <IoCarSport color={colors.primary.blue} />,
         },
         {
-          label: "Maksima sürət",
+          label: "Maksimal sürət",
           value: `${car.speed_km} km/saat`,
           icon: <IoSpeedometer color={colors.primary.blue} />,
         },
@@ -80,37 +81,66 @@ export function CarSpecs({ car }: CarSpecsProps) {
       ],
     },
     {
-      title: "Vehicle Details",
+      title: "Avtomobil haqqında",
       icon: Car,
       specs: [
-        { label: "Year", value: car.year_model.toString(), icon: "📅" },
-        { label: "Body Type", value: car.body_type, icon: "🚗" },
         {
-          label: "Seating",
-          value: `${car.seating_capacity} seats`,
-          icon: "👥",
+          label: "Buraxılış ili",
+          value: car.year_model.toString(),
+          icon: <IoCalendarNumber color={colors.primary.blue} />,
         },
-        { label: "Drivetrain", value: car.battery_type, icon: "⚙️" },
         {
-          label: "Curb Weight",
+          label: "Ban növü",
+          value: car.body_type,
+          icon: <FaCar color={colors.primary.blue} />,
+        },
+        {
+          label: "Oturacaq sayı",
+          value: `${car.seating_capacity} oturacaq`,
+          icon: <MdAirlineSeatReclineNormal color={colors.primary.blue} />,
+        },
+        {
+          label: "Batareya növü",
+          value: car.battery_type,
+          icon: <FaCarBattery color={colors.primary.blue} />,
+        },
+        {
+          label: "Çəki",
           value: `${car?.dimensions?.curb_weight?.toLocaleString()} kq`,
-          icon: "⚖️",
+          icon: <GiWeight color={colors.primary.blue} />,
         },
       ],
     },
     {
-      title: "Dimensions",
+      title: "Parametrlər",
       icon: Ruler,
-      /* specs: [
-        { label: "Length", value: `${car.dimensions.length}"`, icon: "📏" },
-        { label: "Width", value: `${car.dimensions.width}"`, icon: "📐" },
-        { label: "Height", value: `${car.dimensions.height}"`, icon: "📊" },
+      specs: [
         {
-          label: "Wheelbase",
-          value: `${car.dimensions.wheelbase}"`,
-          icon: "🔄",
+          label: "Uzunluq",
+          value: `${car.dimensions.length}`,
+          icon: <FaRulerHorizontal color={colors.primary.blue} />,
         },
-      ], */
+        {
+          label: "En",
+          value: `${car.dimensions.width}`,
+          icon: <RiExpandWidthLine color={colors.primary.blue} />,
+        },
+        {
+          label: "Hündürlük",
+          value: `${car.dimensions.height}`,
+          icon: <FaRulerVertical color={colors.primary.blue} />,
+        },
+        {
+          label: "Təkər bazası",
+          value: `${car.dimensions.wheelbase}`,
+          icon: <PiTireBold color={colors.primary.blue} />,
+        },
+        {
+          label: "Bagaj həcmi",
+          value: `${car.dimensions.trunk_size}`,
+          icon: <RiCustomSize color={colors.primary.blue} />,
+        },
+      ],
     },
   ];
 
@@ -150,13 +180,13 @@ export function CarSpecs({ car }: CarSpecsProps) {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Shield className="h-5 w-5 text-blue-600" />
-            Safety & Features
+            Təhlükəsizlik & Digər
           </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
             <div className="flex items-center gap-2">
-              <span className="text-gray-600">Safety Rating:</span>
+              <span className="text-gray-600">Təhlükəsizlik</span>
               {/*  <div className="flex">
                 {[...Array(5)].map((_, i) => (
                   <span
