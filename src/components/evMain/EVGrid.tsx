@@ -10,25 +10,16 @@ interface EVGridProps {
   cars: EVCars[] | null;
   title?: string;
   showViewAll?: boolean;
-  onViewAll?: () => void;
-  onViewDetails?: (car: EVCars) => void;
-  onCompare?: (car: EVCars) => void;
 }
 type FilterType = "cheapest" | "fastest" | "most_range" | "most_power" | null;
 export function EVGrid({
   cars,
   title = "Seçilmiş Elektrikli Avtomobillər",
   showViewAll = true,
-
-  onCompare,
 }: EVGridProps) {
   const router = useRouter();
   const [showAll, setShowAll] = useState<boolean>(false);
   const [activeFilter, setActiveFilter] = useState<FilterType>(null);
-  const handleViewDetails = (car: EVCars) => {
-    // Navigate to the car's detail page using the car's ID
-    router.push(`/${car.id}`);
-  };
   const handleViewAll = () => {
     setShowAll(!showAll);
   };
@@ -59,10 +50,10 @@ export function EVGrid({
   const carsToDisplay = showAll ? sortedCars : sortedCars?.slice(0, 4);
 
   const sortFilters = [
-    { key: "cheapest" as FilterType, label: "Ən ucuz",  },
-    { key: "fastest" as FilterType, label: "Ən sürətli",  },
-    { key: "most_range" as FilterType, label: "Ən uzun məsafə",  },
-    { key: "most_power" as FilterType, label: "Ən güclü",  },
+    { key: "cheapest" as FilterType, label: "Ən ucuz" },
+    { key: "fastest" as FilterType, label: "Ən sürətli" },
+    { key: "most_range" as FilterType, label: "Ən uzun məsafə" },
+    { key: "most_power" as FilterType, label: "Ən güclü" },
   ];
   return (
     <section className=" px-8 pb-16">
@@ -71,7 +62,11 @@ export function EVGrid({
           {title}
         </h2>
         {showViewAll && (
-          <Button className="mt-4 cursor-pointer" variant="outline" onClick={handleViewAll}>
+          <Button
+            className="mt-4 cursor-pointer"
+            variant="outline"
+            onClick={handleViewAll}
+          >
             {showAll ? "Daha az" : "Hamısını göstər"}
           </Button>
         )}
@@ -106,8 +101,7 @@ export function EVGrid({
           <EVCarCard
             key={car.id}
             car={car}
-            onViewDetails={handleViewDetails}
-            onCompare={onCompare}
+            onViewDetails={() => router.push(`/${car.id}`)}
           />
         ))}
       </div>

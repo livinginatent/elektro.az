@@ -13,6 +13,7 @@ import { Header } from "@/layout/Header";
 import { Footer } from "@/layout/Footer";
 import { DealershipModal } from "../modals/DealershipModal";
 import { ShareModal } from "../modals/ShareModal";
+import { useCompareStore } from "@/lib/compareStore";
 
 interface CarDetailPageProps {
   car: EVCars;
@@ -24,10 +25,13 @@ interface CarDetailPageProps {
 export function CarDetailPage({
   car,
   onBack,
-  onCalculateRange,
+  
 }: CarDetailPageProps) {
   const [isDealershipModalOpen, setIsDealershipModalOpen] = useState(false);
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
+  const { addCar, removeCar, isSelected, selectedCars } = useCompareStore();
+  const selected = isSelected(car.id);
+  const disabled = !selected && selectedCars.length >= 4;
 
   const handleContactDealer = () => {
     setIsDealershipModalOpen(true);
@@ -136,12 +140,15 @@ export function CarDetailPage({
                 </div>
                 <div className="flex w-full flex-col md:flex-row lg:flex-row  gap-3">
                   <Button
-                    variant="outline"
-                    className="flex-1 bg-transparent cursor-pointer rounded-sm"
-                    onClick={onCalculateRange}
+                    variant={selected ? "default" : "outline"}
+                    className={`flex-1 ${
+                      selected ? "bg-blue-600 text-white" : "bg-transparent"
+                    } cursor-pointer rounded-sm`}
+                    onClick={() => (selected ? removeCar(car.id) : addCar(car))}
+                    disabled={disabled}
                   >
                     <ChartColumnStacked className="h-4 w-4 mr-2" />
-                    Müqayisə et
+                    {selected ? "Seçildi" : "Müqayisə et"}
                   </Button>
                   <Button
                     onClick={handleShare}

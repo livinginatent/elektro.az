@@ -7,14 +7,17 @@ import { EVCars } from "@/app/types";
 import { getAvailabilityLabel } from "@/utils/getAvailabilityLabel";
 import { formatPrice } from "@/utils/formatPrice";
 import { formatValue } from "@/utils/formatValue";
+import { useCompareStore } from "@/lib/compareStore";
 
 interface EVCarCardProps {
   car: EVCars;
   onViewDetails?: (car: EVCars) => void;
-  onCompare?: (car: EVCars) => void;
 }
 
-export function EVCarCard({ car, onViewDetails, onCompare }: EVCarCardProps) {
+export function EVCarCard({ car, onViewDetails }: EVCarCardProps) {
+  const { addCar, removeCar, isSelected, selectedCars } = useCompareStore();
+  const selected = isSelected(car.id);
+  const disabled = !selected && selectedCars.length >= 4;
   return (
     <Card className="group hover:shadow-xl transition-all duration-300 border-0 shadow-lg overflow-hidden max-w-md">
       <CardHeader className="p-0">
@@ -97,11 +100,16 @@ export function EVCarCard({ car, onViewDetails, onCompare }: EVCarCardProps) {
               Ətraflı
             </Button>
             <Button
-              variant="outline"
-              className="flex-1 bg-[#caf0f8] hover:bg-blue-200 cursor-pointer"
-              onClick={() => onCompare?.(car)}
+              variant={selected ? "default" : "outline"}
+              className={`flex-1 ${
+                selected
+                  ? "bg-blue-600 text-white"
+                  : "bg-[#caf0f8] hover:bg-blue-200"
+              } cursor-pointer`}
+              onClick={() => (selected ? removeCar(car.id) : addCar(car))}
+              disabled={disabled}
             >
-              Müqayisə et
+              {selected ? "Seçildi" : "Müqayisə et"}
             </Button>
           </div>
         </div>

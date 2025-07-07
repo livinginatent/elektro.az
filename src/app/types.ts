@@ -47,7 +47,7 @@ export interface EVCars {
   seating_capacity: number;
   dimensions: CarDimensions;
   safety: string[];
-  id: string | null | number; 
+  id: string | null | number;
   dealership: Dealership;
 }
 
@@ -58,3 +58,18 @@ export interface QuickTool {
   buttonText: string;
   href: string;
 }
+
+export const COMPARE_CATEGORIES = [
+  "brand",
+  "model",
+  "price",
+  "range_km",
+  "acceleration",
+  "engine.engine_power",
+  "engine.engine_type",
+  "charging_time",
+  "warranty",
+  "availability",
+] as const;
+
+export type CompareCategory = (typeof COMPARE_CATEGORIES)[number];
