@@ -108,7 +108,7 @@ export default function ComparePage() {
   const { selectedCars, removeCar, clear } = useCompareStore();
   const router = useRouter();
 
-  /* if (selectedCars.length < 2) {
+  if (selectedCars.length < 2) {
     return (
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -138,7 +138,7 @@ export default function ComparePage() {
         </motion.div>
       </motion.div>
     );
-  } */
+  }
 
   const bestValues = COMPARE_CATEGORIES.reduce((acc, category) => {
     acc[category] = getBestValue(selectedCars, category);
@@ -231,7 +231,6 @@ export default function ComparePage() {
                         <div className="">Şəkil mövcud deyil</div>
                       )}
                     </div>
-
                     <h3 className="font-bold text-lg text-slate-800 mb-1">
                       {car.brand}
                     </h3>
@@ -246,6 +245,14 @@ export default function ComparePage() {
                       </Badge>
                       <span className="text-sm text-slate-500">Müqayisədə</span>
                     </div>
+                    <Button
+                      onClick={() => router.push(`/${car.id}`)}
+                      variant={"outline"}
+                      className="text-xs mt-4 cursor-pointer"
+                      size={"sm"}
+                    >
+                      Avtomobilə keçid
+                    </Button>
                   </CardContent>
                 </Card>
               </motion.div>

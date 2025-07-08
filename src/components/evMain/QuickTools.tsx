@@ -1,7 +1,8 @@
-import { Calculator, MapPin, DollarSign } from "lucide-react";
+import { Calculator, MapPin } from "lucide-react";
 import { Card } from "../ui/card";
 import { Button } from "../ui/button";
 import { QuickTool } from "@/app/types";
+import Manat from "@/app/compare/manat";
 
 interface QuickToolsProps {
   tools?: QuickTool[];
@@ -26,7 +27,7 @@ const defaultTools: QuickTool[] = [
     href: "/charging",
   },
   {
-    icon: DollarSign,
+    icon: Manat,
     title: "Maliyyət kalkulyatoru",
     description:
       "Elektromobil sahiblik xərclərini ənənəvi avtomobillərlə müqayisə edin.",

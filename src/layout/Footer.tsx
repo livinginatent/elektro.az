@@ -19,27 +19,26 @@ interface FooterProps {
 
 const defaultSections: FooterSection[] = [
   {
-    title: "Explore",
+    title: "Kəşf et",
     links: [
-      { label: "Browse EVs", href: "/cars" },
-      { label: "Compare", href: "/compare" },
-      { label: "Reviews", href: "/reviews" },
+      { label: "Avtomobillər", href: "/cars" },
+      { label: "Elektrik Doldurma məntəqələri", href: "/" },
+      { label: "İncələmələr", href: "/reviews" },
     ],
   },
   {
-    title: "Tools",
+    title: "Alətlər",
     links: [
-      { label: "Range Calculator", href: "/calculator" },
-      { label: "Charging Stations", href: "/charging" },
-      { label: "Cost Calculator", href: "/cost" },
+      { label: "Yürüş məsafəsi kalkulyatoru", href: "/calculator" },
+      { label: "Maliyyət kalkulyatoru", href: "/cost" },
     ],
   },
   {
-    title: "Resources",
+    title: "Oxu",
     links: [
-      { label: "News", href: "/news" },
+      { label: "Xəbərlər", href: "/news" },
       { label: "Blog", href: "/blog" },
-      { label: "Guides", href: "/guides" },
+      { label: "Necə etməli", href: "/guides" },
     ],
   },
 ];
@@ -47,7 +46,7 @@ const defaultSections: FooterSection[] = [
 export function Footer({
   sections = defaultSections,
   companyName = "EVHub",
-  description = "Your complete electric vehicle platform for the future of transportation.",
+  description = "Elektrik və hibrid avtomobillərə aid hərşey bu platformada.",
 }: FooterProps) {
   return (
     <footer className="bg-gray-900 text-white">
@@ -80,7 +79,7 @@ export function Footer({
         </div>
 
         <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-          <p>&copy; 2024 {companyName}. All rights reserved.</p>
+          <p>&copy; 2025 {companyName}. Bütün hüquqlar qorunur.</p>
         </div>
       </div>
     </footer>
