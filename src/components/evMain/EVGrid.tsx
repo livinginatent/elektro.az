@@ -13,11 +13,7 @@ interface EVGridProps {
   page: "Home" | "Electric Vehicles";
 }
 type FilterType = "cheapest" | "fastest" | "most_range" | "most_power" | null;
-export function EVGrid({
-  cars,
-  showViewAll = true,
-  page,
-}: EVGridProps) {
+export function EVGrid({ cars, showViewAll = true, page }: EVGridProps) {
   const router = useRouter();
   const [showAll, setShowAll] = useState<boolean>(false);
   const [activeFilter, setActiveFilter] = useState<FilterType>(null);
@@ -59,9 +55,10 @@ export function EVGrid({
     { key: "most_range" as FilterType, label: "Ən uzun məsafə" },
     { key: "most_power" as FilterType, label: "Ən güclü" },
   ];
-  const title = page === 'Home' ? "Seçilmiş avtomobillər" : "Bütün avtomobillər"
+  const title =
+    page === "Home" ? "Seçilmiş avtomobillər" : "Bütün avtomobillər";
   return (
-    <section className="pb-16">
+    <section className=" px-8 pb-16">
       {" "}
       <div className="flex flex-col items-center justify-between mb-8 md:flex-row lg:flex-row">
         <h2 className="text-base md:text-2xl lg:text-2xl text-center font-bold text-gray-900">
