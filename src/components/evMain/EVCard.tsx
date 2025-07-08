@@ -40,7 +40,7 @@ export function EVCarCard({ car, onViewDetails }: EVCarCardProps) {
             <h3 className="text-lg font-bold text-gray-900">
               {car.brand || "Naməlum marka"} {car.model || ""}
             </h3>
-            <p className="text-xl font-bold text-blue-600">
+            <p className="text-xl font-bold text-[#023e8a]">
               {formatPrice(car?.price)}
             </p>
           </div>
@@ -103,7 +103,7 @@ export function EVCarCard({ car, onViewDetails }: EVCarCardProps) {
               variant={selected ? "default" : "outline"}
               className={`flex-1 ${
                 selected
-                  ? "bg-blue-600 text-white"
+                  ? "bg-[#023e8a] text-white"
                   : "bg-[#caf0f8] hover:bg-blue-200"
               } cursor-pointer`}
               onClick={() => (selected ? removeCar(car.id) : addCar(car))}

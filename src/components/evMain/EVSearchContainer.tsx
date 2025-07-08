@@ -42,7 +42,7 @@ export function EVSearchContainer({ initialCars }: Props) {
             {selectedCars.map((car) => (
               <div
                 key={car.id}
-                className="flex items-center bg-blue-50 rounded px-2 py-1 mr-2"
+                className="flex items-center bg-blue-200 rounded px-2 py-1 mr-2"
               >
                 <span className="font-semibold text-sm mr-2">
                   {car.brand} {car.model}
@@ -57,7 +57,7 @@ export function EVSearchContainer({ initialCars }: Props) {
             ))}
           </div>
           <button
-            className={`px-6 py-2 rounded bg-blue-600 text-white font-bold transition-all ${
+            className={`px-6 py-2 rounded bg-[#023e8a] cursor-pointer text-white font-bold transition-all ${
               selectedCars.length > 1
                 ? "hover:bg-blue-700"
                 : "opacity-50 cursor-not-allowed"
@@ -71,7 +71,7 @@ export function EVSearchContainer({ initialCars }: Props) {
           </button>
           <button
             onClick={clear}
-            className="ml-4 text-gray-500 hover:text-gray-700 text-sm"
+            className="ml-4 px-6 bg-[#caf0f8] py-2 text-gray-500 hover:text-gray-700 cursor-pointer"
           >
             Hamısını sil
           </button>

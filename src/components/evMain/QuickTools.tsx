@@ -50,7 +50,7 @@ export function QuickTools({
             key={index}
             className="text-center p-6 hover:shadow-lg transition-shadow flex flex-col h-full"
           >
-            <tool.icon className="h-12 w-12 text-blue-600 mx-auto mb-4" />
+            <tool.icon className="h-12 w-12 text-[#023e8a] mx-auto mb-4" />
             <h3 className="text-xl font-bold mb-2">{tool.title}</h3>
             <p className="text-gray-600 mb-4 flex-grow">{tool.description}</p>
             <Button className="cursor-pointer mt-auto" variant="outline">

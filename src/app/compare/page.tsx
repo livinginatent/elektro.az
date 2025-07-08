@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { useCompareStore } from "@/lib/compareStore";
@@ -10,7 +11,6 @@ import {
   Zap,
   Clock,
   Shield,
-  DollarSign,
   Gauge,
   Car,
   Battery,
@@ -19,25 +19,28 @@ import {
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import Image from "next/image";
+import Manat from "./manat";
 
+// Category labels with units
 const CATEGORY_LABELS: Record<string, string> = {
   brand: "Marka",
   model: "Model",
   price: "Qiymət",
-  range_km: "Məsafə (km)",
-  acceleration: "0-100 km/saat (s)",
-  "engine.engine_power": "Mühərrik gücü (a.g)",
+  range_km: "Sürüş məsafəsi",
+  acceleration: "0-100 km/saat",
+  "engine.engine_power": "Mühərrik gücü",
   "engine.engine_type": "Mühərrik tipi",
   charging_time: "Şarj vaxtı",
   warranty: "Zəmanət",
   availability: "Əlçatanlıq",
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// Category icons
 const CATEGORY_ICONS: Record<string, any> = {
   brand: Car,
   model: Car,
-  price: DollarSign,
+  price: Manat,
   range_km: Zap,
   acceleration: Gauge,
   "engine.engine_power": Battery,
@@ -47,7 +50,18 @@ const CATEGORY_ICONS: Record<string, any> = {
   availability: Award,
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// Units for each category
+const CATEGORY_UNITS: Record<string, string> = {
+  price: "₼", // Manat currency
+  range_km: "km",
+  acceleration: "san",
+  "engine.engine_power": "a.g",
+  charging_time: "saat",
+  warranty: "",
+  availability: "", // No unit
+};
+
+// Get value for a car and category
 function getCarValue(car: any, category: string) {
   if (category.includes(".")) {
     const [parent, child] = category.split(".");
@@ -56,16 +70,22 @@ function getCarValue(car: any, category: string) {
   return car[category] ?? "-";
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function getBestValue(cars: any[], category: string) {
+// Get value with unit for a specific category
+function getCarValueWithUnit(car: any, category: string) {
+  const value = getCarValue(car, category);
+  const unit = CATEGORY_UNITS[category] || ""; // Default to empty if no unit is defined
+  return `${value} ${unit}`;
+}
+
+// Get the best value for comparison
+const getBestValue = (cars: any[], category: string) => {
   const values = cars.map((car) => getCarValue(car, category));
 
   if (
     category === "price" ||
     category === "acceleration" ||
-    category === "charging_time"
+    category === "charging_time" // Now included as a regular category
   ) {
-    // Lower is better for these categories
     const numericValues = values
       .map((v) => Number.parseFloat(v))
       .filter((v) => !isNaN(v));
@@ -73,7 +93,6 @@ function getBestValue(cars: any[], category: string) {
       ? Math.min(...numericValues).toString()
       : null;
   } else if (category === "range_km" || category === "engine.engine_power") {
-    // Higher is better for these categories
     const numericValues = values
       .map((v) => Number.parseFloat(v))
       .filter((v) => !isNaN(v));
@@ -83,13 +102,13 @@ function getBestValue(cars: any[], category: string) {
   }
 
   return null;
-}
+};
 
 export default function ComparePage() {
   const { selectedCars, removeCar, clear } = useCompareStore();
   const router = useRouter();
 
-  if (selectedCars.length < 2) {
+  /* if (selectedCars.length < 2) {
     return (
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -105,15 +124,13 @@ export default function ComparePage() {
           <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
             <Car className="w-8 h-8 text-blue-600" />
           </div>
-          <h2 className="text-2xl font-bold text-slate-800 mb-2">
-            Müqayisə üçün avtomobil seçin
-          </h2>
+
           <p className="text-slate-600 mb-6">
             Müqayisə üçün ən azı 2 avtomobil seçin.
           </p>
           <Button
             onClick={() => router.push("/")}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition-all duration-200 hover:scale-105"
+            className="px-6 py-2 rounded bg-[#023e8a] cursor-pointer text-white font-bold transition-all rounded-lg  duration-200 hover:scale-105"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
             Geri
@@ -121,13 +138,16 @@ export default function ComparePage() {
         </motion.div>
       </motion.div>
     );
-  }
+  } */
 
   const bestValues = COMPARE_CATEGORIES.reduce((acc, category) => {
     acc[category] = getBestValue(selectedCars, category);
     return acc;
   }, {} as Record<string, string | null>);
-
+  const onClear = () => {
+    clear();
+    router.push("/");
+  };
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -142,10 +162,10 @@ export default function ComparePage() {
           className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4"
         >
           <div>
-            <h1 className="text-3xl font-bold text-slate-800 mb-2">
+            <h1 className="text-3xl font-bold text-slate-800 mb-2 ">
               Avtomobil Müqayisəsi
             </h1>
-            <p className="text-slate-600">
+            <p className="text-slate-600 ">
               {selectedCars.length} avtomobil müqayisə edilir
             </p>
           </div>
@@ -153,17 +173,17 @@ export default function ComparePage() {
             <Button
               variant="outline"
               onClick={() => router.push("/")}
-              className="hover:scale-105 transition-transform duration-200"
+              className="cursor-pointer w-32 h-10"
             >
               <ArrowLeft className="w-4 h-4 mr-2" />
               Geri
             </Button>
             <Button
               variant="destructive"
-              onClick={clear}
-              className="hover:scale-105 transition-transform duration-200"
+              onClick={onClear}
+              className="w-32 h-10 cursor-pointer hover:bg-red-500"
             >
-              <X className="w-4 h-4 mr-2" />
+              <X className="w-4 h-4 mr-2 " />
               Hamısını sil
             </Button>
           </div>
@@ -187,8 +207,8 @@ export default function ComparePage() {
                 whileHover={{ y: -5, scale: 1.02 }}
                 className="relative"
               >
-                <Card className="overflow-hidden border-2 border-slate-200 hover:border-blue-300 transition-all duration-300 shadow-lg hover:shadow-xl">
-                  <CardContent className="p-6">
+                <Card className="overflow-hidden border-2 border-slate-200 hover:border-[#023e8a] transition-all duration-300 shadow-lg hover:shadow-xl">
+                  <CardContent className="p-4">
                     <motion.button
                       whileHover={{ scale: 1.1 }}
                       whileTap={{ scale: 0.9 }}
@@ -198,8 +218,18 @@ export default function ComparePage() {
                       <X className="w-4 h-4 text-red-600" />
                     </motion.button>
 
-                    <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center mb-4">
-                      <Car className="w-6 h-6 text-white" />
+                    <div className=" rounded-xl flex items-center justify-center">
+                      {car.mainImage !== null ? (
+                        <Image
+                          className="mt-1 rounded-md"
+                          src={car.mainImage}
+                          width={300}
+                          height={300}
+                          alt={""}
+                        />
+                      ) : (
+                        <div className="">Şəkil mövcud deyil</div>
+                      )}
                     </div>
 
                     <h3 className="font-bold text-lg text-slate-800 mb-1">
@@ -210,7 +240,7 @@ export default function ComparePage() {
                     <div className="flex items-center justify-between">
                       <Badge
                         variant="secondary"
-                        className="bg-blue-100 text-blue-800"
+                        className="bg-blue-100 text-[#023e8a]"
                       >
                         #{index + 1}
                       </Badge>
@@ -243,7 +273,7 @@ export default function ComparePage() {
                       className="p-6 text-left font-semibold text-slate-700 border-b border-slate-200"
                     >
                       <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
+                        <div className="w-8 h-8 bg-[#023e8a] rounded-lg flex items-center justify-center">
                           <span className="text-white text-sm font-bold">
                             {index + 1}
                           </span>
@@ -284,9 +314,14 @@ export default function ComparePage() {
                           </div>
                         </td>
                         {selectedCars.map((car, carIndex) => {
-                          const value = getCarValue(car, category);
+                          const valueWithUnit = getCarValueWithUnit(
+                            car,
+                            category
+                          );
                           const isBest =
-                            bestValue && value === bestValue && value !== "-";
+                            bestValue &&
+                            valueWithUnit === bestValue &&
+                            valueWithUnit !== "-";
 
                           return (
                             <motion.td
@@ -300,12 +335,8 @@ export default function ComparePage() {
                               className="p-6 border-b border-slate-100"
                             >
                               <div className="flex items-center gap-2">
-                                <span
-                                  className={`font-medium ${
-                                    isBest ? "text-green-700" : "text-slate-700"
-                                  }`}
-                                >
-                                  {value}
+                                <span className="font-medium">
+                                  {valueWithUnit}
                                 </span>
                                 {isBest && (
                                   <motion.div
@@ -317,9 +348,7 @@ export default function ComparePage() {
                                       damping: 30,
                                     }}
                                   >
-                                    <Badge className="bg-green-100 text-green-800 text-xs px-2 py-1">
-                                      Ən yaxşı
-                                    </Badge>
+                                    {/* Add any special indicator for best value */}
                                   </motion.div>
                                 )}
                               </div>
