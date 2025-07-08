@@ -363,7 +363,7 @@ function ElectricVehiclesClient({
               </CardContent>
             </Card>
           </aside>
-          {/* Main content */}x
+          {/* Main content */}
           <main className="flex-1">
             {/* Search Bar */}
             <div className="mb-6">
