@@ -91,7 +91,7 @@ function ElectricVehiclesClient({
   const [selectedMakes, setSelectedMakes] = useState<string[]>([]);
   const [selectedBodyStyles, setSelectedBodyStyles] = useState<string[]>([]);
   const [selectedSeats, setSelectedSeats] = useState<number[]>([]);
-  const [range, setRange] = useState<[number, number]>([0, 500]);
+  const [range, setRange] = useState<[number, number]>([0, 700]);
   const [price, setPrice] = useState<[number, number]>([0, 100000]);
   const [page, setPage] = useState(1);
   const perPage = 8;

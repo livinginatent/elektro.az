@@ -3,14 +3,13 @@
 import { Calculator } from "lucide-react";
 import { Button } from "../ui/button";
 import { colors } from "@/utils/colors";
+import { useRouter } from "next/navigation";
 
 interface HeroSectionProps {
   title?: string;
   subtitle?: string;
   primaryButtonText?: string;
   secondaryButtonText?: string;
-  onPrimaryClick?: () => void;
-  onSecondaryClick?: () => void;
 }
 
 export function HeroSection({
@@ -18,9 +17,9 @@ export function HeroSection({
   subtitle = "İstəklərinizə cavab verən elektrik & hibrid avtomobili tapın, müqayisə edin. Real qiymətlər, məsafə kalkulyatoru, və ən son yeniliklər bir yerdə.",
   primaryButtonText = "Avtomobillərə bax",
   secondaryButtonText = "Yürüş məsafəsini hesabla",
-  onPrimaryClick,
-  onSecondaryClick,
 }: HeroSectionProps) {
+  const router = useRouter();
+
   return (
     <section
       style={{ background: colors.primary.slate }}
@@ -42,7 +41,7 @@ export function HeroSection({
           <Button
             size="lg"
             className="text-lg px-8 hover:bg-[#023e8a] transition-colors cursor-pointer"
-            onClick={onPrimaryClick}
+            onClick={() => router.push("/electric-vehicles")}
           >
             {primaryButtonText}
           </Button>
@@ -50,7 +49,6 @@ export function HeroSection({
             size="lg"
             variant="outline"
             className="text-lg px-8 bg-transparent text-white cursor-pointer"
-            onClick={onSecondaryClick}
           >
             <Calculator className="h-5 w-5 mr-2 " />
             {secondaryButtonText}
