@@ -10,12 +10,13 @@ interface EVGridProps {
   cars: EVCars[] | null;
   title?: string;
   showViewAll?: boolean;
+  page: "Home" | "Electric Vehicles";
 }
 type FilterType = "cheapest" | "fastest" | "most_range" | "most_power" | null;
 export function EVGrid({
   cars,
-  title = "Seçilmiş Elektrikli Avtomobillər",
   showViewAll = true,
+  page,
 }: EVGridProps) {
   const router = useRouter();
   const [showAll, setShowAll] = useState<boolean>(false);
@@ -47,7 +48,10 @@ export function EVGrid({
 
     return sorted;
   }, [cars, activeFilter]);
-  const carsToDisplay = showAll ? sortedCars : sortedCars?.slice(0, 4);
+  const carsToDisplayHome = showAll ? sortedCars : sortedCars?.slice(0, 4);
+  const carsToDisplayElectricVehicles = cars?.slice(0, 8);
+  const carsToDisplay =
+    page === "Home" ? carsToDisplayHome : carsToDisplayElectricVehicles;
 
   const sortFilters = [
     { key: "cheapest" as FilterType, label: "Ən ucuz" },
@@ -55,13 +59,15 @@ export function EVGrid({
     { key: "most_range" as FilterType, label: "Ən uzun məsafə" },
     { key: "most_power" as FilterType, label: "Ən güclü" },
   ];
+  const title = page === 'Home' ? "Seçilmiş avtomobillər" : "Bütün avtomobillər"
   return (
-    <section className=" px-8 pb-16">
+    <section className="pb-16">
+      {" "}
       <div className="flex flex-col items-center justify-between mb-8 md:flex-row lg:flex-row">
         <h2 className="text-base md:text-2xl lg:text-2xl text-center font-bold text-gray-900">
           {title}
         </h2>
-        {showViewAll && (
+        {showViewAll && page === "Home" && (
           <Button
             className="mt-4 cursor-pointer"
             variant="outline"
@@ -71,31 +77,33 @@ export function EVGrid({
           </Button>
         )}
       </div>
-      <div className="grid grid-cols-2 md:flex lg:flex gap-2 mb-6">
-        {sortFilters.map((filter) => (
-          <Button
-            key={filter.key}
-            className={`px-4 py-2 rounded-xs transition-all duration-200 cursor-pointer ${
-              activeFilter === filter.key
-                ? "bg-[#023e8a] hover:bg-sky-600 text-white shadow-lg"
-                : "bg-[#1d242a] text-white hover:bg-slate-700"
-            }`}
-            onClick={() => handleFilterClick(filter.key)}
-          >
-            {filter.label}
-          </Button>
-        ))}
+      {page === "Home" && (
+        <div className="grid grid-cols-2 md:flex lg:flex gap-2 mb-6">
+          {sortFilters.map((filter) => (
+            <Button
+              key={filter.key}
+              className={`px-4 py-2 rounded-xs transition-all duration-200 cursor-pointer ${
+                activeFilter === filter.key
+                  ? "bg-[#023e8a] hover:bg-sky-600 text-white shadow-lg"
+                  : "bg-[#1d242a] text-white hover:bg-slate-700"
+              }`}
+              onClick={() => handleFilterClick(filter.key)}
+            >
+              {filter.label}
+            </Button>
+          ))}
 
-        {/* Clear Filter Button */}
-        {activeFilter && (
-          <Button
-            className=" bg-red-100 text-red-700 hover:bg-red-200 rounded-xs cursor-pointer"
-            onClick={() => setActiveFilter(null)}
-          >
-            ✕ Filtri təmizlə
-          </Button>
-        )}
-      </div>
+          {/* Clear Filter Button */}
+          {activeFilter && (
+            <Button
+              className=" bg-red-100 text-red-700 hover:bg-red-200 rounded-xs cursor-pointer"
+              onClick={() => setActiveFilter(null)}
+            >
+              ✕ Filtri təmizlə
+            </Button>
+          )}
+        </div>
+      )}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {carsToDisplay?.map((car) => (
           <EVCarCard

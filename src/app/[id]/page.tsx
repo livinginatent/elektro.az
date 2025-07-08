@@ -31,7 +31,6 @@ export default function CarPage({ params }: CarPageProps) {
 
     unwrapParams();
   }, [params]);
-console.log(unwrappedParams)
   useEffect(() => {
     const fetchCar = async () => {
       if (unwrappedParams) {

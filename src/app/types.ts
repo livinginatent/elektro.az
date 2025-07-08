@@ -20,7 +20,7 @@ export interface Dealership {
   address: string;
 }
 export interface EVCars {
-  brand: string | null;
+  brand: string;
   model: string | null;
   description: string;
   variant: string | null;
