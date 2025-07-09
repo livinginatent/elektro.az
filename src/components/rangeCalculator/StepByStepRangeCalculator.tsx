@@ -350,7 +350,7 @@ export function StepByStepRangeCalculator({
   return (
     <div className="max-w-4xl mx-auto p-6 space-y-6">
       {/* Header */}
-   
+
       <div className="text-center space-y-2">
         <h1 className="text-3xl font-bold text-gray-900 flex items-center justify-center gap-2">
           <Calculator className="h-8 w-8 text-blue-600" />
@@ -362,7 +362,7 @@ export function StepByStepRangeCalculator({
       </div>
 
       {/* Progress Steps */}
-      <div className="flex items-center justify-between mb-8">
+      <div className="flex flex-col md:flex-row lg:flex-row items-center justify-between  mb-8">
         {steps.map((step, index) => (
           <div key={step.number} className="flex items-center">
             <div className="flex flex-col items-center">
@@ -397,7 +397,7 @@ export function StepByStepRangeCalculator({
                   getStepStatus(step.number) === "completed"
                     ? "bg-green-500"
                     : "bg-gray-300"
-                }`}
+                }     hidden sm:block`} // Hide on mobile (sm and below), show on larger screens`}
               />
             )}
           </div>
@@ -432,7 +432,7 @@ export function StepByStepRangeCalculator({
                   placeholder="Avtomobil axtarın (məs: Tesla Model 3)"
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
-                  className="pl-10 rounded-sm h-12 text-lg"
+                  className="pl-10 rounded-sm h-12 text-xs md:text-lg lg:text-lg"
                 />
 
                 {showDropdown && cars.length > 0 && (
@@ -463,9 +463,9 @@ export function StepByStepRangeCalculator({
               {selectedCar && (
                 <Card className="bg-blue-50 border-blue-200 rounded-sm">
                   <CardContent className="p-6">
-                    <div className="flex items-center justify-between">
+                    <div className="flex flex-col md:flex-row lg:flex-row items-center justify-between">
                       <div>
-                        <p className="text-xl font-semibold text-gray-900">
+                        <p className="text-xl text-center md:text-left lg:text-left font-semibold text-gray-900">
                           {selectedCar.brand} {selectedCar.model}
                         </p>
                         <p className="text-gray-600">
@@ -474,7 +474,7 @@ export function StepByStepRangeCalculator({
                         <p className="text-gray-600">
                           Batareya tutumu: {selectedCar.battery_capacity} kWh
                         </p>
-                        <p className="text-[#023e8a] font-semibold text-lg">
+                        <p className="text-[#023e8a] text-center md:text-left lg:text-left font-semibold text-lg">
                           ₼{selectedCar.price}
                         </p>
                       </div>
