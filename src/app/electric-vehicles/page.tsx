@@ -10,12 +10,19 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { Search, ChevronLeft, ChevronRight, Filter } from "lucide-react";
+import {
+  Search,
+  ChevronLeft,
+  ChevronRight,
+  Filter,
+  ArrowLeft,
+} from "lucide-react";
 import { FadeLoader } from "react-spinners";
 import { colors } from "@/utils/colors";
 import { Footer } from "@/layout/Footer";
 import { Header } from "@/layout/Header";
 import CompareBar from "@/components/compareBar/CompareBar";
+import { useRouter } from "next/navigation";
 
 // Helper to get unique values for filters
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -24,14 +31,14 @@ function getUnique(arr: any[], key: string) {
 }
 
 export default function ElectricVehiclesPage() {
-  const [cars, setCars] = useState<EVCars[] | null>(null);
+  const [cars, setCars] = useState<EVCars[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchCars = async () => {
       const supabase = await createClient();
       const { data: carsRaw } = await supabase.from("EVs").select("*");
-      setCars(carsRaw);
+      setCars(carsRaw || []);
       setLoading(false);
     };
     fetchCars();
@@ -82,7 +89,7 @@ function ElectricVehiclesClient({
   bodyStyles,
   seatCounts,
 }: {
-  cars: EVCars[] | null;
+  cars: EVCars[];
   makes: string[];
   bodyStyles: string[];
   seatCounts: number[];
@@ -95,10 +102,10 @@ function ElectricVehiclesClient({
   const [price, setPrice] = useState<[number, number]>([0, 100000]);
   const [page, setPage] = useState(1);
   const perPage = 8;
-
+  const router = useRouter();
   // Filtering logic
   const filtered = useMemo(() => {
-    return cars?.filter((car) => {
+    return cars.filter((car) => {
       const matchesSearch =
         !search ||
         car?.brand?.toLowerCase().includes(search.toLowerCase()) ||
@@ -182,6 +189,14 @@ function ElectricVehiclesClient({
       <Header />
       <div className="container mx-auto px-4 py-8">
         {/* Header */}
+        <Button
+          variant="outline"
+          onClick={router.back}
+          className="mb-6 bg-white cursor-pointer"
+        >
+          <ArrowLeft className="h-4 w-4 mr-2" />
+          Geri qayıt
+        </Button>
         <div className="mb-8">
           <h1 className="text-4xl font-bold text-gray-900 mb-2">
             Elektrik və Hibrid Avtomobillər
@@ -193,8 +208,8 @@ function ElectricVehiclesClient({
 
         <div className="flex flex-col lg:flex-row gap-2">
           {/* Sidebar */}
-          <aside className=" space-y-6">
-            <Card className="shadow-sm">
+          <aside className="  rounded-md space-y-6">
+            <Card className="shadow-sm border-1 border-[#023e8a]">
               <CardHeader className="pb-4">
                 <div className="flex items-center justify-between">
                   <CardTitle className="text-lg flex items-center gap-2">
@@ -223,7 +238,7 @@ function ElectricVehiclesClient({
                     {makes.map((make) => (
                       <div key={make} className="flex items-center space-x-2">
                         <Checkbox
-                          color="green"
+                          className="border-2 border-[#023e8a]"
                           id={`make-${make}`}
                           checked={selectedMakes.includes(make)}
                           onCheckedChange={() =>
@@ -255,6 +270,7 @@ function ElectricVehiclesClient({
                       <div key={body} className="flex items-center space-x-2">
                         <Checkbox
                           id={`body-${body}`}
+                          className="border-2 border-[#023e8a]"
                           checked={selectedBodyStyles.includes(body)}
                           onCheckedChange={() =>
                             handleCheckbox(
@@ -286,6 +302,7 @@ function ElectricVehiclesClient({
                     {seatCounts.map((seat) => (
                       <div key={seat} className="flex items-center space-x-2">
                         <Checkbox
+                          className="border-2 border-[#023e8a]"
                           id={`seat-${seat}`}
                           checked={selectedSeats.includes(seat)}
                           onCheckedChange={() => handleSeatsCheckbox(seat)}
@@ -364,7 +381,7 @@ function ElectricVehiclesClient({
             </Card>
           </aside>
           {/* Main content */}
-          <main className="flex-1">
+          <main className="flex-1 ">
             {/* Search Bar */}
             <div className="mb-6">
               <div className="relative">
@@ -377,7 +394,7 @@ function ElectricVehiclesClient({
                     setSearch(e.target.value);
                     setPage(1);
                   }}
-                  className="pl-10 h-12 text-lg"
+                  className="pl-10 h-12 text-lg border-1 border-[#023e8a]"
                 />
               </div>
             </div>

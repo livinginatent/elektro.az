@@ -8,7 +8,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 export function Header() {
   const navItems = [
     { href: "/electric-vehicles", icon: Car, label: "Avtomobillərə bax" },
-    { href: "/calculator", icon: Calculator, label: "Yürüş məsafəsi hesabla" },
+    { href: "/range-calculator", icon: Calculator, label: "Yürüş məsafəsi hesabla" },
     { href: "/news", icon: Newspaper, label: "Yeniliklər" },
     { href: "/blog", icon: BookOpen, label: "Bloq" },
   ];

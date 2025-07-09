@@ -73,3 +73,5 @@ export const COMPARE_CATEGORIES = [
 ] as const;
 
 export type CompareCategory = (typeof COMPARE_CATEGORIES)[number];
+
+// NOTE: Use EVCars[] (never null) for car lists, and EVCars | undefined for single car selection throughout the codebase for best practices.

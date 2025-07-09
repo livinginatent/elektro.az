@@ -21,15 +21,15 @@ const defaultSections: FooterSection[] = [
   {
     title: "Kəşf et",
     links: [
-      { label: "Avtomobillər", href: "/cars" },
-      { label: "Elektrik Doldurma məntəqələri", href: "/" },
+      { label: "Elektrik & Hibrid Avtomobillər", href: "/cars" },
+      { label: "Elektrik Doldurma Məntəqələri", href: "/" },
       { label: "İncələmələr", href: "/reviews" },
     ],
   },
   {
     title: "Alətlər",
     links: [
-      { label: "Yürüş məsafəsi kalkulyatoru", href: "/calculator" },
+      { label: "Yürüş məsafəsi kalkulyatoru", href: "/range-calculator" },
       { label: "Maliyyət kalkulyatoru", href: "/cost" },
     ],
   },

@@ -25,7 +25,6 @@ interface CarDetailPageProps {
 export function CarDetailPage({
   car,
   onBack,
-  
 }: CarDetailPageProps) {
   const [isDealershipModalOpen, setIsDealershipModalOpen] = useState(false);
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);

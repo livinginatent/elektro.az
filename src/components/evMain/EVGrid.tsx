@@ -15,11 +15,8 @@ interface EVGridProps {
 type FilterType = "cheapest" | "fastest" | "most_range" | "most_power" | null;
 export function EVGrid({ cars, showViewAll = true, page }: EVGridProps) {
   const router = useRouter();
-  const [showAll, setShowAll] = useState<boolean>(false);
   const [activeFilter, setActiveFilter] = useState<FilterType>(null);
-  const handleViewAll = () => {
-    setShowAll(!showAll);
-  };
+
   const handleFilterClick = (filter: FilterType) => {
     setActiveFilter(activeFilter === filter ? null : filter);
   };
@@ -44,7 +41,7 @@ export function EVGrid({ cars, showViewAll = true, page }: EVGridProps) {
 
     return sorted;
   }, [cars, activeFilter]);
-  const carsToDisplayHome = showAll ? sortedCars : sortedCars?.slice(0, 4);
+  const carsToDisplayHome = sortedCars?.slice(0, 8);
   const carsToDisplayElectricVehicles = cars?.slice(0, 8);
   const carsToDisplay =
     page === "Home" ? carsToDisplayHome : carsToDisplayElectricVehicles;
@@ -58,8 +55,7 @@ export function EVGrid({ cars, showViewAll = true, page }: EVGridProps) {
   const title =
     page === "Home" ? "Seçilmiş avtomobillər" : "Bütün avtomobillər";
   return (
-    <section className=" px-8 pb-16">
-      {" "}
+    <section className={`pb-16 ${page === "Home" ? "px-8" : "px-2"}`}>
       <div className="flex flex-col items-center justify-between mb-8 md:flex-row lg:flex-row">
         <h2 className="text-base md:text-2xl lg:text-2xl text-center font-bold text-gray-900">
           {title}
@@ -68,9 +64,9 @@ export function EVGrid({ cars, showViewAll = true, page }: EVGridProps) {
           <Button
             className="mt-4 cursor-pointer"
             variant="outline"
-            onClick={handleViewAll}
+            onClick={() => router.push("/electric-vehicles")}
           >
-            {showAll ? "Daha az" : "Hamısını göstər"}
+            Bütün avtomobillər
           </Button>
         )}
       </div>

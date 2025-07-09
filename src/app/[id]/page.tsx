@@ -14,13 +14,11 @@ interface CarPageProps {
 
 export default function CarPage({ params }: CarPageProps) {
   const router = useRouter();
-  const [car, setCar] = useState<EVCars | null>(null);
+  const [car, setCar] = useState<EVCars | undefined>(undefined);
   const [loading, setLoading] = useState(true);
   const [unwrappedParams, setUnwrappedParams] = useState<{ id: string } | null>(
     null
   );
-
-
 
   // Unwrap the params using React.use() when they are resolved
   useEffect(() => {
@@ -42,7 +40,7 @@ export default function CarPage({ params }: CarPageProps) {
           .single();
 
         if (error || !data) {
-          setCar(null);
+          setCar(undefined);
         } else {
           setCar(data);
         }

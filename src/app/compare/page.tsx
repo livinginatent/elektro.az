@@ -132,7 +132,7 @@ export default function ComparePage() {
           </p>
           <Button
             onClick={() => router.push("/")}
-            className="px-6 py-2 rounded bg-[#023e8a] cursor-pointer text-white font-bold transition-all rounded-lg  duration-200 hover:scale-105"
+            className="px-6 py-2 rounded bg-[#023e8a] cursor-pointer text-white font-bold transition-all rounded-lg   hover:scale-105"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
             Geri
@@ -148,7 +148,6 @@ export default function ComparePage() {
   }, {} as Record<string, string | null>);
   const onClear = () => {
     clear();
-    router.push("/");
   };
   return (
     <>

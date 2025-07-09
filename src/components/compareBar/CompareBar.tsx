@@ -1,3 +1,4 @@
+"use client";
 import { useCompareStore } from "@/lib/compareStore";
 import React from "react";
 
