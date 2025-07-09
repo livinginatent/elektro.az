@@ -352,9 +352,9 @@ export function StepByStepRangeCalculator({
       {/* Header */}
 
       <div className="text-center space-y-2">
-        <h1 className="text-3xl font-bold text-gray-900 flex items-center justify-center gap-2">
-          <Calculator className="h-8 w-8 text-blue-600" />
+        <h1 className="text-3xl font-bold text-gray-900 flex flex-col items-center justify-center gap-2">
           Elektromobil Yürüş Məsafəsi Kalkulyatoru
+          <Calculator className="h-8 w-8 text-blue-600" />
         </h1>
         <p className="text-gray-600">
           Addım-addım elektrik avtomobilinizin yürüş məsafəsini hesablayın

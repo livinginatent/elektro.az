@@ -45,7 +45,7 @@ const defaultSections: FooterSection[] = [
 
 export function Footer({
   sections = defaultSections,
-  companyName = "EVHub",
+  companyName = "Procar",
   description = "Elektrik və hibrid avtomobillərə aid hərşey bu platformada.",
 }: FooterProps) {
   return (

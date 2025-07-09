@@ -22,7 +22,7 @@ export function Header() {
             <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-600">
               <Zap className="h-5 w-5 text-white" />
             </div>
-            <span className="text-xl font-bold text-gray-900">EVHub</span>
+            <span className="text-xl font-bold text-gray-900">Procar</span>
           </Link>
         </div>
 
