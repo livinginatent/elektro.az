@@ -2,10 +2,8 @@ import {
   Battery,
   Zap,
   Car,
-  Shield,
   Ruler,
-  ChevronDown,
-  ChevronUp,
+  
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { EVCars } from "@/app/types";
@@ -31,6 +29,7 @@ import {
 import { BsGearFill } from "react-icons/bs";
 import { MdAirlineSeatReclineNormal } from "react-icons/md";
 import { useState } from "react";
+import ExtraFeatures from "./ExtraFeatures";
 
 interface CarSpecsProps {
   car: EVCars;
@@ -38,6 +37,7 @@ interface CarSpecsProps {
 
 export function CarSpecs({ car }: CarSpecsProps) {
   const [showAllSafety, setShowAllSafety] = useState(false);
+  const [showAllExterior, setShowAllExterior] = useState(false);
 
   // Helper function to handle null/undefined values
   const formatValue = (
@@ -189,6 +189,10 @@ export function CarSpecs({ car }: CarSpecsProps) {
     ? car.safety
     : car.safety?.slice(0, 3);
   const hasMoreSafetyFeatures = car.safety && car.safety.length > 3;
+  const visibleExteriorFeatures = showAllExterior
+    ? car.exterior
+    : car.exterior?.slice(0, 3);
+  const hasMoreExteriorFeatures = car.exterior && car.exterior.length > 3;
 
   return (
     <div className="space-y-6">
@@ -222,57 +226,25 @@ export function CarSpecs({ car }: CarSpecsProps) {
       </div>
 
       {/* Safety Rating */}
-      <Card className=" rounded-sm">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Shield className="h-5 w-5 text-blue-600" />
-            Təhlükəsizlik & Digər
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            {/* Safety Features Section */}
-            <div>
-              <h4 className="font-semibold mb-3 text-gray-800">
-                Təhlükəsizlik xüsusiyyətləri:
-              </h4>
-              <div className="space-y-2">
-                {visibleSafetyFeatures?.map((safety, index) => (
-                  <div
-                    key={index}
-                    className="flex items-start gap-3 p-2 rounded-lg bg-gray-50 hover:bg-gray-100 transition-colors"
-                  >
-                    <div className="w-2 h-2 bg-blue-600 rounded-full mt-2 flex-shrink-0"></div>
-                    <span className="text-gray-700 text-sm leading-relaxed">
-                      {safety}
-                    </span>
-                  </div>
-                ))}
-              </div>
 
-              {/* Show More/Less Button */}
-              {hasMoreSafetyFeatures && (
-                <button
-                  onClick={() => setShowAllSafety(!showAllSafety)}
-                  className="mt-3 flex items-center gap-2 text-blue-600 hover:text-blue-800 text-sm font-medium transition-colors cursor-pointer"
-                >
-                  {showAllSafety ? (
-                    <>
-                      <ChevronUp className="h-4 w-4" />
-                      Daha az göstər
-                    </>
-                  ) : (
-                    <>
-                      <ChevronDown className="h-4 w-4 " />
-                      Hamısını göstər ({car.safety?.length - 3} daha)
-                    </>
-                  )}
-                </button>
-              )}
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+      <ExtraFeatures
+        mainTitle="Təhlükəsizlik və digər"
+        secondaryTitle="Təhlükəsizlik xüsusiyyətləri"
+        data={visibleSafetyFeatures}
+        hasMoreFeatures={hasMoreSafetyFeatures}
+        setShowAllFeatures={() => setShowAllSafety(!showAllSafety)}
+        car={car}
+        showAllFeatures={showAllSafety}
+      />
+      <ExtraFeatures
+        mainTitle="Eksteryer"
+        secondaryTitle="Eksteryer"
+        data={visibleExteriorFeatures}
+        hasMoreFeatures={hasMoreExteriorFeatures}
+        setShowAllFeatures={() => setShowAllExterior(!showAllExterior)}
+        car={car}
+        showAllFeatures={showAllExterior}
+      />
     </div>
   );
 }

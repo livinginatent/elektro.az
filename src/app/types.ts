@@ -49,6 +49,7 @@ export interface EVCars {
   safety: string[];
   id: string | null | number;
   dealership: Dealership;
+  exterior:string[]
 }
 
 export interface QuickTool {
