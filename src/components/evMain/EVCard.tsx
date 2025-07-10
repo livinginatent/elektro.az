@@ -8,16 +8,19 @@ import { getAvailabilityLabel } from "@/utils/getAvailabilityLabel";
 import { formatPrice } from "@/utils/formatPrice";
 import { formatValue } from "@/utils/formatValue";
 import { useCompareStore } from "@/lib/compareStore";
+import { BsFuelPumpFill } from "react-icons/bs";
 
 interface EVCarCardProps {
   car: EVCars;
   onViewDetails?: (car: EVCars) => void;
+  isElectric: boolean;
 }
 
-export function EVCarCard({ car, onViewDetails }: EVCarCardProps) {
+export function EVCarCard({ car, onViewDetails, isElectric }: EVCarCardProps) {
   const { addCar, removeCar, isSelected, selectedCars } = useCompareStore();
   const selected = isSelected(car.id);
   const disabled = !selected && selectedCars.length >= 4;
+  console.log(isElectric);
   return (
     <Card className="group hover:shadow-xl transition-all duration-300 border-0 shadow-lg overflow-hidden max-w-md">
       <CardHeader className="p-0">
@@ -72,11 +75,22 @@ export function EVCarCard({ car, onViewDetails }: EVCarCardProps) {
             <div className="flex items-center space-x-2">
               <div>
                 <div className="flex gap-1 items-center">
-                  <Clock className="h-4 w-4 text-gray-500" />
-                  <p className="text-sm text-gray-500">Şarj vaxtı</p>
+                  {!isElectric ? (
+                    <>
+                      <BsFuelPumpFill className="h-4 w-4 text-gray-500" />
+                      <p className="text-sm text-gray-500">Sərfiyyat</p>
+                    </>
+                  ) : (
+                    <>
+                      <Clock className="h-4 w-4 text-gray-500" />
+                      <p className="text-sm text-gray-500">Şarj vaxtı</p>
+                    </>
+                  )}
                 </div>
                 <p className="font-semibold">
-                  {formatValue(car.charging_time, " saat")}
+                  {!isElectric
+                    ? formatValue(car.fuel_consumption, " L/100km")
+                    : formatValue(car.charging_time, " saat")}
                 </p>
               </div>
             </div>
@@ -87,7 +101,7 @@ export function EVCarCard({ car, onViewDetails }: EVCarCardProps) {
                   <p className="text-sm text-gray-500">0-100 km/saat</p>
                 </div>
                 <p className="font-semibold">
-                  {formatValue(car.acceleration, " sn")}
+                  {formatValue(car.acceleration, " saniyə")}
                 </p>
               </div>
             </div>

@@ -50,6 +50,7 @@ export interface EVCars {
   id: string | null | number;
   dealership: Dealership;
   exterior:string[]
+  fuel_consumption:number
 }
 
 export interface QuickTool {

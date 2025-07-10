@@ -452,7 +452,9 @@ export function StepByStepRangeCalculator({
                               {car.range_km} km yürüş məsafəsi
                             </p>
                           </div>
-                          <Badge variant="secondary">₼{car.price}</Badge>
+                          <Badge className="bg-[#023e8a] text-white" variant="secondary">
+                            ₼{car.price}
+                          </Badge>
                         </div>
                       </button>
                     ))}

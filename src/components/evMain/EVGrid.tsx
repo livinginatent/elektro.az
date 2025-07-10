@@ -5,6 +5,7 @@ import { Button } from "../ui/button";
 import { EVCarCard } from "./EVCard";
 import { useRouter } from "next/navigation";
 import { useState, useMemo } from "react";
+import { useScreenSize } from "@/utils/getScreenSize";
 
 interface EVGridProps {
   cars: EVCars[] | null;
@@ -16,6 +17,7 @@ type FilterType = "cheapest" | "fastest" | "most_range" | "most_power" | null;
 export function EVGrid({ cars, showViewAll = true, page }: EVGridProps) {
   const router = useRouter();
   const [activeFilter, setActiveFilter] = useState<FilterType>(null);
+  const { width } = useScreenSize();
 
   const handleFilterClick = (filter: FilterType) => {
     setActiveFilter(activeFilter === filter ? null : filter);
@@ -60,7 +62,7 @@ export function EVGrid({ cars, showViewAll = true, page }: EVGridProps) {
         <h2 className="text-base md:text-2xl lg:text-2xl text-center font-bold text-gray-900">
           {title}
         </h2>
-        {showViewAll && page === "Home" && (
+        {showViewAll && page === "Home" && width > 768 && (
           <Button
             className="mt-4 cursor-pointer"
             variant="outline"
@@ -100,12 +102,26 @@ export function EVGrid({ cars, showViewAll = true, page }: EVGridProps) {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {carsToDisplay?.map((car) => (
           <EVCarCard
+            isElectric={
+              car.engine.engine_type === "Tam Elektrik" ? true : false
+            }
             key={car.id}
             car={car}
             onViewDetails={() => router.push(`/${car.id}`)}
           />
         ))}
       </div>
+      {showViewAll && page === "Home" && width < 768 && (
+        <div className="flex justify-center items-center">
+          <Button
+            className="mt-4 cursor-pointer w-full"
+            variant="outline"
+            onClick={() => router.push("/electric-vehicles")}
+          >
+            Bütün avtomobillər
+          </Button>
+        </div>
+      )}
     </section>
   );
 }
