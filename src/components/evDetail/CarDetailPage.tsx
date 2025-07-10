@@ -14,6 +14,7 @@ import { Footer } from "@/layout/Footer";
 import { DealershipModal } from "../modals/DealershipModal";
 import { ShareModal } from "../modals/ShareModal";
 import { useCompareStore } from "@/lib/compareStore";
+import CompareBar from "../compareBar/CompareBar";
 
 interface CarDetailPageProps {
   car: EVCars;
@@ -22,10 +23,7 @@ interface CarDetailPageProps {
   onFindCharging?: () => void;
 }
 
-export function CarDetailPage({
-  car,
-  onBack,
-}: CarDetailPageProps) {
+export function CarDetailPage({ car, onBack }: CarDetailPageProps) {
   const [isDealershipModalOpen, setIsDealershipModalOpen] = useState(false);
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
   const { addCar, removeCar, isSelected, selectedCars } = useCompareStore();
@@ -101,7 +99,7 @@ export function CarDetailPage({
                     </div>
                     <div className="text-center p-4 bg-green-50 rounded-sm">
                       <div className="text-2xl font-bold text-green-600">
-                        {car.acceleration}sn
+                        {car.acceleration} saniyə
                       </div>
                       <div className="text-sm text-gray-600">0-100 km/saat</div>
                     </div>
@@ -112,10 +110,23 @@ export function CarDetailPage({
                       <div className="text-sm text-gray-600">Mühərrik gücü</div>
                     </div>
                     <div className="text-center p-4 bg-orange-50 rounded-sm">
-                      <div className="text-2xl font-bold text-orange-600">
-                        {car.charging_time} dəqiqə
-                      </div>
-                      <div className="text-sm text-gray-600">Şarj vaxtı</div>
+                      {car.engine.engine_type === "Tam Elektrik" ? (
+                        <>
+                          <div className="text-2xl font-bold text-orange-600">
+                            {car.charging_time} dəqiqə
+                          </div>
+                          <div className="text-sm text-gray-600">
+                            Şarj vaxtı
+                          </div>
+                        </>
+                      ) : (
+                        <>
+                          <div className="text-2xl font-bold text-orange-600">
+                            {car.fuel_consumption} Litr/100Km
+                          </div>
+                          <div className="text-sm text-gray-600">Sərfiyyat</div>
+                        </>
+                      )}
                     </div>
                   </div>
                 </CardContent>
@@ -197,6 +208,7 @@ export function CarDetailPage({
         carUrl={`elektro-az.vercel.app/${car.id}`}
       />
       <Footer />
+      <CompareBar />
     </>
   );
 }

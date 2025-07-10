@@ -1,6 +1,6 @@
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
-import { ChevronDown, ChevronUp, Shield } from "lucide-react";
+import { ChevronDown, ChevronUp,  LucideIcon } from "lucide-react";
 import { EVCars } from "@/app/types";
 
 type Props = {
@@ -10,7 +10,8 @@ type Props = {
   hasMoreFeatures: boolean;
   setShowAllFeatures: () => void;
   showAllFeatures: boolean;
-  car:EVCars
+  car: EVCars;
+  Icon: LucideIcon;
 };
 
 const ExtraFeatures = ({
@@ -20,13 +21,14 @@ const ExtraFeatures = ({
   hasMoreFeatures,
   setShowAllFeatures,
   showAllFeatures,
-  car
+  car,
+  Icon
 }: Props) => {
   return (
     <Card className=" rounded-sm">
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
-          <Shield className="h-5 w-5 text-blue-600" />
+          <Icon className="h-5 w-5 text-blue-600" />
           {mainTitle}
         </CardTitle>
       </CardHeader>

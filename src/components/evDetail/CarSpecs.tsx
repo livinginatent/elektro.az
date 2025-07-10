@@ -3,6 +3,8 @@ import {
   Zap,
   Car,
   Ruler,
+  Shield,
+  GalleryHorizontalEnd,
   
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -235,6 +237,7 @@ export function CarSpecs({ car }: CarSpecsProps) {
         setShowAllFeatures={() => setShowAllSafety(!showAllSafety)}
         car={car}
         showAllFeatures={showAllSafety}
+        Icon={Shield}
       />
       <ExtraFeatures
         mainTitle="Eksteryer"
@@ -244,6 +247,7 @@ export function CarSpecs({ car }: CarSpecsProps) {
         setShowAllFeatures={() => setShowAllExterior(!showAllExterior)}
         car={car}
         showAllFeatures={showAllExterior}
+        Icon={GalleryHorizontalEnd}
       />
     </div>
   );
