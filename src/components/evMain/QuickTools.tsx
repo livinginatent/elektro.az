@@ -1,8 +1,10 @@
+"use client";
 import { Calculator, MapPin } from "lucide-react";
 import { Card } from "../ui/card";
 import { Button } from "../ui/button";
 import { QuickTool } from "@/app/types";
 import Manat from "@/app/compare/manat";
+import { useRouter } from "next/navigation";
 
 interface QuickToolsProps {
   tools?: QuickTool[];
@@ -16,7 +18,7 @@ const defaultTools: QuickTool[] = [
     description:
       "Yol vəziyyəti və sürüş vərdişinizə əsasən elektromobilinizin sürüş məsafəsini hesablayın.",
     buttonText: "Kalkulyatoru yoxlayın",
-    href: "/calculator",
+    href: "/range-calculator",
   },
   {
     icon: MapPin,
@@ -24,7 +26,7 @@ const defaultTools: QuickTool[] = [
     description:
       "Sizə yaxın olan elektrik doldurma məntəqələrini xəritədən tapın.",
     buttonText: "EDM tapın",
-    href: "/charging",
+    href: "/charger",
   },
   {
     icon: Manat,
@@ -35,11 +37,12 @@ const defaultTools: QuickTool[] = [
     href: "/cost",
   },
 ];
-
 export function QuickTools({
   tools = defaultTools,
   title = "Elektrikli avtomobil alətləri & Resurslar",
 }: QuickToolsProps) {
+  const router = useRouter();
+
   return (
     <section className="mt-6 px-4 pb-16">
       <h2 className="text-3xl font-bold text-gray-900 text-center mb-12">
@@ -54,7 +57,11 @@ export function QuickTools({
             <tool.icon className="h-12 w-12 text-[#023e8a] mx-auto mb-4" />
             <h3 className="text-xl font-bold mb-2">{tool.title}</h3>
             <p className="text-gray-600 mb-4 flex-grow">{tool.description}</p>
-            <Button className="cursor-pointer mt-auto" variant="outline">
+            <Button
+              onClick={() => router.push(tool.href)}
+              className="cursor-pointer mt-auto"
+              variant="outline"
+            >
               {tool.buttonText}
             </Button>
           </Card>

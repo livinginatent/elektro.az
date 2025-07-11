@@ -30,6 +30,7 @@ const defaultSections: FooterSection[] = [
     title: "Alətlər",
     links: [
       { label: "Yürüş məsafəsi kalkulyatoru", href: "/range-calculator" },
+      { label: "Elektrik Doldurma Məntəqələri", href: "/charger" },
       { label: "Maliyyət kalkulyatoru", href: "/cost" },
     ],
   },

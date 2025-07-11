@@ -37,7 +37,7 @@ export function Header() {
             <Link
               key={item.href}
               href={item.href}
-              className="flex items-center space-x-1 text-md font-medium text-gray-700 hover:text-blue-600"
+              className="flex items-center space-x-1 text-md font-medium text-gray-700 hover:!text-[#023e8a]"
             >
               <item.icon className="h-5 w-5" />
               <span>{item.label}</span>

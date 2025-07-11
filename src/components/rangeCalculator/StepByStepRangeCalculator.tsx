@@ -55,6 +55,7 @@ import {
   FaRoad,
 } from "react-icons/fa6";
 import { ShareModal } from "../modals/ShareModal";
+import { useScreenSize } from "@/utils/getScreenSize";
 
 interface StepByStepRangeCalculatorProps {
   initialCars: EVCars[];
@@ -103,7 +104,7 @@ export function StepByStepRangeCalculator({
   const [averageSpeed, setAverageSpeed] = useState([60]);
 
   const debounceRef = useRef<NodeJS.Timeout | null>(null);
-
+  const { width } = useScreenSize();
   const steps = [
     { number: 1, title: "Avtomobil seçin", icon: Car },
     { number: 2, title: "Batareya səviyyəsi", icon: Zap },
@@ -362,47 +363,49 @@ export function StepByStepRangeCalculator({
       </div>
 
       {/* Progress Steps */}
-      <div className="flex flex-col md:flex-row lg:flex-row items-center justify-between  mb-8">
-        {steps.map((step, index) => (
-          <div key={step.number} className="flex items-center">
-            <div className="flex flex-col items-center">
-              <div
-                className={`w-12 h-12 rounded-full flex items-center justify-center border-2 transition-all ${
-                  getStepStatus(step.number) === "completed"
-                    ? "bg-green-500 border-green-500 text-white"
-                    : getStepStatus(step.number) === "current"
-                    ? "bg-[#023e8a] border-[#023e8a] text-white"
-                    : "bg-gray-100 border-gray-300 text-gray-400"
-                }`}
-              >
-                {getStepStatus(step.number) === "completed" ? (
-                  <Check className="h-6 w-6" />
-                ) : (
-                  <step.icon className="h-6 w-6" />
-                )}
+      {width > 768 && (
+        <div className="flex flex-col md:flex-row lg:flex-row items-center justify-between  mb-8">
+          {steps.map((step, index) => (
+            <div key={step.number} className="flex items-center">
+              <div className="flex flex-col items-center">
+                <div
+                  className={`w-12 h-12 rounded-full flex items-center justify-center border-2 transition-all ${
+                    getStepStatus(step.number) === "completed"
+                      ? "bg-green-500 border-green-500 text-white"
+                      : getStepStatus(step.number) === "current"
+                      ? "bg-[#023e8a] border-[#023e8a] text-white"
+                      : "bg-gray-100 border-gray-300 text-gray-400"
+                  }`}
+                >
+                  {getStepStatus(step.number) === "completed" ? (
+                    <Check className="h-6 w-6" />
+                  ) : (
+                    <step.icon className="h-6 w-6" />
+                  )}
+                </div>
+                <p
+                  className={`text-xs mt-2 text-center max-w-20 ${
+                    getStepStatus(step.number) === "current"
+                      ? "text-[#023e8a] font-semibold"
+                      : "text-gray-500"
+                  }`}
+                >
+                  {step.title}
+                </p>
               </div>
-              <p
-                className={`text-xs mt-2 text-center max-w-20 ${
-                  getStepStatus(step.number) === "current"
-                    ? "text-[#023e8a] font-semibold"
-                    : "text-gray-500"
-                }`}
-              >
-                {step.title}
-              </p>
+              {index < steps.length - 1 && (
+                <div
+                  className={`w-16 h-0.5 mx-4 ${
+                    getStepStatus(step.number) === "completed"
+                      ? "bg-green-500"
+                      : "bg-gray-300"
+                  }     hidden sm:block`} // Hide on mobile (sm and below), show on larger screens`}
+                />
+              )}
             </div>
-            {index < steps.length - 1 && (
-              <div
-                className={`w-16 h-0.5 mx-4 ${
-                  getStepStatus(step.number) === "completed"
-                    ? "bg-green-500"
-                    : "bg-gray-300"
-                }     hidden sm:block`} // Hide on mobile (sm and below), show on larger screens`}
-              />
-            )}
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
 
       {/* Progress Bar */}
       <div className="mb-6">
@@ -452,7 +455,10 @@ export function StepByStepRangeCalculator({
                               {car.range_km} km yürüş məsafəsi
                             </p>
                           </div>
-                          <Badge className="bg-[#023e8a] text-white" variant="secondary">
+                          <Badge
+                            className="bg-[#023e8a] text-white"
+                            variant="secondary"
+                          >
                             ₼{car.price}
                           </Badge>
                         </div>

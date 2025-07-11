@@ -31,7 +31,7 @@ const CompareBar = () => {
             <button
               className={`px-6 py-2 rounded bg-[#023e8a] cursor-pointer text-white font-bold transition-all ${
                 selectedCars.length > 1
-                  ? "hover:bg-blue-700"
+                  ? "hover:bg-[#3575D4]"
                   : "opacity-50 cursor-not-allowed"
               }`}
               disabled={selectedCars.length <= 1}
@@ -43,7 +43,7 @@ const CompareBar = () => {
             </button>
             <button
               onClick={clear}
-              className="ml-4 px-6 rounded bg-[#caf0f8] py-2 text-gray-500 hover:text-gray-700 cursor-pointer"
+              className="ml-4 px-6 rounded bg-[#B00F23] hover:bg-[#E61951] py-2 text-white  cursor-pointer"
             >
               Hamısını sil
             </button>

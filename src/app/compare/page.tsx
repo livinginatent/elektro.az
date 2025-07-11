@@ -63,6 +63,20 @@ const CATEGORY_UNITS: Record<string, string> = {
   availability: "", // No unit
 };
 
+// Categories that should be neutral (no best/worst indication)
+const NEUTRAL_CATEGORIES = [
+  "brand",
+  "model",
+  "engine.engine_type",
+  "availability",
+];
+
+// Categories where lower values are better
+const LOWER_IS_BETTER = ["price", "acceleration", "charging_time"];
+
+// Categories where higher values are better
+const HIGHER_IS_BETTER = ["range_km", "engine.engine_power", "warranty"];
+
 // Get value for a car and category
 function getCarValue(car: any, category: string) {
   if (category.includes(".")) {
@@ -83,24 +97,82 @@ function getCarValueWithUnit(car: any, category: string) {
 const getBestValue = (cars: any[], category: string) => {
   const values = cars.map((car) => getCarValue(car, category));
 
-  if (
-    category === "price" ||
-    category === "acceleration" ||
-    category === "charging_time" // Now included as a regular category
-  ) {
+  if (LOWER_IS_BETTER.includes(category)) {
     const numericValues = values
       .map((v) => Number.parseFloat(v))
       .filter((v) => !isNaN(v));
     return numericValues.length > 0
       ? Math.min(...numericValues).toString()
       : null;
-  } else if (category === "range_km" || category === "engine.engine_power") {
+  } else if (HIGHER_IS_BETTER.includes(category)) {
     const numericValues = values
       .map((v) => Number.parseFloat(v))
       .filter((v) => !isNaN(v));
     return numericValues.length > 0
       ? Math.max(...numericValues).toString()
       : null;
+  }
+
+  return null;
+};
+
+// Get the worst value for comparison
+const getWorstValue = (cars: any[], category: string) => {
+  const values = cars.map((car) => getCarValue(car, category));
+
+  if (LOWER_IS_BETTER.includes(category)) {
+    const numericValues = values
+      .map((v) => Number.parseFloat(v))
+      .filter((v) => !isNaN(v));
+    return numericValues.length > 0
+      ? Math.max(...numericValues).toString()
+      : null;
+  } else if (HIGHER_IS_BETTER.includes(category)) {
+    const numericValues = values
+      .map((v) => Number.parseFloat(v))
+      .filter((v) => !isNaN(v));
+    return numericValues.length > 0
+      ? Math.min(...numericValues).toString()
+      : null;
+  }
+
+  return null;
+};
+
+// Get badge variant and text based on value performance
+const getValueBadge = (
+  value: string,
+  category: string,
+  bestValue: string | null,
+  worstValue: string | null
+) => {
+  if (NEUTRAL_CATEGORIES.includes(category) || value === "-") {
+    return null;
+  }
+
+  const numericValue = Number.parseFloat(value);
+  const numericBest = bestValue ? Number.parseFloat(bestValue) : null;
+  const numericWorst = worstValue ? Number.parseFloat(worstValue) : null;
+
+  if (numericBest === null || numericWorst === null || isNaN(numericValue)) {
+    return null;
+  }
+
+  // If there's only one unique value, don't show badges
+  if (numericBest === numericWorst) {
+    return null;
+  }
+
+  if (numericValue === numericBest) {
+    return {
+      variant: "default" as const,
+      className: "bg-green-100 text-green-800 border-green-200",
+    };
+  } else if (numericValue === numericWorst) {
+    return {
+      variant: "destructive" as const,
+      className: "bg-red-100 text-red-800 border-red-200",
+    };
   }
 
   return null;
@@ -146,9 +218,16 @@ export default function ComparePage() {
     acc[category] = getBestValue(selectedCars, category);
     return acc;
   }, {} as Record<string, string | null>);
+
+  const worstValues = COMPARE_CATEGORIES.reduce((acc, category) => {
+    acc[category] = getWorstValue(selectedCars, category);
+    return acc;
+  }, {} as Record<string, string | null>);
+
   const onClear = () => {
     clear();
   };
+
   return (
     <>
       <Header />
@@ -210,7 +289,7 @@ export default function ComparePage() {
                   whileHover={{ y: -5, scale: 1.02 }}
                   className="relative"
                 >
-                  <Card className="overflow-hidden border-2 border-slate-200 hover:border-[#023e8a] transition-all duration-300 shadow-lg hover:shadow-xl">
+                  <Card className="overflow-hidden rounded-sm border-2 border-slate-200 hover:border-[#023e8a] transition-all duration-300 shadow-lg hover:shadow-xl">
                     <CardContent className="p-4">
                       <motion.button
                         whileHover={{ scale: 1.1 }}
@@ -242,7 +321,7 @@ export default function ComparePage() {
                       <div className="flex items-center justify-between">
                         <Badge
                           variant="secondary"
-                          className="bg-blue-100 text-[#023e8a]"
+                          className="bg-blue-100  text-[#023e8a]"
                         >
                           #{index + 1}
                         </Badge>
@@ -270,10 +349,10 @@ export default function ComparePage() {
             initial={{ y: 40, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.3 }}
-            className="bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden"
+            className="bg-white rounded-sm shadow-xl border border-slate-200 overflow-hidden"
           >
-            <div className="overflow-x-auto">
-              <table className="w-full">
+            <div className="overflow-x-auto ">
+              <table className="w-full ">
                 <thead className="bg-gradient-to-r from-slate-50 to-blue-50">
                   <tr>
                     <th className="p-6 text-left font-semibold text-slate-700 border-b border-slate-200">
@@ -306,6 +385,7 @@ export default function ComparePage() {
                     {COMPARE_CATEGORIES.map((category, categoryIndex) => {
                       const Icon = CATEGORY_ICONS[category] || Car;
                       const bestValue = bestValues[category];
+                      const worstValue = worstValues[category];
 
                       return (
                         <motion.tr
@@ -326,14 +406,17 @@ export default function ComparePage() {
                             </div>
                           </td>
                           {selectedCars.map((car, carIndex) => {
+                            const value = getCarValue(car, category);
                             const valueWithUnit = getCarValueWithUnit(
                               car,
                               category
                             );
-                            const isBest =
-                              bestValue &&
-                              valueWithUnit === bestValue &&
-                              valueWithUnit !== "-";
+                            const badgeInfo = getValueBadge(
+                              value,
+                              category,
+                              bestValue,
+                              worstValue
+                            );
 
                             return (
                               <motion.td
@@ -348,22 +431,29 @@ export default function ComparePage() {
                                 }}
                                 className="p-6 border-b border-slate-100"
                               >
-                                <div className="flex items-center gap-2">
-                                  <span className="font-medium">
-                                    {valueWithUnit}
-                                  </span>
-                                  {isBest && (
+                                <div className="flex items-center">
+                                  {badgeInfo ? (
                                     <motion.div
-                                      initial={{ scale: 0 }}
-                                      animate={{ scale: 1 }}
+                                      initial={{ scale: 0, opacity: 0 }}
+                                      animate={{ scale: 1, opacity: 1 }}
                                       transition={{
                                         type: "spring",
                                         stiffness: 500,
                                         damping: 30,
+                                        delay: 0.1,
                                       }}
                                     >
-                                      {/* Add any special indicator for best value */}
+                                      <Badge
+                                        variant={badgeInfo.variant}
+                                        className={`${badgeInfo.className} rounded-xs text-md flex items-center gap-1`}
+                                      >
+                                        {valueWithUnit}
+                                      </Badge>
                                     </motion.div>
+                                  ) : (
+                                    <span className="font-medium">
+                                      {valueWithUnit}
+                                    </span>
                                   )}
                                 </div>
                               </motion.td>
@@ -377,6 +467,8 @@ export default function ComparePage() {
               </table>
             </div>
           </motion.div>
+
+          {/* Legend */}
 
           {/* Footer */}
           <motion.div
