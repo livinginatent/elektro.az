@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 
 import { useState } from "react";
@@ -135,7 +136,7 @@ export function ChargingStationDetails({
                   <p className="text-sm text-gray-700">{station.address}</p>
                 </div>
 
-                {station.phone && (
+                {/* {station.phone && (
                   <div className="flex items-center gap-2">
                     <Phone className="h-4 w-4 text-gray-500" />
                     <a
@@ -145,7 +146,7 @@ export function ChargingStationDetails({
                       {station.phone}
                     </a>
                   </div>
-                )}
+                )} */}
               </div>
             </CardContent>
           </Card>
@@ -209,20 +210,19 @@ export function ChargingStationDetails({
           </Card>
 
           {/* Additional Info */}
-          
 
           {/* Action Buttons */}
           <div className="flex gap-3 pt-2">
             <Button
               onClick={handleGetDirections}
-              className="flex-1 rounded-sm"
+              className="flex-1 rounded-sm cursor-pointer bg-[#023e8a]"
               disabled={isNavigating}
             >
               <Navigation className="h-4 w-4 mr-2" />
               {isNavigating ? "Açılır..." : "Yol göstər"}
             </Button>
 
-            {station.phone && (
+            {/* {station.phone && (
               <Button
                 variant="outline"
                 className="rounded-sm bg-transparent"
@@ -231,7 +231,7 @@ export function ChargingStationDetails({
                 <Phone className="h-4 w-4 mr-2" />
                 Zəng et
               </Button>
-            )}
+            )} */}
           </div>
         </div>
       </DialogContent>

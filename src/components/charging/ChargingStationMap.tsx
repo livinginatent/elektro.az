@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useMemo } from "react";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { Search, Navigation, Zap, Coffee, Clock, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -20,6 +21,8 @@ import { ChargingStationDetails } from "./ChargingStationDetails";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { ChargingPoint } from "@/app/types";
+import { useScreenSize } from "@/utils/getScreenSize";
+import { BsFillLightningChargeFill } from "react-icons/bs";
 
 // Fix for default markers in react-leaflet
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -96,6 +99,8 @@ export function ChargingStationMap({
   const [selectedStation, setSelectedStation] = useState<ChargingPoint | null>(
     null
   );
+  const { width } = useScreenSize();
+
   const [detailsModalOpen, setDetailsModalOpen] = useState(false);
   const [mapCenter, setMapCenter] = useState<[number, number]>([
     40.4093, 49.8671,
@@ -104,6 +109,7 @@ export function ChargingStationMap({
     null
   );
   const [showOnlyWithCafe, setShowOnlyWithCafe] = useState(false);
+  const [showOnlyWithWc, setShowOnlyWithWc] = useState(false);
   const [connectorFilter, setConnectorFilter] = useState<string>("all");
   const [sortBy, setSortBy] = useState<string>("distance");
 
@@ -206,6 +212,10 @@ export function ChargingStationMap({
       if (showOnlyWithCafe && !point.cafe) {
         return false;
       }
+      // WC filter
+      if (showOnlyWithWc && !point.wc) {
+        return false;
+      }
 
       // Connector filter
       if (connectorFilter !== "all") {
@@ -246,6 +256,7 @@ export function ChargingStationMap({
     connectorFilter,
     sortBy,
     userLocation,
+    showOnlyWithWc,
   ]);
 
   const handleStationSelect = (station: ChargingPoint) => {
@@ -278,13 +289,15 @@ export function ChargingStationMap({
   }, [chargingPoints]);
 
   return (
-    <div className="h-screen flex">
+    <div className="h-screen flex flex-col md:flex-row">
+      {" "}
       {/* Sidebar */}
-      <div className="w-1/3 bg-white border-r border-gray-200 flex flex-col">
+      <div className="w-full md:w-1/3 bg-white border-r border-gray-200 flex flex-col h-full">
+        {" "}
         {/* Header */}
         <div className="p-4 border-b border-gray-200">
           <h1 className="text-2xl font-bold text-gray-900 flex items-center gap-2 mb-4">
-            <Zap className="h-6 w-6 text-blue-600" />
+            <BsFillLightningChargeFill className="h-6 w-6 text-[#023e8a]" />
             Şarj Məntəqələri
           </h1>
 
@@ -302,13 +315,25 @@ export function ChargingStationMap({
           {/* Filters */}
           <div className="space-y-3">
             <div className="flex items-center justify-between">
-              <Label htmlFor="cafe-only" className="text-sm font-medium">
+              <Label htmlFor="cafe-only" className="text-sm font-medium ">
                 Kafe olan yerlər
               </Label>
               <Switch
+                className="cursor-pointer"
                 id="cafe-only"
                 checked={showOnlyWithCafe}
                 onCheckedChange={setShowOnlyWithCafe}
+              />
+            </div>
+            <div className="flex items-center justify-between">
+              <Label htmlFor="wc-only" className="text-sm font-medium">
+                Tualet olan yerlər
+              </Label>
+              <Switch
+                className="cursor-pointer"
+                id="wc-only"
+                checked={showOnlyWithWc}
+                onCheckedChange={setShowOnlyWithWc}
               />
             </div>
 
@@ -317,13 +342,19 @@ export function ChargingStationMap({
                 value={connectorFilter}
                 onValueChange={setConnectorFilter}
               >
-                <SelectTrigger className="rounded-sm">
+                <SelectTrigger className="rounded-sm cursor-pointer">
                   <SelectValue placeholder="Konnector" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">Bütün konnektorlar</SelectItem>
+                  <SelectItem className="cursor-pointer" value="all">
+                    Bütün konnektorlar
+                  </SelectItem>
                   {uniqueConnectorTypes.map((type) => (
-                    <SelectItem key={type} value={type}>
+                    <SelectItem
+                      className="cursor-pointer"
+                      key={type}
+                      value={type}
+                    >
                       {getConnectorDisplayName(type)}
                     </SelectItem>
                   ))}
@@ -331,12 +362,16 @@ export function ChargingStationMap({
               </Select>
 
               <Select value={sortBy} onValueChange={setSortBy}>
-                <SelectTrigger className="rounded-sm">
+                <SelectTrigger className="rounded-sm cursor-pointer">
                   <SelectValue placeholder="Sıralama" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="distance">Məsafəyə görə</SelectItem>
-                  <SelectItem value="name">Ada görə</SelectItem>
+                  <SelectItem className="cursor-pointer" value="distance">
+                    Məsafəyə görə
+                  </SelectItem>
+                  <SelectItem className="cursor-pointer" value="name">
+                    Ada görə
+                  </SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -346,7 +381,6 @@ export function ChargingStationMap({
             {filteredAndSortedPoints.length} məntəqə tapıldı
           </div>
         </div>
-
         {/* Station List */}
         <div className="flex-1 overflow-y-auto">
           <div className="p-4 space-y-3">
@@ -365,7 +399,7 @@ export function ChargingStationMap({
                   key={station._id}
                   className={`cursor-pointer transition-all hover:shadow-md rounded-sm ${
                     selectedStation?._id === station._id
-                      ? "ring-2 ring-blue-500"
+                      ? "ring-1 ring-[#023e8a]"
                       : ""
                   }`}
                   onClick={() => handleStationSelect(station)}
@@ -417,7 +451,7 @@ export function ChargingStationMap({
                         <Button
                           size="sm"
                           variant="outline"
-                          className="text-xs h-7 rounded-sm bg-transparent"
+                          className="text-xs h-7 rounded-sm bg-transparent cursor-pointer"
                           onClick={(e) => {
                             e.stopPropagation();
                             handleGetDirections(station);
@@ -429,7 +463,7 @@ export function ChargingStationMap({
                         <Button
                           size="sm"
                           variant="outline"
-                          className="text-xs h-7 rounded-sm bg-transparent"
+                          className="text-xs h-7 rounded-sm bg-transparent cursor-pointer"
                           onClick={(e) => {
                             e.stopPropagation();
                             handleShowDetails(station);
@@ -437,7 +471,7 @@ export function ChargingStationMap({
                         >
                           Ətraflı
                         </Button>
-                        {station.phone && (
+                        {/*  {station.phone !== " " && (
                           <Button
                             size="sm"
                             variant="outline"
@@ -452,7 +486,7 @@ export function ChargingStationMap({
                             <Phone className="h-3 w-3 mr-1" />
                             Zəng et
                           </Button>
-                        )}
+                        )} */}
                       </div>
                     </div>
                   </CardContent>
@@ -472,28 +506,28 @@ export function ChargingStationMap({
           </div>
         </div>
       </div>
-
       {/* Map */}
-      <div className="flex-1 relative">
-        <MapContainer
-          center={mapCenter}
-          zoom={13}
-          style={{ height: "100%", width: "100%" }}
-          className="z-0"
-        >
-          <TileLayer
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          />
+      {width > 768 && (
+        <div className="flex-1 relative">
+          <MapContainer
+            center={mapCenter}
+            zoom={13}
+            style={{ height: "100%", width: "100%" }}
+            className="z-0"
+          >
+            <TileLayer
+              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            />
 
-          <MapController center={mapCenter} />
+            <MapController center={mapCenter} />
 
-          {/* User location marker */}
-          {userLocation && (
-            <Marker
-              position={userLocation}
-              icon={L.divIcon({
-                html: `
+            {/* User location marker */}
+            {userLocation && (
+              <Marker
+                position={userLocation}
+                icon={L.divIcon({
+                  html: `
                   <div style="
                     background-color: #3b82f6;
                     width: 20px;
@@ -503,152 +537,152 @@ export function ChargingStationMap({
                     box-shadow: 0 2px 4px rgba(0,0,0,0.3);
                   "></div>
                 `,
-                className: "user-location-icon",
-                iconSize: [20, 20],
-                iconAnchor: [10, 10],
-              })}
-            >
-              <Popup>
-                <div className="text-center">
-                  <p className="font-semibold">Sizin yerləşdiyiniz yer</p>
-                </div>
-              </Popup>
-            </Marker>
-          )}
+                  className: "user-location-icon",
+                  iconSize: [20, 20],
+                  iconAnchor: [10, 10],
+                })}
+              >
+                <Popup>
+                  <div className="text-center">
+                    <p className="font-semibold">Sizin yerləşdiyiniz yer</p>
+                  </div>
+                </Popup>
+              </Marker>
+            )}
 
-          {/* Charging station markers */}
-          {filteredAndSortedPoints.map((station) => (
-            <Marker
-              key={station._id}
-              position={[
-                station.geometry.coordinates[1],
-                station.geometry.coordinates[0],
-              ]}
-              icon={createChargingIcon(station.cafe, station.wc)}
-              eventHandlers={{
-                click: () => handleStationSelect(station),
-              }}
-            >
-              <Popup>
-                <div className="min-w-[250px]">
-                  <h3 className="font-semibold text-gray-900 mb-2">
-                    {station.name}
-                  </h3>
-                  <p className="text-sm text-gray-600 mb-3">
-                    {station.address}
-                  </p>
+            {/* Charging station markers */}
+            {filteredAndSortedPoints.map((station) => (
+              <Marker
+                key={station._id}
+                position={[
+                  station.geometry.coordinates[1],
+                  station.geometry.coordinates[0],
+                ]}
+                icon={createChargingIcon(station.cafe, station.wc)}
+                eventHandlers={{
+                  click: () => handleStationSelect(station),
+                }}
+              >
+                <Popup>
+                  <div className="min-w-[250px]">
+                    <h3 className="font-semibold text-gray-900 mb-2">
+                      {station.name}
+                    </h3>
+                    <p className="text-sm text-gray-600 mb-3">
+                      {station.address}
+                    </p>
 
-                  <div className="space-y-2 mb-3">
-                    <div className="flex flex-wrap gap-1">
-                      {station.cafe && (
-                        <Badge variant="secondary" className="text-xs">
-                          <Coffee className="h-3 w-3 mr-1" />
-                          Kafe
-                        </Badge>
-                      )}
-                      {station.wc && (
-                        <Badge variant="secondary" className="text-xs">
-                          🚻 Tualet
-                        </Badge>
-                      )}
-                    </div>
-
-                    <div className="text-sm text-gray-600">
-                      <p>
-                        <strong>Konnektorlar:</strong>
-                      </p>
-                      <div className="flex flex-wrap gap-1 mt-1">
-                        {station.types?.map((type, index) => (
-                          <Badge
-                            key={index}
-                            variant="outline"
-                            className="text-xs"
-                          >
-                            {getConnectorDisplayName(type)}
+                    <div className="space-y-2 mb-3">
+                      <div className="flex flex-wrap gap-1">
+                        {station.cafe && (
+                          <Badge variant="secondary" className="text-xs">
+                            <Coffee className="h-3 w-3 mr-1" />
+                            Kafe
                           </Badge>
-                        ))}
+                        )}
+                        {station.wc && (
+                          <Badge variant="secondary" className="text-xs">
+                            🚻 Tualet
+                          </Badge>
+                        )}
+                      </div>
+
+                      <div className="text-sm text-gray-600">
+                        <p>
+                          <strong>Konnektorlar:</strong>
+                        </p>
+                        <div className="flex flex-wrap gap-1 mt-1">
+                          {station.types?.map((type, index) => (
+                            <Badge
+                              key={index}
+                              variant="outline"
+                              className="text-xs"
+                            >
+                              {getConnectorDisplayName(type)}
+                            </Badge>
+                          ))}
+                        </div>
+                      </div>
+
+                      <div className="flex items-center gap-1 text-sm text-gray-600">
+                        <Clock className="h-4 w-4" />
+                        <span>
+                          {getWorkingHoursDisplay(station.working_hours)}
+                        </span>
                       </div>
                     </div>
 
-                    <div className="flex items-center gap-1 text-sm text-gray-600">
-                      <Clock className="h-4 w-4" />
-                      <span>
-                        {getWorkingHoursDisplay(station.working_hours)}
-                      </span>
-                    </div>
-                  </div>
-
-                  <div className="flex gap-2">
-                    <Button
-                      size="sm"
-                      className="flex-1 rounded-sm"
-                      onClick={() => handleGetDirections(station)}
-                    >
-                      <Navigation className="h-4 w-4 mr-1" />
-                      Yol göstər
-                    </Button>
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      className="rounded-sm bg-transparent"
-                      onClick={() => handleShowDetails(station)}
-                    >
-                      Ətraflı
-                    </Button>
-                    {station.phone && (
+                    <div className="flex gap-2">
+                      <Button
+                        size="sm"
+                        className="flex-1 rounded-sm cursor-pointer"
+                        onClick={() => handleGetDirections(station)}
+                      >
+                        <Navigation className="h-4 w-4 mr-1" />
+                        Yol göstər
+                      </Button>
                       <Button
                         size="sm"
                         variant="outline"
-                        className="rounded-sm bg-transparent"
-                        onClick={() =>
-                          typeof window !== "undefined" &&
-                          window.open(`tel:${station.phone}`, "_self")
-                        }
+                        className="rounded-sm bg-transparent cursor-pointer"
+                        onClick={() => handleShowDetails(station)}
                       >
-                        <Phone className="h-4 w-4" />
+                        Ətraflı
                       </Button>
-                    )}
+                      {/* {station.phone !== " " && (
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          className="rounded-sm bg-transparent"
+                          onClick={() =>
+                            typeof window !== "undefined" &&
+                            window.open(`tel:${station.phone}`, "_self")
+                          }
+                        >
+                          <Phone className="h-4 w-4" />
+                        </Button>
+                      )} */}
+                    </div>
                   </div>
-                </div>
-              </Popup>
-            </Marker>
-          ))}
-        </MapContainer>
+                </Popup>
+              </Marker>
+            ))}
+          </MapContainer>
 
-        {/* Map Legend */}
-        <Card className="absolute top-4 right-4 z-[1000] rounded-sm">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm">Xəritə açarı</CardTitle>
-          </CardHeader>
-          <CardContent className="pt-0">
-            <div className="space-y-2 text-xs">
-              <div className="flex items-center gap-2">
-                <div className="w-4 h-4 bg-green-500 rounded-full flex items-center justify-center text-white text-xs">
-                  ⚡
+          {/* Map Legend */}
+          <Card className="absolute top-4 right-4 z-[1000] rounded-sm">
+            <CardHeader className="pb-2">
+              <CardTitle className="text-sm">Xəritə açarı</CardTitle>
+            </CardHeader>
+            <CardContent className="pt-0">
+              <div className="space-y-2 text-xs">
+                <div className="flex items-center gap-2">
+                  <div className="w-4 h-4 bg-green-500 rounded-full flex items-center justify-center text-white text-xs">
+                    ⚡
+                  </div>
+                  <span>Şarj məntəqəsi</span>
                 </div>
-                <span>Şarj məntəqəsi</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-4 h-4 bg-green-500 rounded-full flex items-center justify-center text-white text-xs relative">
-                  ⚡<div className="absolute -top-1 -right-1 text-xs">☕</div>
+                <div className="flex items-center gap-2">
+                  <div className="w-4 h-4 bg-green-500 rounded-full flex items-center justify-center text-white text-xs relative">
+                    ⚡<div className="absolute -top-1 -right-1 text-xs">☕</div>
+                  </div>
+                  <span>Kafe ilə</span>
                 </div>
-                <span>Kafe ilə</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-4 h-4 bg-green-500 rounded-full flex items-center justify-center text-white text-xs relative">
-                  ⚡<div className="absolute -top-1 -right-1 text-xs">🚻</div>
+                <div className="flex items-center gap-2">
+                  <div className="w-4 h-4 bg-green-500 rounded-full flex items-center justify-center text-white text-xs relative">
+                    ⚡<div className="absolute -top-1 -right-1 text-xs">🚻</div>
+                  </div>
+                  <span>Tualet ilə</span>
                 </div>
-                <span>Tualet ilə</span>
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
+                  <span>Sizin yeriniz</span>
+                </div>
               </div>
-              <div className="flex items-center gap-2">
-                <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
-                <span>Sizin yeriniz</span>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-
+            </CardContent>
+          </Card>
+        </div>
+      )}
       {/* Details Modal */}
       {selectedStation && (
         <ChargingStationDetails
