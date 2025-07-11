@@ -49,8 +49,8 @@ export interface EVCars {
   safety: string[];
   id: string | null | number;
   dealership: Dealership;
-  exterior:string[]
-  fuel_consumption:number
+  exterior: string[];
+  fuel_consumption: number;
 }
 
 export interface QuickTool {
@@ -73,6 +73,54 @@ export const COMPARE_CATEGORIES = [
   "warranty",
   "availability",
 ] as const;
+
+export interface ChargingPoint {
+  _id: string;
+  address: string;
+  cafe: boolean;
+  geometry: {
+    coordinates: [number, number];
+    type: "Point";
+  };
+  name?: string;
+  operator?: string;
+  power?: number | null; // kW
+  connector_types?: string[];
+  availability?: "available" | "occupied" | "out_of_service";
+  price?: number | null; // qəpik per kWh
+  opening_hours?: {
+    active: boolean;
+    start: number;
+    end: number;
+    name: string;
+  }[];
+  phone?: string;
+  amenities?: string[];
+  rating?: number | null;
+  reviews_count?: number | null;
+  last_updated?: string | null;
+  // Added for compatibility with data and code usage:
+  types: string[];
+  wc: boolean;
+  quantity: string;
+  working_hours: {
+    active: boolean;
+    start: number;
+    end: number;
+    name: string;
+  }[];
+}
+
+export interface ChargingFilter {
+  availability?: string[];
+  powerRange?: {
+    min: number;
+    max: number;
+  };
+  connectorTypes?: string[];
+  amenities?: string[];
+  maxDistance?: number;
+}
 
 export type CompareCategory = (typeof COMPARE_CATEGORIES)[number];
 
