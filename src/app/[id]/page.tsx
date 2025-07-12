@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, use } from "react";
 import { useRouter } from "next/navigation";
 import { EVCars } from "../types";
 import { createClient } from "../utils/supabase/client";
@@ -12,7 +12,8 @@ interface CarPageProps {
   params: Promise<{ id: string }>;
 }
 
-export default function CarPage({ params }: CarPageProps) {
+export default function CarPage(props: CarPageProps) {
+  const params = use(props.params);
   const router = useRouter();
   const [car, setCar] = useState<EVCars | undefined>(undefined);
   const [loading, setLoading] = useState(true);
