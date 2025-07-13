@@ -82,7 +82,6 @@ export function ShareModal({
 📊 Nəticə: ${estimatedRange} km (${batteryLevel}% batareya)
 📈 Baza məsafəsi: ${originalRange} km
 📉 Dəyişiklik: ${rangeDifferenceText} km
-
 🌡️ Temperatur: ${conditions.temperature}°C
 🚗 Sürücülük: ${conditions.drivingStyle}
 🛣️ Ərazi: ${conditions.terrain}
