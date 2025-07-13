@@ -36,7 +36,7 @@ interface ShareModalProps {
     acUsage: string;
     averageSpeed: number;
   };
-  // Blog specific props
+  //Blog specific props
   blogTitle?: string;
   blogExcerpt?: string;
   blogAuthor?: string;
