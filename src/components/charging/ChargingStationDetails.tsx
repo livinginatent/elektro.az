@@ -215,7 +215,7 @@ export function ChargingStationDetails({
           <div className="flex gap-3 pt-2">
             <Button
               onClick={handleGetDirections}
-              className="flex-1 rounded-sm cursor-pointer bg-[#023e8a]"
+              className="flex-1 rounded-sm cursor-pointer bg-custom-blue"
               disabled={isNavigating}
             >
               <Navigation className="h-4 w-4 mr-2" />

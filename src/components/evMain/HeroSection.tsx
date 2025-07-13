@@ -1,9 +1,9 @@
 "use client";
 
-import { Calculator } from "lucide-react";
 import { Button } from "../ui/button";
 import { colors } from "@/utils/colors";
 import { useRouter } from "next/navigation";
+import { FaMagnifyingGlass } from "react-icons/fa6";
 
 interface HeroSectionProps {
   title?: string;
@@ -16,7 +16,7 @@ export function HeroSection({
   title = "Elektrikli və hibrid avtomobillər",
   subtitle = "İstəklərinizə cavab verən elektrik & hibrid avtomobili tapın, müqayisə edin. Real qiymətlər, məsafə kalkulyatoru, və ən son yeniliklər bir yerdə.",
   primaryButtonText = "Avtomobillərə bax",
-  secondaryButtonText = "Yürüş məsafəsini hesabla",
+  secondaryButtonText = "Uyğun avtomobil tapın",
 }: HeroSectionProps) {
   const router = useRouter();
 
@@ -40,8 +40,8 @@ export function HeroSection({
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
           <Button
             size="lg"
-            className="text-lg  px-8 hover:bg-[#023e8a] transition-colors cursor-pointer"
-            onClick={() => router.push("/electric-vehicles")}
+            className="text-lg  px-8 hover:bg-custom-blue transition-colors cursor-pointer"
+            onClick={() => router.push("/cars")}
           >
             {primaryButtonText}
           </Button>
@@ -51,7 +51,7 @@ export function HeroSection({
             className="text-lg px-8 bg-transparent text-white cursor-pointer"
             onClick={() => router.push("/range-calculator")}
           >
-            <Calculator className="h-5 w-5 mr-2 " />
+            <FaMagnifyingGlass className="h-5 w-5 mr-2 " />
             {secondaryButtonText}
           </Button>
         </div>

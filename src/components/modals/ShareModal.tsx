@@ -345,7 +345,7 @@ Procar.az-da daha çox faydalı məlumat üçün! 🚗⚡`;
                       </p>
                     </div>
                     {carPrice && (
-                      <p className="font-semibold text-[#023e8a] text-xl">
+                      <p className="font-semibold text-custom-blue text-xl">
                         ₼{carPrice}
                       </p>
                     )}

@@ -9,8 +9,7 @@ import {
   Zap,
   Users,
   MapPin,
-  Heart,
-  Share2,
+
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -150,7 +149,7 @@ export function CarFinderResults({
   });
 
   const handleViewDetails = (car: EVCars) => {
-    router.push(`/cars/${car.id}`);
+    router.push(`/${car.id}`);
   };
 
   const getAvailabilityBadge = (availability: string) => {
@@ -174,14 +173,14 @@ export function CarFinderResults({
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
       <Header />
 
-      <div className="container px-4 py-8">
+      <div className="mx-auto max-w-7xl px-4 py-8">
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-center justify-between mb-8">
           <div>
             <Button
               onClick={onStartOver}
               variant="outline"
-              className="mb-4 md:mb-0 rounded-sm bg-transparent"
+              className="mb-4 md:mb-0 rounded-sm bg-transparent cursor-pointer"
             >
               <ArrowLeft className="h-4 w-4 mr-2" />
               Yenidən başla
@@ -196,7 +195,7 @@ export function CarFinderResults({
 
           <div className="flex flex-col sm:flex-row gap-3">
             <Select value={sortBy} onValueChange={setSortBy}>
-              <SelectTrigger className="w-full sm:w-[180px] rounded-sm">
+              <SelectTrigger className="w-full  rounded-sm">
                 <SortAsc className="h-4 w-4 mr-2" />
                 <SelectValue placeholder="Sıralama" />
               </SelectTrigger>
@@ -212,7 +211,7 @@ export function CarFinderResults({
             <Button
               variant="outline"
               onClick={() => setShowFilters(!showFilters)}
-              className="rounded-sm bg-transparent"
+              className="rounded-sm bg-transparent cursor-pointer"
             >
               <Filter className="h-4 w-4 mr-2" />
               Filtrlər
@@ -259,7 +258,10 @@ export function CarFinderResults({
               <p className="text-gray-600 mb-4">
                 Seçimlərinizə uyğun avtomobil yoxdur. Filtrlərə yenidən baxın.
               </p>
-              <Button onClick={onStartOver} className="rounded-sm">
+              <Button
+                onClick={onStartOver}
+                className="rounded-sm cursor-pointer"
+              >
                 Yenidən cəhd edin
               </Button>
             </CardContent>
@@ -358,7 +360,7 @@ export function CarFinderResults({
                         </p>
                         <div className="flex flex-wrap gap-1">
                           {preferences.bodyTypes.includes(car.body_type) && (
-                            <Badge variant="secondary" className="text-xs">
+                            <Badge  variant="secondary" className="text-xs">
                               Növ uyğun
                             </Badge>
                           )}
@@ -387,25 +389,13 @@ export function CarFinderResults({
                       {/* Action Buttons */}
                       <div className="flex gap-2">
                         <Button
-                          className="flex-1 rounded-sm"
+                          className="flex-1 rounded-sm cursor-pointer"
                           onClick={() => handleViewDetails(car)}
                         >
                           Ətraflı bax
                         </Button>
-                        <Button
-                          variant="outline"
-                          size="icon"
-                          className="rounded-sm bg-transparent"
-                        >
-                          <Heart className="h-4 w-4" />
-                        </Button>
-                        <Button
-                          variant="outline"
-                          size="icon"
-                          className="rounded-sm bg-transparent"
-                        >
-                          <Share2 className="h-4 w-4" />
-                        </Button>
+                  
+                     
                       </div>
                     </div>
                   </CardContent>
@@ -418,7 +408,10 @@ export function CarFinderResults({
         {/* Load More */}
         {cars.length > 0 && (
           <div className="text-center mt-12">
-            <Button variant="outline" className="rounded-sm bg-transparent">
+            <Button
+              variant="outline"
+              className="rounded-sm bg-transparent cursor-pointer"
+            >
               Daha çox göstər
             </Button>
           </div>

@@ -66,7 +66,7 @@ export function EVGrid({ cars, showViewAll = true, page }: EVGridProps) {
           <Button
             className="mt-4 cursor-pointer"
             variant="outline"
-            onClick={() => router.push("/electric-vehicles")}
+            onClick={() => router.push("/cars")}
           >
             Bütün avtomobillər
           </Button>
@@ -79,7 +79,7 @@ export function EVGrid({ cars, showViewAll = true, page }: EVGridProps) {
               key={filter.key}
               className={`px-4 py-2 rounded-xs transition-all duration-200 cursor-pointer ${
                 activeFilter === filter.key
-                  ? "bg-[#023e8a] hover:bg-sky-600 text-white shadow-lg"
+                  ? "bg-custom-blue hover:bg-sky-600 text-white shadow-lg"
                   : "bg-[#1d242a] text-white hover:bg-slate-700"
               }`}
               onClick={() => handleFilterClick(filter.key)}
@@ -116,7 +116,7 @@ export function EVGrid({ cars, showViewAll = true, page }: EVGridProps) {
           <Button
             className="mt-4 cursor-pointer w-full"
             variant="outline"
-            onClick={() => router.push("/electric-vehicles")}
+            onClick={() => router.push("/cars")}
           >
             Bütün avtomobillər
           </Button>

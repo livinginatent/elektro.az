@@ -204,7 +204,7 @@ export default function ComparePage() {
           </p>
           <Button
             onClick={() => router.push("/")}
-            className="px-6 py-2 rounded bg-[#023e8a] cursor-pointer text-white font-bold transition-all rounded-lg   hover:scale-105"
+            className="px-6 py-2 rounded bg-custom-blue cursor-pointer text-white font-bold transition-all rounded-lg   hover:scale-105"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
             Geri
@@ -214,15 +214,21 @@ export default function ComparePage() {
     );
   }
 
-  const bestValues = COMPARE_CATEGORIES.reduce((acc, category) => {
-    acc[category] = getBestValue(selectedCars, category);
-    return acc;
-  }, {} as Record<string, string | null>);
+  const bestValues = COMPARE_CATEGORIES.reduce(
+    (acc, category) => {
+      acc[category] = getBestValue(selectedCars, category);
+      return acc;
+    },
+    {} as Record<string, string | null>
+  );
 
-  const worstValues = COMPARE_CATEGORIES.reduce((acc, category) => {
-    acc[category] = getWorstValue(selectedCars, category);
-    return acc;
-  }, {} as Record<string, string | null>);
+  const worstValues = COMPARE_CATEGORIES.reduce(
+    (acc, category) => {
+      acc[category] = getWorstValue(selectedCars, category);
+      return acc;
+    },
+    {} as Record<string, string | null>
+  );
 
   const onClear = () => {
     clear();
@@ -289,7 +295,7 @@ export default function ComparePage() {
                   whileHover={{ y: -5, scale: 1.02 }}
                   className="relative"
                 >
-                  <Card className="overflow-hidden rounded-sm border-2 border-slate-200 hover:border-[#023e8a] transition-all duration-300 shadow-lg hover:shadow-xl">
+                  <Card className="overflow-hidden rounded-sm border-2 border-slate-200 hover:border-custom-blue transition-all duration-300 shadow-lg hover:shadow-xl">
                     <CardContent className="p-4">
                       <motion.button
                         whileHover={{ scale: 1.1 }}
@@ -321,7 +327,7 @@ export default function ComparePage() {
                       <div className="flex items-center justify-between">
                         <Badge
                           variant="secondary"
-                          className="bg-blue-100  text-[#023e8a]"
+                          className="bg-blue-100  text-custom-blue"
                         >
                           #{index + 1}
                         </Badge>
@@ -364,7 +370,7 @@ export default function ComparePage() {
                         className="p-6 text-left font-semibold text-slate-700 border-b border-slate-200"
                       >
                         <div className="flex items-center gap-3">
-                          <div className="w-8 h-8 bg-[#023e8a] rounded-lg flex items-center justify-center">
+                          <div className="w-8 h-8 bg-custom-blue rounded-lg flex items-center justify-center">
                             <span className="text-white text-sm font-bold">
                               {index + 1}
                             </span>

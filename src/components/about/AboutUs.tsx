@@ -45,7 +45,7 @@ export function AboutUsPage() {
               Haqqımızda
             </Badge>
             <h1 className="text-4xl md:text-6xl font-bold text-gray-900 leading-tight">
-              <span className="text-[#023e8a]"> Elektrik </span>
+              <span className="text-custom-blue"> Elektrik </span>
               Nəqliyyatın Gələcəyini Formalaşdırırıq
             </h1>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
@@ -120,7 +120,7 @@ export function AboutUsPage() {
                 className="rounded-sm text-center p-6 bg-white shadow-lg hover:shadow-xl transition-shadow"
               >
                 <CardContent className="p-0">
-                  <stat.icon className="h-12 w-12 text-[#023e8a] mx-auto mb-4" />
+                  <stat.icon className="h-12 w-12 text-custom-blue mx-auto mb-4" />
                   <div className="text-3xl font-bold text-gray-900 mb-2">
                     {stat.number}
                   </div>
@@ -210,7 +210,6 @@ export function AboutUsPage() {
         <WhatWeDoSection />
 
         {/* CTA Section */}
-       
       </div>
       <Footer />
     </>

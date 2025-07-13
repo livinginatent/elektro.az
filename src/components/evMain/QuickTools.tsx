@@ -5,6 +5,7 @@ import { Button } from "../ui/button";
 import { QuickTool } from "@/app/types";
 import Manat from "@/app/compare/manat";
 import { useRouter } from "next/navigation";
+import { FaMagnifyingGlass } from "react-icons/fa6";
 
 interface QuickToolsProps {
   tools?: QuickTool[];
@@ -13,12 +14,12 @@ interface QuickToolsProps {
 
 const defaultTools: QuickTool[] = [
   {
-    icon: Calculator,
-    title: "Yürüş məsafəsi kalkulyatoru",
+    icon: FaMagnifyingGlass,
+    title: "Elektrik vəya hibrid avtomobilinizi tapın",
     description:
-      "Yol vəziyyəti və sürüş vərdişinizə əsasən elektromobilinizin sürüş məsafəsini hesablayın.",
-    buttonText: "Kalkulyatoru yoxlayın",
-    href: "/range-calculator",
+      "Sizə ən uyğun elektrik vəya hibrid avtomobili 90 saniyə ərzində tapın",
+    buttonText: "Avtomobilinizi tapın",
+    href: "/find-car",
   },
   {
     icon: MapPin,
@@ -27,6 +28,14 @@ const defaultTools: QuickTool[] = [
       "Sizə yaxın olan elektrik doldurma məntəqələrini xəritədən tapın.",
     buttonText: "EDM tapın",
     href: "/charger",
+  },
+  {
+    icon: Calculator,
+    title: "Yürüş məsafəsi kalkulyatoru",
+    description:
+      "Yol vəziyyəti və sürüş vərdişinizə əsasən elektromobilinizin sürüş məsafəsini hesablayın.",
+    buttonText: "Kalkulyatoru yoxlayın",
+    href: "/range-calculator",
   },
   {
     icon: Manat,
@@ -48,13 +57,13 @@ export function QuickTools({
       <h2 className="text-3xl font-bold text-gray-900 text-center mb-12">
         {title}
       </h2>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-6 max-w-6xl mx-auto">
         {tools.map((tool, index) => (
           <Card
             key={index}
             className="text-center p-6 hover:shadow-lg transition-shadow flex flex-col h-full"
           >
-            <tool.icon className="h-12 w-12 text-[#023e8a] mx-auto mb-4" />
+            <tool.icon className="h-12 w-12 text-custom-blue mx-auto mb-4" />
             <h3 className="text-xl font-bold mb-2">{tool.title}</h3>
             <p className="text-gray-600 mb-4 flex-grow">{tool.description}</p>
             <Button

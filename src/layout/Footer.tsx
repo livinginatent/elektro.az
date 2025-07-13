@@ -19,17 +19,18 @@ interface FooterProps {
 
 const defaultSections: FooterSection[] = [
   {
-    title: "Kəşf et",
-    links: [
-      { label: "Elektrik & Hibrid Avtomobillər", href: "/cars" },
-      { label: "Elektrik Doldurma Məntəqələri", href: "/charge" },
-    ],
-  },
-  {
     title: "Alətlər",
     links: [
       { label: "Yürüş məsafəsi kalkulyatoru", href: "/range-calculator" },
       { label: "Maliyyət kalkulyatoru", href: "/cost" },
+      { label: "Ən uyğun avtomobili tapın", href: "/find-car" },
+    ],
+  },
+  {
+    title: "Kəşf et",
+    links: [
+      { label: "Elektrik & Hibrid Avtomobillər", href: "/cars" },
+      { label: "Elektrik Doldurma Məntəqələri", href: "/charge" },
     ],
   },
   {

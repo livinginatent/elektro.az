@@ -1,16 +1,14 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   ChevronRight,
   ChevronLeft,
   Search,
-  Car,
   Zap,
   Users,
-  DollarSign,
   Route,
-  Battery,
+
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -19,12 +17,17 @@ import { Progress } from "@/components/ui/progress";
 import { Slider } from "@/components/ui/slider";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Header } from "@/layout/Header";
 import { Footer } from "@/layout/Footer";
 import { EVCars } from "@/app/types";
 import { CarFinderResults } from "./CarFinderResults";
 import { createClient } from "@/app/utils/supabase/client";
+import Manat from "@/app/compare/manat";
+import { colors } from "@/utils/colors";
+import { IoCarSport, IoSpeedometerOutline } from "react-icons/io5";
+import SuvIcon from "./SuvIcon";
+import { FaRoad } from "react-icons/fa6";
+import { GiBatteryPack } from "react-icons/gi";
 
 interface UserPreferences {
   budget: [number, number];
@@ -38,11 +41,11 @@ interface UserPreferences {
 }
 
 const steps = [
-  { id: 1, title: "Büdcə", icon: DollarSign },
+  { id: 1, title: "Büdcə", icon: Manat },
   { id: 2, title: "İstifadə", icon: Route },
-  { id: 3, title: "Avtomobil növü", icon: Car },
+  { id: 3, title: "Növ", icon: IoCarSport },
   { id: 4, title: "Oturacaq", icon: Users },
-  { id: 5, title: "Məsafə", icon: Battery },
+  { id: 5, title: "Məsafə", icon: FaRoad },
   { id: 6, title: "Şarj", icon: Zap },
   { id: 7, title: "Nəticələr", icon: Search },
 ];
@@ -54,7 +57,12 @@ const bodyTypeOptions = [
     icon: "🚗",
     description: "Klassik və rahat",
   },
-  { value: "SUV", label: "SUV", icon: "🚙", description: "Böyük və güclü" },
+  {
+    value: "SUV",
+    label: "SUV",
+    icon: <SuvIcon width={64} height={64} />,
+    description: "Böyük və güclü",
+  },
   {
     value: "Minivan",
     label: "Minivan",
@@ -111,8 +119,8 @@ const chargingOptions = [
 ];
 
 const priorityFeatures = [
-  { value: "range", label: "Uzun məsafə", icon: "🔋" },
-  { value: "speed", label: "Sürət", icon: "⚡" },
+  { value: "range", label: "Uzun məsafə", icon: <GiBatteryPack/> },
+  { value: "speed", label: "Sürət", icon: IoSpeedometerOutline },
   { value: "luxury", label: "Lüks", icon: "✨" },
   { value: "efficiency", label: "Qənaət", icon: "🌱" },
   { value: "technology", label: "Texnologiya", icon: "📱" },
@@ -134,9 +142,11 @@ export default function CarFinderPage() {
   const [showResults, setShowResults] = useState(false);
   const [matchedCars, setMatchedCars] = useState<EVCars[]>([]);
   const [cars, setCars] = useState<EVCars[]>([]);
-  function getUnique<T, K extends keyof T>(arr: T[], key: K): T[K][] {
-    return Array.from(new Set(arr.map((item) => item[key]))).filter(Boolean) as T[K][];
-  }
+/*   function getUnique<T, K extends keyof T>(arr: T[], key: K): T[K][] {
+    return Array.from(new Set(arr.map((item) => item[key]))).filter(
+      Boolean
+    ) as T[K][];
+  } */
   // Get unique brands from data
   /*   const availableBrands1 = [...new Set(evCarsData.map((car:EVCars) => car.brand))].sort()
    */ useEffect(() => {
@@ -149,11 +159,14 @@ export default function CarFinderPage() {
   }, []);
 
   // Get filter options only when cars data is available
-  const availableBrands = useMemo(
+/*   const availableBrands = useMemo(
     () => (cars ? getUnique(cars, "brand") : []),
     [cars]
-  );
-  const updatePreferences = <K extends keyof UserPreferences>(key: K, value: UserPreferences[K]) => {
+  ); */
+  const updatePreferences = <K extends keyof UserPreferences>(
+    key: K,
+    value: UserPreferences[K]
+  ) => {
     setPreferences((prev) => ({ ...prev, [key]: value }));
   };
 
@@ -301,10 +314,10 @@ export default function CarFinderPage() {
         {/* Header */}
         <div className="text-center mb-8">
           <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-            Mükəmməl EV-nizi Tapın
+            Sizə uyğun elektrik vəya hibrid avtomobili tapın!
           </h1>
           <p className="text-gray-600 text-lg">
-            Bir neçə sadə sual cavablandıraraq sizə uyğun elektrik avtomobilini
+            Bir neçə sadə sual cavablandıraraq sizə ən uyğun elektrik vəya avtomobili
             tapın
           </p>
         </div>
@@ -312,7 +325,8 @@ export default function CarFinderPage() {
         {/* Progress Steps - Mobile Optimized */}
         <div className="mb-8">
           {/* Desktop Progress */}
-          <div className="hidden md:flex items-center justify-between mb-6">
+          <div className="flex flex-col md:flex-row lg:flex-row items-center justify-between  mb-8">
+            {" "}
             {steps.map((step, index) => {
               const Icon = step.icon;
               return (
@@ -321,16 +335,16 @@ export default function CarFinderPage() {
                     <div
                       className={`w-12 h-12 rounded-full flex items-center justify-center border-2 transition-all ${
                         step.id <= currentStep
-                          ? "bg-blue-600 border-blue-600 text-white"
+                          ? "bg-custom-blue border-custom-blue text-white"
                           : "bg-gray-100 border-gray-300 text-gray-400"
                       }`}
                     >
                       {Icon && <Icon className="h-6 w-6" />}
                     </div>
                     <p
-                      className={`text-xs mt-2 text-center ${
+                      className={`text-xs mt-2  text-center  ${
                         step.id === currentStep
-                          ? "text-blue-600 font-semibold"
+                          ? "text-custom-blue font-semibold"
                           : "text-gray-500"
                       }`}
                     >
@@ -339,7 +353,7 @@ export default function CarFinderPage() {
                   </div>
                   {index < steps.length - 1 && (
                     <div
-                      className={`w-16 h-0.5 mx-4 ${step.id < currentStep ? "bg-blue-600" : "bg-gray-300"}`}
+                      className={`w-16 h-0.5 mx-4 ${step.id < currentStep ? "bg-custom-blue" : "bg-gray-300"}`}
                     />
                   )}
                 </div>
@@ -368,7 +382,7 @@ export default function CarFinderPage() {
         <Card className="rounded-sm min-h-[500px]">
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-xl md:text-2xl">
-              {StepIcon && <StepIcon className="h-6 w-6 text-blue-600" />}
+              {StepIcon && <StepIcon className="h-6 w-6 text-custom-blue" />}
               {steps[currentStep - 1].title}
             </CardTitle>
           </CardHeader>
@@ -376,8 +390,7 @@ export default function CarFinderPage() {
             {/* Step 1: Budget */}
             {currentStep === 1 && (
               <div className="space-y-6">
-                <div className="text-center">
-                  <div className="text-4xl mb-4">💰</div>
+                <div className="text-center justify-center">
                   <h3 className="text-xl font-semibold mb-2">
                     Büdcə aralığınızı seçin
                   </h3>
@@ -388,7 +401,7 @@ export default function CarFinderPage() {
 
                 <div className="space-y-4">
                   <div className="text-center">
-                    <div className="text-2xl font-bold text-blue-600">
+                    <div className="text-2xl font-bold text-custom-blue">
                       ₼{preferences.budget[0].toLocaleString()} - ₼
                       {preferences.budget[1].toLocaleString()}
                     </div>
@@ -396,12 +409,15 @@ export default function CarFinderPage() {
 
                   <div className="px-4">
                     <Slider
+                      color={colors.primary.blue}
                       value={preferences.budget}
-                      onValueChange={(value) => updatePreferences("budget", value as [number, number])}
+                      onValueChange={(value) =>
+                        updatePreferences("budget", value as [number, number])
+                      }
                       max={200000}
                       min={20000}
                       step={5000}
-                      className="w-full"
+                      className="w-full e"
                     />
                   </div>
 
@@ -426,7 +442,7 @@ export default function CarFinderPage() {
                           ? "default"
                           : "outline"
                       }
-                      className="rounded-sm bg-transparent"
+                      className="rounded-sm  cursor-pointer"
                       onClick={() =>
                         updatePreferences("budget", [range.min, range.max])
                       }
@@ -442,7 +458,6 @@ export default function CarFinderPage() {
             {currentStep === 2 && (
               <div className="space-y-6">
                 <div className="text-center">
-                  <div className="text-4xl mb-4">🛣️</div>
                   <h3 className="text-xl font-semibold mb-2">
                     Avtomobili necə istifadə edəcəksiniz?
                   </h3>
@@ -485,7 +500,6 @@ export default function CarFinderPage() {
             {currentStep === 3 && (
               <div className="space-y-6">
                 <div className="text-center">
-                  <div className="text-4xl mb-4">🚗</div>
                   <h3 className="text-xl font-semibold mb-2">
                     Hansı avtomobil növünü üstün tutursunuz?
                   </h3>
@@ -500,7 +514,7 @@ export default function CarFinderPage() {
                       key={option.value}
                       className={`cursor-pointer transition-all rounded-sm ${
                         preferences.bodyTypes.includes(option.value)
-                          ? "ring-2 ring-blue-500 bg-blue-50"
+                          ? "ring-2 ring-custom-blue bg-blue-50"
                           : "hover:shadow-md"
                       }`}
                       onClick={() => {
@@ -515,7 +529,7 @@ export default function CarFinderPage() {
                       }}
                     >
                       <CardContent className="p-6 text-center">
-                        <div className="text-3xl mb-2">{option.icon}</div>
+                        {/* <div className="text-3xl mb-2">{option.icon}</div> */}
                         <h4 className="font-semibold mb-1">{option.label}</h4>
                         <p className="text-sm text-gray-500">
                           {option.description}
@@ -531,7 +545,6 @@ export default function CarFinderPage() {
             {currentStep === 4 && (
               <div className="space-y-6">
                 <div className="text-center">
-                  <div className="text-4xl mb-4">👥</div>
                   <h3 className="text-xl font-semibold mb-2">
                     Neçə nəfərlik avtomobil lazımdır?
                   </h3>
@@ -540,7 +553,7 @@ export default function CarFinderPage() {
 
                 <div className="space-y-4">
                   <div className="text-center">
-                    <div className="text-3xl font-bold text-blue-600">
+                    <div className="text-3xl font-bold text-custom-blue">
                       {preferences.seatingCapacity} nəfər
                     </div>
                   </div>
@@ -573,7 +586,7 @@ export default function CarFinderPage() {
                           ? "default"
                           : "outline"
                       }
-                      className="rounded-sm bg-transparent"
+                      className="rounded-sm cursor-pointer"
                       onClick={() =>
                         updatePreferences("seatingCapacity", capacity)
                       }
@@ -589,7 +602,6 @@ export default function CarFinderPage() {
             {currentStep === 5 && (
               <div className="space-y-6">
                 <div className="text-center">
-                  <div className="text-4xl mb-4">🔋</div>
                   <h3 className="text-xl font-semibold mb-2">
                     Minimum yürüş məsafəsi tələbiniz?
                   </h3>
@@ -600,7 +612,7 @@ export default function CarFinderPage() {
 
                 <div className="space-y-4">
                   <div className="text-center">
-                    <div className="text-3xl font-bold text-blue-600">
+                    <div className="text-3xl font-bold text-custom-blue">
                       {preferences.rangeRequirement} km
                     </div>
                   </div>
@@ -633,7 +645,7 @@ export default function CarFinderPage() {
                           ? "default"
                           : "outline"
                       }
-                      className="rounded-sm bg-transparent"
+                      className="rounded-sm cursor-pointer"
                       onClick={() =>
                         updatePreferences("rangeRequirement", range)
                       }
@@ -649,7 +661,7 @@ export default function CarFinderPage() {
             {currentStep === 6 && (
               <div className="space-y-6">
                 <div className="text-center">
-                  <div className="text-4xl mb-4">⚡</div>
+                  
                   <h3 className="text-xl font-semibold mb-2">
                     Əsasən harada şarj edəcəksiniz?
                   </h3>
@@ -687,7 +699,7 @@ export default function CarFinderPage() {
                 </RadioGroup>
 
                 {/* Optional: Brand Preferences */}
-                <div className="pt-6 border-t">
+            {/*     <div className="pt-6 border-t">
                   <h4 className="font-semibold mb-4">
                     Marka üstünlüyünüz varmı? (İstəyə bağlı)
                   </h4>
@@ -715,7 +727,7 @@ export default function CarFinderPage() {
                       </div>
                     ))}
                   </div>
-                </div>
+                </div> */}
 
                 {/* Priority Features */}
                 <div className="pt-6 border-t">
@@ -745,7 +757,7 @@ export default function CarFinderPage() {
                         }}
                       >
                         <CardContent className="p-4 text-center">
-                          <div className="text-2xl mb-1">{feature.icon}</div>
+                          {/* <div className="text-2xl mb-1">{feature.icon}</div> */}
                           <span className="text-sm font-medium">
                             {feature.label}
                           </span>
@@ -885,7 +897,7 @@ export default function CarFinderPage() {
             onClick={handlePrev}
             disabled={currentStep === 1}
             variant="outline"
-            className="rounded-sm bg-transparent"
+            className="rounded-sm cursor-pointer cursor-pointer"
           >
             <ChevronLeft className="h-4 w-4 mr-2" />
             Əvvəlki
@@ -899,7 +911,7 @@ export default function CarFinderPage() {
               currentStep !== 4 &&
               currentStep !== 7
             }
-            className="rounded-sm"
+            className="rounded-sm cursor-pointer"
           >
             {currentStep === 7 ? (
               <>

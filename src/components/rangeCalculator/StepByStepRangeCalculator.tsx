@@ -228,36 +228,36 @@ export function StepByStepRangeCalculator({
           drivingStyle === "eco"
             ? 15
             : drivingStyle === "sport"
-            ? -20
-            : drivingStyle === "aggressive"
-            ? -35
-            : 0,
+              ? -20
+              : drivingStyle === "aggressive"
+                ? -35
+                : 0,
         terrain:
           terrain === "hilly"
             ? -15
             : terrain === "mountainous"
-            ? -30
-            : terrain === "city"
-            ? -10
-            : 0,
+              ? -30
+              : terrain === "city"
+                ? -10
+                : 0,
         acUsage:
           acUsage === "high"
             ? -20
             : acUsage === "moderate"
-            ? -10
-            : acUsage === "low"
-            ? -5
-            : 0,
+              ? -10
+              : acUsage === "low"
+                ? -5
+                : 0,
         speed:
           speed > 120
             ? -30
             : speed > 100
-            ? -20
-            : speed > 80
-            ? -10
-            : speed < 30
-            ? -15
-            : 0,
+              ? -20
+              : speed > 80
+                ? -10
+                : speed < 30
+                  ? -15
+                  : 0,
       },
     });
   };
@@ -373,8 +373,8 @@ export function StepByStepRangeCalculator({
                     getStepStatus(step.number) === "completed"
                       ? "bg-green-500 border-green-500 text-white"
                       : getStepStatus(step.number) === "current"
-                      ? "bg-[#023e8a] border-[#023e8a] text-white"
-                      : "bg-gray-100 border-gray-300 text-gray-400"
+                        ? "bg-custom-blue border-custom-blue text-white"
+                        : "bg-gray-100 border-gray-300 text-gray-400"
                   }`}
                 >
                   {getStepStatus(step.number) === "completed" ? (
@@ -386,7 +386,7 @@ export function StepByStepRangeCalculator({
                 <p
                   className={`text-xs mt-2 text-center max-w-20 ${
                     getStepStatus(step.number) === "current"
-                      ? "text-[#023e8a] font-semibold"
+                      ? "text-custom-blue font-semibold"
                       : "text-gray-500"
                   }`}
                 >
@@ -420,7 +420,7 @@ export function StepByStepRangeCalculator({
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             {React.createElement(steps[currentStep - 1].icon, {
-              className: "h-5 w-5 text-[#023e8a]",
+              className: "h-5 w-5 text-custom-blue",
             })}
             {steps[currentStep - 1].title}
           </CardTitle>
@@ -456,7 +456,7 @@ export function StepByStepRangeCalculator({
                             </p>
                           </div>
                           <Badge
-                            className="bg-[#023e8a] text-white"
+                            className="bg-custom-blue text-white"
                             variant="secondary"
                           >
                             ₼{car.price}
@@ -482,7 +482,7 @@ export function StepByStepRangeCalculator({
                         <p className="text-gray-600">
                           Batareya tutumu: {selectedCar.battery_capacity} kWh
                         </p>
-                        <p className="text-[#023e8a] text-center md:text-left lg:text-left font-semibold text-lg">
+                        <p className="text-custom-blue text-center md:text-left lg:text-left font-semibold text-lg">
                           ₼{selectedCar.price}
                         </p>
                       </div>
@@ -522,7 +522,7 @@ export function StepByStepRangeCalculator({
 
               <div className="space-y-4">
                 <div className="text-center">
-                  <div className="text-4xl font-bold text-[#023e8a]">
+                  <div className="text-4xl font-bold text-custom-blue">
                     {batteryLevel[0]}%
                   </div>
                   <p className="text-gray-600">Batareya səviyyəsi</p>
@@ -754,7 +754,7 @@ export function StepByStepRangeCalculator({
 
               {/* Main Result */}
               <div className="text-center space-y-2">
-                <div className="text-5xl font-bold text-[#023e8a]">
+                <div className="text-5xl font-bold text-custom-blue">
                   {result.estimatedRange} km
                 </div>
                 <p className="text-gray-600 text-lg">Təxmini yürüş məsafəsi</p>

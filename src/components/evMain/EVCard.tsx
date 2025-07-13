@@ -43,7 +43,7 @@ export function EVCarCard({ car, onViewDetails, isElectric }: EVCarCardProps) {
             <h3 className="text-lg font-bold text-gray-900">
               {car.brand || "Naməlum marka"} {car.model || ""}
             </h3>
-            <p className="text-xl font-bold text-[#023e8a]">
+            <p className="text-xl font-bold text-custom-blue">
               {formatPrice(car?.price)}
             </p>
           </div>
@@ -108,7 +108,7 @@ export function EVCarCard({ car, onViewDetails, isElectric }: EVCarCardProps) {
           </div>
           <div className="flex gap-2 pt-2">
             <Button
-              className={`flex-1 bg-[#1d242a] cursor-pointer hover:bg-slate-700`}
+              className={`flex-1 bg-custom-blue cursor-pointer hover:bg-[#034ba3]`}
               onClick={() => onViewDetails?.(car)}
             >
               Ətraflı
@@ -117,8 +117,8 @@ export function EVCarCard({ car, onViewDetails, isElectric }: EVCarCardProps) {
               variant={selected ? "default" : "outline"}
               className={`flex-1 ${
                 selected
-                  ? "bg-[#023e8a] text-white"
-                  : "bg-[#caf0f8] hover:bg-blue-200"
+                  ? "bg-blue-900 text-white"
+                  : "bg-slate-700 text-white hover:bg-slate-600 hover:text-white"
               } cursor-pointer`}
               onClick={() => (selected ? removeCar(car.id) : addCar(car))}
               disabled={disabled}

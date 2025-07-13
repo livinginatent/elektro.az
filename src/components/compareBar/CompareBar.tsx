@@ -29,7 +29,7 @@ const CompareBar = () => {
           </div>
           <div className="flex items-center justify-center">
             <button
-              className={`px-6 py-2 rounded bg-[#023e8a] cursor-pointer text-white font-bold transition-all ${
+              className={`px-6 py-2 rounded bg-custom-blue cursor-pointer text-white font-bold transition-all ${
                 selectedCars.length > 1
                   ? "hover:bg-[#3575D4]"
                   : "opacity-50 cursor-not-allowed"

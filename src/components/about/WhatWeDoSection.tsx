@@ -24,7 +24,7 @@ const defaultServices: ServiceCard[] = [
     description:
       "Azərbaycanda mövcud olan bütün elektrik və hibrid avtomobillərin ətraflı məlumatları, qiymətləri və spesifikasiyaları.",
     icon: IoCarSport,
-    href: "/electric-vehicles",
+    href: "/cars",
   },
   {
     title: "Şarj Məntəqələri",
@@ -67,7 +67,7 @@ export function WhatWeDoSection({
             <Card className="rounded-sm p-6 bg-white shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 min-h-[220px] flex flex-col">
               <CardContent className="p-0 flex flex-col h-full">
                 <div className="flex justify-center items-center gap-3 mb-4">
-                  <service.icon className="h-12 w-12 text-[#023e8a] transition-transform duration-300 group-hover:scale-110" />
+                  <service.icon className="h-12 w-12 text-custom-blue transition-transform duration-300 group-hover:scale-110" />
                   <h3 className="text-xl font-bold text-gray-900">
                     {service.title}
                   </h3>

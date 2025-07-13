@@ -209,7 +209,7 @@ function ElectricVehiclesClient({
         <div className="flex flex-col lg:flex-row gap-2">
           {/* Sidebar */}
           <aside className="  rounded-md space-y-6">
-            <Card className="shadow-sm border-1 border-[#023e8a]">
+            <Card className="shadow-sm border-1 border-custom-blue">
               <CardHeader className="pb-4">
                 <div className="flex items-center justify-between">
                   <CardTitle className="text-lg flex items-center gap-2">
@@ -238,7 +238,7 @@ function ElectricVehiclesClient({
                     {makes.map((make) => (
                       <div key={make} className="flex items-center space-x-2">
                         <Checkbox
-                          className="border-2 border-[#023e8a]"
+                          className="border-2 border-custom-blue"
                           id={`make-${make}`}
                           checked={selectedMakes.includes(make)}
                           onCheckedChange={() =>
@@ -270,7 +270,7 @@ function ElectricVehiclesClient({
                       <div key={body} className="flex items-center space-x-2">
                         <Checkbox
                           id={`body-${body}`}
-                          className="border-2 border-[#023e8a]"
+                          className="border-2 border-custom-blue"
                           checked={selectedBodyStyles.includes(body)}
                           onCheckedChange={() =>
                             handleCheckbox(
@@ -302,7 +302,7 @@ function ElectricVehiclesClient({
                     {seatCounts.map((seat) => (
                       <div key={seat} className="flex items-center space-x-2">
                         <Checkbox
-                          className="border-2 border-[#023e8a]"
+                          className="border-2 border-custom-blue"
                           id={`seat-${seat}`}
                           checked={selectedSeats.includes(seat)}
                           onCheckedChange={() => handleSeatsCheckbox(seat)}
@@ -394,7 +394,7 @@ function ElectricVehiclesClient({
                     setSearch(e.target.value);
                     setPage(1);
                   }}
-                  className="pl-10 h-12 text-lg border-1 border-[#023e8a]"
+                  className="pl-10 h-12 text-lg border-1 border-custom-blue"
                 />
               </div>
             </div>

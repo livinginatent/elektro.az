@@ -297,7 +297,7 @@ export function ChargingStationMap({
         {/* Header */}
         <div className="p-4 border-b border-gray-200">
           <h1 className="text-2xl font-bold text-gray-900 flex items-center gap-2 mb-4">
-            <BsFillLightningChargeFill className="h-6 w-6 text-[#023e8a]" />
+            <BsFillLightningChargeFill className="h-6 w-6 text-custom-blue" />
             Şarj Məntəqələri
           </h1>
 
@@ -399,7 +399,7 @@ export function ChargingStationMap({
                   key={station._id}
                   className={`cursor-pointer transition-all hover:shadow-md rounded-sm ${
                     selectedStation?._id === station._id
-                      ? "ring-1 ring-[#023e8a]"
+                      ? "ring-1 ring-custom-blue"
                       : ""
                   }`}
                   onClick={() => handleStationSelect(station)}

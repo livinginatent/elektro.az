@@ -158,7 +158,7 @@ export default function EVCostCalculator() {
           {/* Header */}
           <div className="text-center space-y-2">
             <div className="flex items-center justify-center gap-2 mb-4">
-              <Calculator className="h-8 w-8 text-[#023e8a]" />
+              <Calculator className="h-8 w-8 text-custom-blue" />
               <h1 className="text-3xl font-bold text-gray-900">
                 Maliyyə Kalkulyatoru
               </h1>
@@ -174,7 +174,7 @@ export default function EVCostCalculator() {
             <Card className="rounded-sm">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <Zap className="h-5 w-5 text-[#023e8a]" />
+                  <Zap className="h-5 w-5 text-custom-blue" />
                   Avtomobil & İstifadə Detalları
                 </CardTitle>
                 <CardDescription>
@@ -322,7 +322,7 @@ export default function EVCostCalculator() {
 
                 <Button
                   onClick={calculateCosts}
-                  className="w-full bg-[#023e8a] hover:bg-[#034ba3] rounded-sm"
+                  className="w-full bg-custom-blue hover:bg-[#034ba3] rounded-sm"
                 >
                   <Calculator className="h-4 w-4 mr-2" />
                   Maliyyəti hesabla
@@ -350,7 +350,7 @@ export default function EVCostCalculator() {
                     </div>
                     <Badge
                       variant={savings > 0 ? "default" : "destructive"}
-                      className="text-lg px-4 py-2 bg-[#023e8a]"
+                      className="text-lg px-4 py-2 bg-custom-blue"
                     >
                       {savingsPercentage > 0
                         ? ` ${savingsPercentage.toFixed(1)}% Qənaət`
@@ -372,7 +372,7 @@ export default function EVCostCalculator() {
               <Card className="rounded-sm">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
-                    <Zap className="h-5 w-5 text-[#023e8a]" />
+                    <Zap className="h-5 w-5 text-custom-blue" />
                     Sizin {vehicleType} Xərcləriniz
                   </CardTitle>
                 </CardHeader>
