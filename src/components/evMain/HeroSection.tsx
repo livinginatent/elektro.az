@@ -49,7 +49,7 @@ export function HeroSection({
             size="lg"
             variant="outline"
             className="text-lg px-8 bg-transparent text-white cursor-pointer"
-            onClick={() => router.push("/range-calculator")}
+            onClick={() => router.push("/find-car")}
           >
             <FaMagnifyingGlass className="h-5 w-5 mr-2 " />
             {secondaryButtonText}
