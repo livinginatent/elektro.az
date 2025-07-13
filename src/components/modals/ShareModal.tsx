@@ -2,7 +2,7 @@
 "use client";
 
 import { useState } from "react";
-import { Share2, Copy, Check, Calculator, Car } from "lucide-react";
+import { Share2, Copy, Check, Calculator, Car, BookOpen } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import {
@@ -20,11 +20,11 @@ import { FaTwitterSquare } from "react-icons/fa";
 interface ShareModalProps {
   isOpen: boolean;
   onClose: () => void;
-  carBrand: string | null;
-  carModel: string | null;
+  carBrand?: string | null;
+  carModel?: string | null;
   carPrice?: number | null;
   carUrl: string;
-  page?: "Car" | "Range";
+  page?: "Car" | "Range" | "Blog";
   // Range calculator specific props
   estimatedRange?: number | null;
   originalRange?: number | null;
@@ -36,6 +36,12 @@ interface ShareModalProps {
     acUsage: string;
     averageSpeed: number;
   };
+  // Blog specific props
+  blogTitle?: string;
+  blogExcerpt?: string;
+  blogAuthor?: string;
+  blogDate?: string;
+  blogCategories?: string[];
 }
 
 export function ShareModal({
@@ -50,6 +56,11 @@ export function ShareModal({
   originalRange,
   batteryLevel,
   conditions,
+  blogTitle,
+  blogExcerpt,
+  blogAuthor,
+  blogDate,
+  blogCategories,
 }: ShareModalProps) {
   const [copied, setCopied] = useState(false);
 
@@ -79,6 +90,18 @@ export function ShareModal({
 ⚡ Orta sürət: ${conditions.averageSpeed} km/s
 
 Elektrik avtomobillərin real yürüş məsafəsini öyrənin! 🚗⚡`;
+    } else if (page === "Blog" && blogTitle) {
+      const categoriesText = blogCategories?.length
+        ? `\n🏷️ Kateqoriya: ${blogCategories.join(", ")}`
+        : "";
+
+      return `📖 ${blogTitle}
+
+${blogExcerpt || "Elektrik və hibrid avtomobillər haqqında maraqlı məlumat"}${categoriesText}
+
+${blogAuthor ? `✍️ Müəllif: ${blogAuthor}` : ""}${blogDate ? `\n📅 ${blogDate}` : ""}
+
+Procar.az-da daha çox faydalı məlumat üçün! 🚗⚡`;
     } else {
       return `${carBrand} ${carModel}${
         carPrice ? ` - ₼${carPrice} qiymətində` : ""
@@ -133,7 +156,7 @@ Elektrik avtomobillərin real yürüş məsafəsini öyrənin! 🚗⚡`;
       await navigator.clipboard.writeText(shareUrl);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (err) {
       // Fallback for older browsers
       const textArea = document.createElement("textarea");
@@ -165,15 +188,35 @@ Elektrik avtomobillərin real yürüş məsafəsini öyrənin! 🚗⚡`;
     }
   };
 
+  const getModalTitle = () => {
+    switch (page) {
+      case "Range":
+        return "Hesablama nəticəsini paylaş";
+      case "Blog":
+        return "Blog yazısını paylaş";
+      default:
+        return "Avtomobili paylaş";
+    }
+  };
+
+  const getModalIcon = () => {
+    switch (page) {
+      case "Range":
+        return <Calculator className="h-5 w-5 text-blue-600" />;
+      case "Blog":
+        return <BookOpen className="h-5 w-5 text-blue-600" />;
+      default:
+        return <Car className="h-5 w-5 text-blue-600" />;
+    }
+  };
+
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-md rounded-sm">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <Share2 className="h-5 w-5 text-blue-600" />
-            {page === "Range"
-              ? "Hesablama nəticəsini paylaş"
-              : "Avtomobili paylaş"}
+            {getModalTitle()}
           </DialogTitle>
         </DialogHeader>
 
@@ -240,6 +283,58 @@ Elektrik avtomobillərin real yürüş məsafəsini öyrənin! 🚗⚡`;
                     </div>
                   )}
                 </div>
+              ) : page === "Blog" ? (
+                // Blog Details
+                <div className="space-y-3">
+                  <div className="flex items-center justify-center gap-2">
+                    <BookOpen className="h-5 w-5 text-blue-600" />
+                    <p className="font-semibold text-lg text-gray-900">
+                      Blog Yazısı
+                    </p>
+                  </div>
+
+                  <div className="text-center">
+                    <p className="font-semibold text-lg text-gray-900 mb-2">
+                      {blogTitle}
+                    </p>
+                    {blogExcerpt && (
+                      <p className="text-sm text-gray-600 mb-3 line-clamp-3">
+                        {blogExcerpt}
+                      </p>
+                    )}
+
+                    <div className="flex items-center justify-center gap-4 text-sm text-gray-600">
+                      {blogAuthor && (
+                        <div className="flex items-center gap-1">
+                          <span>✍️</span>
+                          <span>{blogAuthor}</span>
+                        </div>
+                      )}
+                      {blogDate && (
+                        <div className="flex items-center gap-1">
+                          <span>📅</span>
+                          <span>{blogDate}</span>
+                        </div>
+                      )}
+                    </div>
+
+                    {blogCategories && blogCategories.length > 0 && (
+                      <div className="flex items-center justify-center gap-2 mt-3">
+                        <span className="text-xs text-gray-500">🏷️</span>
+                        <div className="flex flex-wrap gap-1">
+                          {blogCategories.map((category, index) => (
+                            <span
+                              key={index}
+                              className="text-xs bg-white px-2 py-1 rounded text-gray-700"
+                            >
+                              {category}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
               ) : (
                 // Car Details
                 <div className="flex items-center justify-center">
@@ -283,11 +378,11 @@ Elektrik avtomobillərin real yürüş məsafəsini öyrənin! 🚗⚡`;
 
           {/* Copy Options */}
           <div className="space-y-3">
-            {/* Copy Results Text (for Range Calculator) */}
-            {page === "Range" && (
+            {/* Copy Results Text (for Range Calculator and Blog) */}
+            {(page === "Range" || page === "Blog") && (
               <div className="space-y-2">
                 <p className="text-sm font-medium text-gray-700">
-                  Nəticəni kopyala:
+                  {page === "Range" ? "Nəticəni kopyala:" : "Məzmunu kopyala:"}
                 </p>
                 <Button
                   onClick={handleCopyResults}
@@ -299,48 +394,23 @@ Elektrik avtomobillərin real yürüş məsafəsini öyrənin! 🚗⚡`;
                   {copied ? (
                     <>
                       <Check className="h-4 w-4 mr-2 text-green-600" />
-                      <span className="text-green-600">Nəticə kopyalandı</span>
+                      <span className="text-green-600">
+                        {page === "Range"
+                          ? "Nəticə kopyalandı"
+                          : "Məzmun kopyalandı"}
+                      </span>
                     </>
                   ) : (
                     <>
                       <Copy className="h-4 w-4 mr-2" />
-                      Hesablama nəticəsini kopyala
+                      {page === "Range"
+                        ? "Hesablama nəticəsini kopyala"
+                        : "Blog məzmununu kopyala"}
                     </>
                   )}
                 </Button>
               </div>
             )}
-
-            {/* Copy Link */}
-          {/*   <div className="space-y-2">
-              <p className="text-sm font-medium text-gray-700">
-                Və ya linki kopyala:
-              </p>
-              <div className="flex gap-2">
-                <Input
-                  value={shareUrl}
-                  readOnly
-                  className="flex-1 text-sm bg-gray-50 rounded-sm"
-                  onClick={(e) => e.currentTarget.select()}
-                />
-                <Button
-                  onClick={handleCopyLink}
-                  variant="outline"
-                  className={`px-3 rounded-sm cursor-pointer ${
-                    copied ? "bg-green-50 border-green-200" : "bg-transparent"
-                  }`}
-                >
-                  {copied ? (
-                    <Check className="h-4 w-4 text-green-600" />
-                  ) : (
-                    <Copy className="h-4 w-4" />
-                  )}
-                </Button>
-              </div>
-              {copied && (
-                <p className="text-xs text-green-600">Link kopyalandı</p>
-              )}
-            </div> */}
           </div>
 
           {/* Close Button */}
@@ -357,7 +427,9 @@ Elektrik avtomobillərin real yürüş məsafəsini öyrənin! 🚗⚡`;
             <p className="text-xs text-gray-500">
               {page === "Range"
                 ? "Hesablama nəticənizi dostlarınızla paylaşın və elektrik avtomobillərin real performansını göstərin!"
-                : "Bu avtomobili dostlarınızla paylaşın və onlara da elektrik/hibrid avtomobillərin üstünlüklərini göstərin!"}
+                : page === "Blog"
+                  ? "Bu faydalı məlumatı dostlarınızla paylaşın və elektrik avtomobillərin dünyasını kəşf edin!"
+                  : "Bu avtomobili dostlarınızla paylaşın və onlara da elektrik/hibrid avtomobillərin üstünlüklərini göstərin!"}
             </p>
           </div>
         </div>

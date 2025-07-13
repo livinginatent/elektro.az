@@ -17,23 +17,9 @@ import { client } from "@/sanity/lib/client";
 import { urlFor } from "@/sanity/lib/image";
 import Link from "next/link";
 import Image from "next/image";
-
-interface BlogPost {
-  _id: string;
-  title: string;
-  slug: { current: string };
-  excerpt: string;
-  author?: { name: string };
-  publishedAt: string;
-  readTime: string;
-  category: string;
-  mainImage?: {
-    asset: {
-      _ref: string;
-    };
-  };
-  featured?: boolean;
-}
+import { type SanityDocument } from "next-sanity";
+import { getCategoryColor, getCategoryIcon } from "@/utils/getCategoryInfo";
+import { formatToAzerbaijaniDate } from "@/utils/formatToAzerbaijaniDate";
 
 const POSTS_QUERY = `*[_type == "post"] | order(publishedAt desc) {
   _id,
@@ -43,16 +29,20 @@ const POSTS_QUERY = `*[_type == "post"] | order(publishedAt desc) {
   author->{name},
   publishedAt,
   readTime,
-  category,
+  categories[]->{
+    _id,
+    title,
+    slug
+  },
   mainImage,
   featured
 }`;
 
 export default async function BlogPage() {
-  const posts = await client.fetch<BlogPost[]>(POSTS_QUERY);
+  const posts = await client.fetch<SanityDocument[]>(POSTS_QUERY);
 
-  const featuredPost = posts.find((post: BlogPost) => post.featured);
-  const regularPosts = posts.filter((post: BlogPost) => !post.featured);
+  const featuredPost = posts.find((post: SanityDocument) => post.featured);
+  const regularPosts = posts.filter((post: SanityDocument) => !post.featured);
 
   return (
     <>
@@ -61,70 +51,97 @@ export default async function BlogPage() {
         {/* Hero Section */}
         <section className="bg-slate-50 border-b">
           <div className="container mx-auto px-4 py-16">
-            <div className="max-w-4xl mx-auto text-center space-y-6">
+            <div className=" mx-auto text-center space-y-6">
               <div className="inline-flex items-center px-4 py-2 bg-slate-900 text-white text-sm font-medium">
-                <span>BLOG</span>
+                <span>Bloq və xəbərlər</span>
               </div>
-              <h1 className="text-4xl md:text-6xl font-bold text-slate-900 leading-tight">
-                Elektrik Avtomobil
-                <br />
-                <span className="text-slate-600">Xəbərləri</span>
+              <h1 className="text-2xl md:text-4xl font-bold text-slate-900 leading-tight">
+                Elektrik və hibrid avtomobillər haqqında faydalı məlumatlar, yeniliklər və
+                xəbərlər
               </h1>
-              <p className="text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed">
-                Elektrik və hibrid avtomobillər haqqında ən son xəbərlər,
-                texnologiya yenilikləri və davamlı nəqliyyat həlləri
-              </p>
             </div>
           </div>
         </section>
 
         {/* Featured Post */}
         {featuredPost && (
-          <section className="container mx-auto px-4 py-12">
-            <div className="bg-slate-900 text-white overflow-hidden">
+          <section className="max-w-7xl mx-auto px-4 py-8 md:py-12">
+            <div className="bg-slate-800 text-white overflow-hidden rounded-lg">
               <div className="grid lg:grid-cols-2 gap-0">
-                <div className="p-8 lg:p-12 flex flex-col justify-center">
-                  <div className="space-y-6">
-                    <div className="inline-flex items-center px-3 py-1 bg-white/10 text-white text-sm font-medium">
+                <div className="p-6 md:p-8 lg:p-12 flex flex-col justify-center order-2 lg:order-1">
+                  <div className="space-y-4 md:space-y-6">
+                    <div className="inline-flex items-center px-3 py-1 bg-white/10 text-white text-sm font-medium rounded-full">
                       <Star className="w-4 h-4 mr-2" />
                       Əsas Yazı
                     </div>
-                    <h2 className="text-2xl md:text-3xl font-bold leading-tight">
+                    <h2 className="text-xl md:text-2xl lg:text-3xl font-bold leading-tight">
                       {featuredPost.title}
                     </h2>
-                    <p className="text-slate-300 text-lg leading-relaxed">
+                    <p className="text-slate-300 text-base md:text-lg leading-relaxed">
                       {featuredPost.excerpt}
                     </p>
-                    <div className="flex items-center space-x-6 text-slate-400 text-sm">
+
+                    {/* Mobile-first responsive metadata */}
+                    <div className="space-y-3 md:space-y-0 md:flex md:flex-wrap md:items-center md:gap-4 lg:gap-6 text-slate-400 text-sm">
                       <div className="flex items-center">
-                        <User className="w-4 h-4 mr-2" />
-                        {featuredPost.author?.name || "Procar.az"}
+                        <User className="w-4 h-4 mr-2 flex-shrink-0" />
+                        <span className="truncate">
+                          {featuredPost.author?.name || "Procar.az"}
+                        </span>
                       </div>
                       <div className="flex items-center">
-                        <Calendar className="w-4 h-4 mr-2" />
-                        {new Date(featuredPost.publishedAt).toLocaleDateString(
-                          "az-AZ"
+                        <Calendar className="w-4 h-4 mr-2 flex-shrink-0" />
+                        <span className="truncate">
+                          {new Date(
+                            featuredPost.publishedAt
+                          ).toLocaleDateString("az-AZ")}
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-2 flex-wrap">
+                        {featuredPost?.categories?.map(
+                          (category: SanityDocument) => {
+                            const CategoryIcon = getCategoryIcon(
+                              category.title
+                            );
+                            return (
+                              <Badge
+                                key={category._id}
+                                className={`${getCategoryColor(category.title)} text-white hover:opacity-90 text-xs`}
+                              >
+                                {CategoryIcon && (
+                                  <CategoryIcon className="w-3 h-3 mr-1" />
+                                )}
+                                {category.title}
+                              </Badge>
+                            );
+                          }
                         )}
                       </div>
-                      <div className="flex items-center">
-                        <Clock className="w-4 h-4 mr-2" />
-                        {featuredPost.readTime}
-                      </div>
                     </div>
+
                     <Link href={`/blog/${featuredPost.slug.current}`}>
-                      <Button className="bg-white text-slate-900 hover:bg-slate-100 w-fit">
+                      <Button className="bg-white text-slate-900 hover:bg-slate-100 w-full md:w-fit cursor-pointer">
                         Ətraflı Oxu
                         <ArrowRight className="w-4 h-4 ml-2" />
                       </Button>
                     </Link>
                   </div>
                 </div>
-                <div className="bg-slate-800 flex items-center justify-center min-h-[400px]">
-                  <div className="text-center">
-                    <Car className="w-24 h-24 text-slate-600 mx-auto mb-4" />
-                    <div className="text-slate-500 text-sm">
-                      Featured Article Image
-                    </div>
+
+                {/* Responsive image container */}
+                <div className="relative overflow-hidden order-1 lg:order-2">
+                  <div className="aspect-video md:aspect-square lg:aspect-auto lg:min-h-[400px] bg-slate-700">
+                    <Image
+                      src={urlFor(featuredPost.mainImage)
+                        .width(800)
+                        .height(600)
+                        .url()}
+                      alt={featuredPost.title}
+                      fill
+                      className="object-cover transition-transform duration-300 hover:scale-105"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 50vw"
+                      priority
+                    />
                   </div>
                 </div>
               </div>
@@ -135,62 +152,77 @@ export default async function BlogPage() {
         {/* Blog Posts Grid */}
         <section className="container mx-auto px-4 py-12">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {regularPosts.map((post: BlogPost) => (
-              <Card
-                key={post._id}
-                className="group hover:shadow-lg transition-all duration-300 border-slate-200 overflow-hidden"
-              >
-                <div className="aspect-video bg-slate-100 relative overflow-hidden">
-                  {post.mainImage ? (
-                    <Image
-                      src={urlFor(post.mainImage).width(400).height(225).url()}
-                      alt={post.title}
-                      width={400}
-                      height={225}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                    />
-                  ) : (
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <Car className="w-16 h-16 text-slate-400" />
-                    </div>
-                  )}
-                  <div className="absolute top-4 left-4">
-                    <Badge className="bg-slate-900 text-white hover:bg-slate-800">
-                      {post.category}
-                    </Badge>
-                  </div>
-                </div>
-                <CardContent className="p-6">
-                  <h3 className="font-bold text-lg text-slate-900 mb-3 group-hover:text-slate-700 transition-colors leading-tight">
-                    {post.title}
-                  </h3>
-                  <p className="text-slate-600 mb-4 line-clamp-3 leading-relaxed">
-                    {post.excerpt}
-                  </p>
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-4 text-sm text-slate-500">
-                      <div className="flex items-center">
-                        <User className="w-4 h-4 mr-1" />
-                        {post.author?.name || "Procar.az"}
+            {regularPosts.map((post: SanityDocument) => (
+              <Link href={`/blog/${post.slug.current}`} key={post._id}>
+                <Card className="group hover:shadow-lg rounded-sm transition-all duration-300 border-slate-200 overflow-hidden">
+                  <div className="aspect-video bg-slate-100 relative overflow-hidden">
+                    {post.mainImage ? (
+                      <Image
+                        src={urlFor(post.mainImage)
+                          .width(400)
+                          .height(225)
+                          .url()}
+                        alt={post.title}
+                        width={400}
+                        height={225}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      />
+                    ) : (
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <Car className="w-16 h-16 text-slate-400" />
                       </div>
-                      <div className="flex items-center">
-                        <Clock className="w-4 h-4 mr-1" />
-                        {post.readTime}
+                    )}
+                    <div className="absolute top-4 left-4">
+                      <div className="flex gap-2 flex-wrap">
+                        {post?.categories?.map((category: SanityDocument) => {
+                          const CategoryIcon = getCategoryIcon(category.title);
+                          return (
+                            <Badge
+                              key={category._id}
+                              className={`${getCategoryColor(category.title)} text-white hover:opacity-90`}
+                            >
+                              {CategoryIcon && (
+                                <CategoryIcon className="w-3 h-3 mr-1" />
+                              )}
+                              {category.title}
+                            </Badge>
+                          );
+                        })}
                       </div>
                     </div>
-                    <Link href={`/blog/${post.slug.current}`}>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className="text-slate-900 hover:text-slate-700 hover:bg-slate-50 p-0"
-                      >
-                        Oxu
-                        <ChevronRight className="w-4 h-4 ml-1" />
-                      </Button>
-                    </Link>
                   </div>
-                </CardContent>
-              </Card>
+                  <CardContent className="p-6">
+                    <h3 className="font-bold text-lg text-slate-900 mb-3 group-hover:text-slate-700 transition-colors leading-tight">
+                      {post.title}
+                    </h3>
+                    <p className="text-slate-600 mb-4 line-clamp-3 leading-relaxed">
+                      {post.excerpt}
+                    </p>
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center space-x-4 text-sm text-slate-500">
+                        <div className="flex justify-center items-center">
+                          <User className="w-4 h-4 mr-1" />
+                          {post.author?.name || "Procar.az"}
+                        </div>
+                        <div className="flex justify-center items-center">
+                          <Clock className="w-4 h-4 mr-1" />
+                          {formatToAzerbaijaniDate(post.publishedAt)}
+                        </div>
+                      </div>
+                      <Link href={`/blog/${post.slug.current}`}>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="text-slate-900 hover:text-slate-700 hover:bg-slate-50 p-0 cursor-pointer"
+                        >
+                          Oxu
+                          <ChevronRight className="w-4 h-4 ml-1" />
+                        </Button>
+                      </Link>
+                    </div>
+                  </CardContent>
+                </Card>
+              </Link>
             ))}
           </div>
         </section>

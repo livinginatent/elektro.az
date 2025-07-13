@@ -22,24 +22,21 @@ const defaultSections: FooterSection[] = [
     title: "Kəşf et",
     links: [
       { label: "Elektrik & Hibrid Avtomobillər", href: "/cars" },
-      { label: "Elektrik Doldurma Məntəqələri", href: "/" },
-      { label: "İncələmələr", href: "/reviews" },
+      { label: "Elektrik Doldurma Məntəqələri", href: "/charge" },
     ],
   },
   {
     title: "Alətlər",
     links: [
       { label: "Yürüş məsafəsi kalkulyatoru", href: "/range-calculator" },
-      { label: "Elektrik Doldurma Məntəqələri", href: "/charger" },
       { label: "Maliyyət kalkulyatoru", href: "/cost" },
     ],
   },
   {
     title: "Oxu",
     links: [
-      { label: "Xəbərlər", href: "/news" },
-      { label: "Blog", href: "/blog" },
-      { label: "Necə etməli", href: "/guides" },
+      { label: "Bloq və xəbərlər", href: "/blog" },
+      { label: "Haqqımızda", href: "/about" },
     ],
   },
 ];

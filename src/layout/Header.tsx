@@ -10,12 +10,12 @@ export function Header() {
   const navItems = [
     { href: "/electric-vehicles", icon: Car, label: "Avtomobillərə bax" },
     {
-      href: "/range-calculator",
+      href: "/charger",
       icon: Calculator,
-      label: "Yürüş məsafəsi hesabla",
+      label: "Şarj məntəqələri",
     },
-    { href: "/news", icon: Newspaper, label: "Yeniliklər" },
-    { href: "/blog", icon: BookOpen, label: "Bloq" },
+    { href: "/blog", icon: Newspaper, label: "Blog və xəbərlər" },
+    { href: "/about", icon: BookOpen, label: "Haqqımızda" },
   ];
 
   return (

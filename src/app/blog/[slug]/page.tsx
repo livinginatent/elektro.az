@@ -10,18 +10,9 @@ import { Footer } from "@/layout/Footer";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-  Calendar,
-  User,
-  Clock,
-  ArrowLeft,
-  Share2,
-  Bookmark,
-  Heart,
-
-} from "lucide-react";
-import { FaBolt, FaCar, FaLeaf, FaChargingStation } from "react-icons/fa";
+import { User, ArrowLeft, Calendar } from "lucide-react";
 import { sanityBlocks } from "@/components/sanityBlocks/sanityBlocks";
+import { getCategoryColor, getCategoryIcon } from "@/utils/getCategoryInfo";
 
 export const metadata: Metadata = {
   title: "Blog Yazısı - Procar.az | Elektrik Avtomobil Xəbərləri",
@@ -29,7 +20,30 @@ export const metadata: Metadata = {
     "Elektrik və hibrid avtomobillər haqqında ən son xəbərlər və texnologiya yenilikləri.",
 };
 
-const POST_QUERY = `*[_type == "post" && slug.current == $slug][0]`;
+const POST_QUERY = `*[_type == "post" && slug.current == $slug][0]{
+  _id,
+  title,
+  slug,
+  excerpt,
+  author->{
+    name,
+    slug,
+    image,
+    bio
+  },
+  publishedAt,
+  readTime,
+  body,
+  mainImage,
+  categories[]->{
+    _id,
+    title,
+    slug
+  },
+  featured,
+  _createdAt,
+  _updatedAt
+}`;
 
 const { projectId, dataset } = client.config();
 const urlFor = (source: SanityImageSource) =>
@@ -39,51 +53,17 @@ const urlFor = (source: SanityImageSource) =>
 
 const options = { next: { revalidate: 30 } };
 
-
-
-const getCategoryIcon = (category: string) => {
-  switch (category) {
-    case "Yeni Modellər":
-      return FaCar;
-    case "İnfrastruktur":
-      return FaChargingStation;
-    case "Texnologiya":
-      return FaBolt;
-    case "Davamlılıq":
-      return FaLeaf;
-    default:
-      return FaCar;
-  }
-};
-
-const getCategoryColor = (category: string) => {
-  switch (category) {
-    case "Yeni Modellər":
-      return "bg-blue-500";
-    case "İnfrastruktur":
-      return "bg-green-500";
-    case "Müqayisə":
-      return "bg-purple-500";
-    case "Baxım":
-      return "bg-orange-500";
-    case "Bazar Analizi":
-      return "bg-red-500";
-    case "Texnologiya":
-      return "bg-yellow-500";
-    case "Davamlılıq":
-      return "bg-emerald-500";
-    default:
-      return "bg-gray-500";
-  }
-};
-
 export default async function PostPage({
   params,
 }: {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  params: { slug: any };
+  params: { slug: string };
 }) {
-  const post = await client.fetch<SanityDocument>(POST_QUERY, params, options);
+  const { slug } = await params;
+  const post = await client.fetch<SanityDocument>(
+    POST_QUERY,
+    { slug: slug },
+    options
+  );
   if (!post) {
     return (
       <>
@@ -106,8 +86,6 @@ export default async function PostPage({
     );
   }
 
-  const CategoryIcon = getCategoryIcon(post.category);
-  const categoryColor = getCategoryColor(post.category);
   const postImageUrl = post.mainImage
     ? urlFor(post.mainImage)?.width(1200).height(630).url()
     : null;
@@ -117,35 +95,17 @@ export default async function PostPage({
       <Header />
       <article className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-green-50">
         {/* Hero Section */}
-        <section className="relative py-20 overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 to-green-600/10"></div>
+
+        <section className="relative  overflow-hidden">
+          <div className="absolute inset-0 "></div>
           <div className="container mx-auto px-4 relative z-10">
             <div className="max-w-4xl mx-auto">
               {/* Breadcrumb */}
               <div className="flex items-center space-x-2 text-sm text-gray-600 mb-6">
-                <Link href="/blog">
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="text-blue-600 hover:text-blue-700"
-                  >
-                    <ArrowLeft className="w-4 h-4 mr-2" />
-                    Blog
-                  </Button>
-                </Link>
-                <span>/</span>
                 <span>{post.category}</span>
               </div>
 
               {/* Category Badge */}
-              <div className="mb-6">
-                <Badge
-                  className={`${categoryColor} text-white px-4 py-2 text-lg`}
-                >
-                  <CategoryIcon className="mr-2" />
-                  {post.category}
-                </Badge>
-              </div>
 
               {/* Title */}
               <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
@@ -153,63 +113,61 @@ export default async function PostPage({
               </h1>
 
               {/* Meta Information */}
-              <div className="flex flex-wrap items-center space-x-6 text-gray-600 mb-8">
+              <div className="mb-4 space-y-3 md:space-y-0 md:flex md:flex-wrap md:items-center md:gap-4 lg:gap-6 text-slate-400 text-sm">
                 <div className="flex items-center">
-                  <User className="w-5 h-5 mr-2" />
-                  {post.author?.name || "Procar.az"}
+                  <User className="w-6 h-6 mr-2 flex-shrink-0" />
+                  <span className="truncate text-black">
+                    {post.author?.name || "Procar.az"}
+                  </span>
                 </div>
                 <div className="flex items-center">
-                  <Calendar className="w-5 h-5 mr-2" />
-                  {new Date(post.publishedAt).toLocaleDateString("az-AZ", {
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric",
+                  <Calendar className="w-6 h-6 mr-2 flex-shrink-0" />
+                  <span className="truncate text-black">
+                    {new Date(post.publishedAt).toLocaleDateString("az-AZ")}
+                  </span>
+                </div>
+                <div className="flex items-center gap-2 flex-wrap">
+                  {post?.categories?.map((category: SanityDocument) => {
+                    const CategoryIcon = getCategoryIcon(category.title);
+                    return (
+                      <Badge
+                        key={category._id}
+                        className={`${getCategoryColor(category.title)} text-white hover:opacity-90 text-xs`}
+                      >
+                        {CategoryIcon && (
+                          <CategoryIcon className="w-5 h-5 mr-1" />
+                        )}
+                        {category.title}
+                      </Badge>
+                    );
                   })}
-                </div>
-                <div className="flex items-center">
-                  <Clock className="w-5 h-5 mr-2" />
-                  {post.readTime}
                 </div>
               </div>
 
               {/* Action Buttons */}
-              <div className="flex items-center space-x-4 mb-8">
-                <Button className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600">
-                  <Share2 className="w-4 h-4 mr-2" />
-                  Paylaş
-                </Button>
-                <Button variant="outline">
-                  <Bookmark className="w-4 h-4 mr-2" />
-                  Yadda Saxla
-                </Button>
-                <Button variant="outline">
-                  <Heart className="w-4 h-4 mr-2" />
-                  Bəyən
-                </Button>
-              </div>
             </div>
           </div>
         </section>
 
         {/* Featured Image */}
         {postImageUrl && (
-          <section className="container mx-auto px-4 py-8">
-            <div className="max-w-4xl mx-auto">
+          <section className=" container mx-auto px-4 py-8">
+            <div className=" max-w-4xl mx-auto">
               <Image
                 src={postImageUrl}
                 alt={post.title}
                 width={1200}
                 height={630}
-                className="w-full h-auto rounded-2xl shadow-2xl"
+                className="w-full h-auto rounded-sm shadow-2xl"
               />
             </div>
           </section>
         )}
 
         {/* Content Section */}
-        <section className="container mx-auto px-4 py-12">
+        <section className=" container mx-auto px-4 py-12">
           <div className="max-w-4xl mx-auto">
-            <Card className="bg-white shadow-xl rounded-2xl overflow-hidden">
+            <Card className="rounded-sm bg-white shadow-xl  overflow-hidden">
               <CardContent className="p-8 md:p-12">
                 {/* Excerpt */}
                 {post.excerpt && (
@@ -222,10 +180,7 @@ export default async function PostPage({
 
                 {/* Main Content */}
                 <div className="prose prose-lg max-w-none">
-                  <PortableText
-                    value={post.body}
-                    components={sanityBlocks}
-                  />
+                  <PortableText value={post.body} components={sanityBlocks} />
                 </div>
 
                 {/* Tags */}
@@ -249,7 +204,6 @@ export default async function PostPage({
                 )}
 
                 {/* Comments Section */}
-          
 
                 {/* Author Bio Section */}
                 {/* {post.author && (
@@ -282,6 +236,7 @@ export default async function PostPage({
           </div>
         </section>
       </article>
+
       <Footer />
     </>
   );
