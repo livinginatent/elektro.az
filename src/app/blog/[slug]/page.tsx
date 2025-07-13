@@ -80,10 +80,10 @@ const getCategoryColor = (category: string) => {
 export default async function PostPage({
   params,
 }: {
-  params: { slug: string };
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  params: { slug: any };
 }) {
   const post = await client.fetch<SanityDocument>(POST_QUERY, params, options);
-console.log(post)
   if (!post) {
     return (
       <>
