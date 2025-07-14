@@ -5,7 +5,7 @@ import {
   Ruler,
   Shield,
   GalleryHorizontalEnd,
-  
+  ScreenShare,
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { EVCars } from "@/app/types";
@@ -29,7 +29,7 @@ import {
   RiTimerFlashFill,
 } from "react-icons/ri";
 import { BsGearFill } from "react-icons/bs";
-import { MdAirlineSeatReclineNormal } from "react-icons/md";
+import { MdAirlineSeatReclineNormal,  } from "react-icons/md";
 import { useState } from "react";
 import ExtraFeatures from "./ExtraFeatures";
 
@@ -40,6 +40,7 @@ interface CarSpecsProps {
 export function CarSpecs({ car }: CarSpecsProps) {
   const [showAllSafety, setShowAllSafety] = useState(false);
   const [showAllExterior, setShowAllExterior] = useState(false);
+  const [showAllInterior, setShowAllInterior] = useState(false);
 
   // Helper function to handle null/undefined values
   const formatValue = (
@@ -159,27 +160,29 @@ export function CarSpecs({ car }: CarSpecsProps) {
       specs: [
         {
           label: "Uzunluq",
-          value: car.dimensions?.length || "Mövcud deyil",
+          value: formatValue(car.dimensions?.length, " mm") || "Mövcud deyil",
           icon: <FaRulerHorizontal color={colors.primary.blue} />,
         },
         {
           label: "En",
-          value: car.dimensions?.width || "Mövcud deyil",
+          value: formatValue(car.dimensions?.width, " mm") || "Mövcud deyil",
           icon: <RiExpandWidthLine color={colors.primary.blue} />,
         },
         {
           label: "Hündürlük",
-          value: car.dimensions?.height || "Mövcud deyil",
+          value: formatValue(car.dimensions?.height, " mm") || "Mövcud deyil",
           icon: <FaRulerVertical color={colors.primary.blue} />,
         },
         {
           label: "Təkər bazası",
-          value: car.dimensions?.wheelbase || "Mövcud deyil",
+          value:
+            formatValue(car.dimensions?.wheelbase, " mm") || "Mövcud deyil",
           icon: <PiTireBold color={colors.primary.blue} />,
         },
         {
           label: "Bagaj həcmi",
-          value: car.dimensions?.trunk_size || "Mövcud deyil",
+          value:
+            formatValue(car.dimensions?.trunk_size, " litr") || "Mövcud deyil",
           icon: <RiCustomSize color={colors.primary.blue} />,
         },
       ],
@@ -195,6 +198,10 @@ export function CarSpecs({ car }: CarSpecsProps) {
     ? car.exterior
     : car.exterior?.slice(0, 3);
   const hasMoreExteriorFeatures = car.exterior && car.exterior.length > 3;
+  const visibleInteriorFeatures = showAllInterior
+    ? car.interior
+    : car.interior?.slice(0, 3);
+  const hasMoreInteriorFeatures = car.interior && car.interior.length > 3;
 
   return (
     <div className="space-y-6">
@@ -248,6 +255,16 @@ export function CarSpecs({ car }: CarSpecsProps) {
         car={car}
         showAllFeatures={showAllExterior}
         Icon={GalleryHorizontalEnd}
+      />
+      <ExtraFeatures
+        mainTitle="İnteryer"
+        secondaryTitle="İnteryer"
+        data={visibleInteriorFeatures}
+        hasMoreFeatures={hasMoreInteriorFeatures}
+        setShowAllFeatures={() => setShowAllInterior(!showAllInterior)}
+        car={car}
+        showAllFeatures={showAllExterior}
+        Icon={ScreenShare}
       />
     </div>
   );

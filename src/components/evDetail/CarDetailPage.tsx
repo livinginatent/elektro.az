@@ -142,7 +142,7 @@ export function CarDetailPage({ car, onBack }: CarDetailPageProps) {
                 <div className="flex  gap-3">
                   <Button
                     onClick={handleContactDealer}
-                    className="flex-1 hover:bg-blue-700 cursor-pointer rounded-sm"
+                    className="flex-1 hover:bg-custom-blue cursor-pointer rounded-sm"
                     size="lg"
                   >
                     Dilerlə əlaqə saxla

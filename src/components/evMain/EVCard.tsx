@@ -20,7 +20,7 @@ export function EVCarCard({ car, onViewDetails, isElectric }: EVCarCardProps) {
   const { addCar, removeCar, isSelected, selectedCars } = useCompareStore();
   const selected = isSelected(car.id);
   const disabled = !selected && selectedCars.length >= 4;
-  console.log(isElectric);
+  console.log(car.availability,'hello');
   return (
     <Card className="group hover:shadow-xl transition-all duration-300 border-0 shadow-lg overflow-hidden max-w-md">
       <CardHeader className="p-0">

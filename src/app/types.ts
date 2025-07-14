@@ -32,7 +32,7 @@ export interface EVCars {
   battery_capacity: number | null;
   charging_time: number | null;
   price: number | null;
-  availability: "Avaialable" | "Pre-order" | "Not avaialble";
+  availability: "Satışda var" | "Sifariş ilə" | "Satışda yoxdur";
   brand_image: string | null | StaticImageData;
   mainImage: string | StaticImport;
   warranty: never;
@@ -50,6 +50,7 @@ export interface EVCars {
   id: string | null | number;
   dealership: Dealership;
   exterior: string[];
+  interior: string[];
   fuel_consumption: number;
 }
 
@@ -71,7 +72,7 @@ export const COMPARE_CATEGORIES = [
   "engine.engine_type",
   "charging_time",
   "warranty",
-  "availability",
+  
 ] as const;
 
 export interface ChargingPoint {

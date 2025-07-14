@@ -14,7 +14,7 @@ import {
   Gauge,
   Car,
   Battery,
-  Award,
+/*   Award, */
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -36,7 +36,7 @@ const CATEGORY_LABELS: Record<string, string> = {
   "engine.engine_type": "Mühərrik tipi",
   charging_time: "Şarj vaxtı",
   warranty: "Zəmanət",
-  availability: "Əlçatanlıq",
+  /* availability: "Əlçatanlıq", */
 };
 
 // Category icons
@@ -50,7 +50,7 @@ const CATEGORY_ICONS: Record<string, any> = {
   "engine.engine_type": Zap,
   charging_time: Clock,
   warranty: Shield,
-  availability: Award,
+ /*  availability: Award, */
 };
 
 // Units for each category
@@ -61,7 +61,7 @@ const CATEGORY_UNITS: Record<string, string> = {
   "engine.engine_power": "a.g",
   charging_time: "saat",
   warranty: "",
-  availability: "", // No unit
+  /* availability: "", // No unit */
 };
 
 // Categories that should be neutral (no best/worst indication)
@@ -69,7 +69,7 @@ const NEUTRAL_CATEGORIES = [
   "brand",
   "model",
   "engine.engine_type",
-  "availability",
+/*   "availability", */
 ];
 
 // Categories where lower values are better
@@ -256,6 +256,16 @@ export default function ComparePage() {
     {} as Record<string, string | null>
   );
 
+  // Filter out 'charging_time' if any car is not fully electric
+  const filteredCategories = COMPARE_CATEGORIES.filter((category) => {
+    if (category === "charging_time") {
+      return selectedCars.every(
+        (car) => car.engine?.engine_type === "Tam Elektrik"
+      );
+    }
+    return true;
+  });
+
   const onClear = () => {
     clear();
   };
@@ -427,7 +437,7 @@ export default function ComparePage() {
                 </thead>
                 <tbody>
                   <AnimatePresence>
-                    {COMPARE_CATEGORIES.map((category, categoryIndex) => {
+                    {filteredCategories.map((category, categoryIndex) => {
                       const Icon = CATEGORY_ICONS[category] || Car;
                       const bestValue = bestValues[category];
                       const worstValue = worstValues[category];

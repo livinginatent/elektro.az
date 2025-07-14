@@ -103,7 +103,7 @@ export function EVGrid({ cars, showViewAll = true, page }: EVGridProps) {
         {carsToDisplay?.map((car) => (
           <EVCarCard
             isElectric={
-              car.engine.engine_type === "Tam Elektrik" ? true : false
+              car.engine?.engine_type === "Tam Elektrik" ? true : false
             }
             key={car.id}
             car={car}
