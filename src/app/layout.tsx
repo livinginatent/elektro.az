@@ -19,6 +19,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <meta
+        name="google-site-verification"
+        content="tb8nMv-7jPlzcRs5SlVoiQOZbrCJMPqnQ5rvxkm7Jxg"
+      />
       <body className={`${lexend.className} antialiased`}>{children}</body>
     </html>
   );
