@@ -24,7 +24,7 @@ const defaultServices: ServiceCard[] = [
     description:
       "Azərbaycanda mövcud olan bütün elektrik və hibrid avtomobillərin ətraflı məlumatları, qiymətləri və spesifikasiyaları.",
     icon: IoCarSport,
-    href: "/cars",
+    href: "/electric-vehicles",
   },
   {
     title: "Şarj Məntəqələri",

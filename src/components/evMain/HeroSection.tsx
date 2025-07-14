@@ -41,7 +41,7 @@ export function HeroSection({
           <Button
             size="lg"
             className="text-lg  px-8 hover:bg-custom-blue transition-colors cursor-pointer"
-            onClick={() => router.push("/cars")}
+            onClick={() => router.push("/electric-vehicles")}
           >
             {primaryButtonText}
           </Button>

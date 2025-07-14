@@ -8,7 +8,7 @@ import { RiChargingPileFill } from "react-icons/ri";
 
 export function Header() {
   const navItems = [
-    { href: "/cars", icon: Car, label: "Avtomobillərə bax" },
+    { href: "/electric-vehicles", icon: Car, label: "Avtomobillərə bax" },
     {
       href: "/charger",
       icon: Calculator,

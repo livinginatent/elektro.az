@@ -29,7 +29,7 @@ const defaultSections: FooterSection[] = [
   {
     title: "Kəşf et",
     links: [
-      { label: "Elektrik & Hibrid Avtomobillər", href: "/cars" },
+      { label: "Elektrik & Hibrid Avtomobillər", href: "/electric-vehicles" },
       { label: "Elektrik Doldurma Məntəqələri", href: "/charge" },
     ],
   },

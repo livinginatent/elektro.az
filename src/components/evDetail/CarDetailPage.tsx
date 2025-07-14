@@ -5,7 +5,6 @@ import { ArrowLeft, Share2, ChartColumnStacked } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import type { EVCars } from "@/app/types";
-import { CarSpecs } from "./CarSpecs";
 import { ImageCarousel } from "./ImageCarousel";
 import { getAvailabilityLabel } from "@/utils/getAvailabilityLabel";
 import { colors } from "@/utils/colors";
@@ -15,6 +14,7 @@ import { DealershipModal } from "../modals/DealershipModal";
 import { ShareModal } from "../modals/ShareModal";
 import { useCompareStore } from "@/lib/compareStore";
 import CompareBar from "../compareBar/CompareBar";
+import { CarSpecs } from "./CarSpecs";
 
 interface CarDetailPageProps {
   car: EVCars;

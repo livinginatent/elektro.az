@@ -66,7 +66,7 @@ export function EVGrid({ cars, showViewAll = true, page }: EVGridProps) {
           <Button
             className="mt-4 cursor-pointer"
             variant="outline"
-            onClick={() => router.push("/cars")}
+            onClick={() => router.push("/electric-vehicles")}
           >
             Bütün avtomobillər
           </Button>
@@ -116,7 +116,7 @@ export function EVGrid({ cars, showViewAll = true, page }: EVGridProps) {
           <Button
             className="mt-4 cursor-pointer w-full"
             variant="outline"
-            onClick={() => router.push("/cars")}
+            onClick={() => router.push("/electric-vehicles")}
           >
             Bütün avtomobillər
           </Button>
