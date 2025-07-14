@@ -20,6 +20,56 @@ import Image from "next/image";
 import { type SanityDocument } from "next-sanity";
 import { getCategoryColor, getCategoryIcon } from "@/utils/getCategoryInfo";
 import { formatToAzerbaijaniDate } from "@/utils/formatToAzerbaijaniDate";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Bloq və Xəbərlər - Procar.az | Elektrik & Hibrid Avtomobil Yenilikləri",
+  description:
+    "Azərbaycanda elektrik və hibrid avtomobillər haqqında ən son xəbərlər, məqalələr və yeniliklər. Elektrik avtomobil texnologiyaları, təhlillər və ekspert məsləhətləri Procar.az-da.",
+  keywords: [
+    "elektrik avtomobil",
+    "hibrid avtomobil",
+    "EV xəbərləri",
+    "elektrik avtomobil bloqu",
+    "elektrik avtomobil texnologiyaları",
+    "procar.az",
+    "azərbaycan elektrik avtomobil",
+    "elektrik avtomobil məqalələri",
+    "elektrik avtomobil yenilikləri",
+  ],
+  alternates: {
+    canonical: "/blog",
+  },
+  openGraph: {
+    title: "Bloq və Xəbərlər - Procar.az | Elektrik Avtomobil Yenilikləri",
+    description:
+      "Azərbaycanda elektrik və hibrid avtomobillər haqqında ən son xəbərlər, məqalələr və yeniliklər. Elektrik avtomobil texnologiyaları, təhlillər və ekspert məsləhətləri Procar.az-da.",
+    url: "https://procar.az/blog",
+    siteName: "Procar.az",
+    locale: "az_AZ",
+    type: "website",
+    images: [
+      {
+        url: "/og-blog.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Procar.az - Elektrik Avtomobil Bloqu və Xəbərləri",
+      },
+    ],
+  },
+  
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+};
 
 const POSTS_QUERY = `*[_type == "post"] | order(publishedAt desc) {
   _id,
@@ -56,8 +106,8 @@ export default async function BlogPage() {
                 <span>Bloq və xəbərlər</span>
               </div>
               <h1 className="text-2xl md:text-4xl font-bold text-slate-900 leading-tight">
-                Elektrik və hibrid avtomobillər haqqında faydalı məlumatlar, yeniliklər və
-                xəbərlər
+                Elektrik və hibrid avtomobillər haqqında faydalı məlumatlar,
+                yeniliklər və xəbərlər
               </h1>
             </div>
           </div>

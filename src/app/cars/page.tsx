@@ -23,6 +23,7 @@ import { Footer } from "@/layout/Footer";
 import { Header } from "@/layout/Header";
 import CompareBar from "@/components/compareBar/CompareBar";
 import { useRouter } from "next/navigation";
+import Head from "next/head";
 
 // Helper to get unique values for filters
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -55,31 +56,71 @@ export default function ElectricVehiclesPage() {
     [cars]
   );
 
+  // SEO meta tags
+  const pageTitle =
+    "Elektrik və Hibrid Avtomobillər - Qiymətlər, Xüsusiyyətlər və Seçimlər | Procar.az";
+  const pageDescription =
+    "Azərbaycanda elektrik və hibrid avtomobillərin ən geniş seçimi, qiymətləri, texniki göstəriciləri və müqayisə imkanları. Gələcəyin avtomobillərini Procar.az-da kəşf edin.";
+  const canonicalUrl = "https://procar.az/cars";
+  const ogImage = "/og-cars.jpg";
+  const keywords =
+    "elektrik avtomobil, hibrid avtomobil, qiymət, texniki göstəricilər, yürüş məsafəsi, Azərbaycan, avtomobil müqayisəsi, procar.az";
+
   if (loading) {
     return (
-      <div className=" bg-gray-50">
-        <div className=" mx-auto px-4 py-8">
-          <div className="flex items-center justify-center h-64">
-            <div className="text-center">
-              <div className="min-h-screen flex items-center justify-center">
-                <FadeLoader color={colors.primary.blue} />
+      <>
+        <Head>
+          <title>{pageTitle}</title>
+          <meta name="description" content={pageDescription} />
+          <link rel="canonical" href={canonicalUrl} />
+          <meta property="og:title" content={pageTitle} />
+          <meta property="og:description" content={pageDescription} />
+          <meta property="og:type" content="website" />
+          <meta property="og:url" content={canonicalUrl} />
+          <meta property="og:image" content={ogImage} />
+          <meta property="og:site_name" content="Procar.az" />
+          <meta name="keywords" content={keywords} />
+          <meta name="robots" content="index, follow" />
+        </Head>
+        <div className=" bg-gray-50">
+          <div className=" mx-auto px-4 py-8">
+            <div className="flex items-center justify-center h-64">
+              <div className="text-center">
+                <div className="min-h-screen flex items-center justify-center">
+                  <FadeLoader color={colors.primary.blue} />
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <ElectricVehiclesClient
-        cars={cars}
-        makes={makes}
-        bodyStyles={bodyStyles}
-        seatCounts={seatCounts}
-      />
-    </div>
+    <>
+      <Head>
+        <title>{pageTitle}</title>
+        <meta name="description" content={pageDescription} />
+        <link rel="canonical" href={canonicalUrl} />
+        <meta property="og:title" content={pageTitle} />
+        <meta property="og:description" content={pageDescription} />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={canonicalUrl} />
+        <meta property="og:image" content={ogImage} />
+        <meta property="og:site_name" content="Procar.az" />
+        <meta name="keywords" content={keywords} />
+        <meta name="robots" content="index, follow" />
+      </Head>
+      <div className="min-h-screen bg-gray-50">
+        <ElectricVehiclesClient
+          cars={cars}
+          makes={makes}
+          bodyStyles={bodyStyles}
+          seatCounts={seatCounts}
+        />
+      </div>
+    </>
   );
 }
 

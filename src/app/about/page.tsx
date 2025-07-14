@@ -46,13 +46,7 @@ export const metadata: Metadata = {
       },
     ],
   },
-  twitter: {
-    card: "summary_large_image",
-    title: "Haqqımızda - Procar.az | Elektrik Avtomobil Platformu",
-    description:
-      "Procar.az Azərbaycanda elektrik və hibrid avtomobillərin populyarlaşdırılması üçün çalışır.",
-    images: ["/og-about.jpg"],
-  },
+
   robots: {
     index: true,
     follow: true,
@@ -64,10 +58,7 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
-  verification: {
-    google: "your-google-verification-code",
-    yandex: "your-yandex-verification-code",
-  },
+  
 };
 
 export default function AboutPage() {

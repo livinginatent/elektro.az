@@ -23,6 +23,7 @@ import Image from "next/image";
 import Manat from "./manat";
 import { Footer } from "@/layout/Footer";
 import { Header } from "@/layout/Header";
+import Head from "next/head";
 
 // Category labels with units
 const CATEGORY_LABELS: Record<string, string> = {
@@ -182,35 +183,60 @@ export default function ComparePage() {
   const { selectedCars, removeCar, clear } = useCompareStore();
   const router = useRouter();
 
+  // SEO meta tags
+  const pageTitle =
+    "Avtomobil Müqayisəsi - Elektrik və Hibrid Avtomobillərin Xüsusiyyətləri və Qiymətləri | Procar.az";
+  const pageDescription =
+    "Elektrik və hibrid avtomobillərin xüsusiyyətlərini, qiymətlərini və texniki göstəricilərini müqayisə edin. Azərbaycanda ən yaxşı EV və hibrid avtomobil müqayisə platforması - Procar.az.";
+  const canonicalUrl = "https://procar.az/compare";
+  const ogImage = "/og-compare.jpg";
+  const keywords =
+    "avtomobil müqayisəsi, elektrik avtomobil, hibrid avtomobil, texniki göstəricilər, qiymət, yürüş məsafəsi, Azərbaycan, procar.az";
+
   if (selectedCars.length < 2) {
     return (
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100"
-      >
+      <>
+        <Head>
+          <title>{pageTitle}</title>
+          <meta name="description" content={pageDescription} />
+          <link rel="canonical" href={canonicalUrl} />
+          <meta property="og:title" content={pageTitle} />
+          <meta property="og:description" content={pageDescription} />
+          <meta property="og:type" content="website" />
+          <meta property="og:url" content={canonicalUrl} />
+          <meta property="og:image" content={ogImage} />
+          <meta property="og:site_name" content="Procar.az" />
+          <meta name="keywords" content={keywords} />
+          <meta name="robots" content="index, follow" />
+        </Head>
         <motion.div
-          initial={{ scale: 0.8 }}
-          animate={{ scale: 1 }}
-          transition={{ delay: 0.2 }}
-          className="text-center p-8 bg-white rounded-2xl shadow-xl border border-slate-200"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100"
         >
-          <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-            <Car className="w-8 h-8 text-blue-600" />
-          </div>
-
-          <p className="text-slate-600 mb-6">
-            Müqayisə üçün ən azı 2 avtomobil seçin.
-          </p>
-          <Button
-            onClick={() => router.push("/")}
-            className="px-6 py-2 rounded bg-custom-blue cursor-pointer text-white font-bold transition-all rounded-lg   hover:scale-105"
+          <motion.div
+            initial={{ scale: 0.8 }}
+            animate={{ scale: 1 }}
+            transition={{ delay: 0.2 }}
+            className="text-center p-8 bg-white rounded-2xl shadow-xl border border-slate-200"
           >
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Geri
-          </Button>
+            <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <Car className="w-8 h-8 text-blue-600" />
+            </div>
+
+            <p className="text-slate-600 mb-6">
+              Müqayisə üçün ən azı 2 avtomobil seçin.
+            </p>
+            <Button
+              onClick={() => router.push("/")}
+              className="px-6 py-2 rounded bg-custom-blue cursor-pointer text-white font-bold transition-all rounded-lg   hover:scale-105"
+            >
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Geri
+            </Button>
+          </motion.div>
         </motion.div>
-      </motion.div>
+      </>
     );
   }
 
@@ -236,6 +262,19 @@ export default function ComparePage() {
 
   return (
     <>
+      <Head>
+        <title>{pageTitle}</title>
+        <meta name="description" content={pageDescription} />
+        <link rel="canonical" href={canonicalUrl} />
+        <meta property="og:title" content={pageTitle} />
+        <meta property="og:description" content={pageDescription} />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={canonicalUrl} />
+        <meta property="og:image" content={ogImage} />
+        <meta property="og:site_name" content="Procar.az" />
+        <meta name="keywords" content={keywords} />
+        <meta name="robots" content="index, follow" />
+      </Head>
       <Header />
       <motion.div
         initial={{ opacity: 0 }}
@@ -309,11 +348,11 @@ export default function ComparePage() {
                       <div className=" rounded-xl flex items-center justify-center">
                         {car.mainImage !== null ? (
                           <Image
-                            className="mt-1 rounded-md"
+                            className="mt-1 rounded-sm w-full h-40 object-cover group-hover:scale-105 transition-transform duration-600"
                             src={car.mainImage}
                             width={300}
                             height={300}
-                            alt={""}
+                            alt={`${car.brand}${car.model}`}
                           />
                         ) : (
                           <div className="">Şəkil mövcud deyil</div>

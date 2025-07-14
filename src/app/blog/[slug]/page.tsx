@@ -15,7 +15,7 @@ import { sanityBlocks } from "@/components/sanityBlocks/sanityBlocks";
 import { getCategoryColor, getCategoryIcon } from "@/utils/getCategoryInfo";
 
 export const metadata: Metadata = {
-  title: "Blog Yazısı - Procar.az | Elektrik Avtomobil Xəbərləri",
+  title: "Elektrik & Hibrid Avtomobil Blog - Procar.az | Faydalı Məlumatlar",
   description:
     "Elektrik və hibrid avtomobillər haqqında ən son xəbərlər və texnologiya yenilikləri.",
 };

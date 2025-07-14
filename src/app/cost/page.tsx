@@ -23,6 +23,7 @@ import { Separator } from "@/components/ui/separator";
 import { Calculator, Zap, Car, TrendingDown } from "lucide-react";
 import { Footer } from "@/layout/Footer";
 import { Header } from "@/layout/Header";
+import Head from "next/head";
 
 interface CostBreakdown {
   energyCost: number;
@@ -150,8 +151,31 @@ export default function EVCostCalculator() {
   const savingsPercentage =
     iceCosts.totalAnnual > 0 ? (savings / iceCosts.totalAnnual) * 100 : 0;
 
+  // SEO meta tags
+  const pageTitle =
+    "Maliyyə Kalkulyatoru - Elektrik və Hibrid Avtomobil Xərcləri | Procar.az";
+  const pageDescription =
+    "Elektrik və hibrid avtomobillərin illik və aylıq xərclərini ənənəvi avtomobillərlə müqayisə edin. Enerji, yanacaq, təmir və sığorta xərclərini Procar.az maliyyə kalkulyatoru ilə hesablayın.";
+  const canonicalUrl = "https://procar.az/cost";
+  const ogImage = "/og-cost.jpg";
+  const keywords =
+    "maliyyə kalkulyatoru, elektrik avtomobil, hibrid avtomobil, xərclər, müqayisə, enerji xərci, yanacaq xərci, təmir, sığorta, Azərbaycan, procar.az";
+
   return (
     <>
+      <Head>
+        <title>{pageTitle}</title>
+        <meta name="description" content={pageDescription} />
+        <link rel="canonical" href={canonicalUrl} />
+        <meta property="og:title" content={pageTitle} />
+        <meta property="og:description" content={pageDescription} />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={canonicalUrl} />
+        <meta property="og:image" content={ogImage} />
+        <meta property="og:site_name" content="Procar.az" />
+        <meta name="keywords" content={keywords} />
+        <meta name="robots" content="index, follow" />
+      </Head>
       <Header />
       <div className="min-h-screen bg-gradient-to-br from-blue-50 to-green-50 p-4">
         <div className=" mx-auto space-y-6">

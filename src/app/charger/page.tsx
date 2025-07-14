@@ -1,10 +1,9 @@
 "use client";
 
-import { Header } from "@/layout/Header";
-import { Footer } from "@/layout/Footer";
 import dynamic from "next/dynamic";
 import data from "@/app/getChargePoints.json";
 import type { ChargingPoint } from "@/app/types";
+import Head from "next/head";
 
 interface WorkingHours {
   active: boolean;
@@ -93,12 +92,34 @@ export default function ChargingPage() {
     working_hours: point.working_hours,
   }));
 
-  return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-br from-slate-50 to-blue-50">
-      <Header />
+  // SEO meta tags
+  const pageTitle =
+    "Şarj Məntəqələri Xəritəsi - Elektrik Avtomobil Şarj Stansiyaları | Procar.az";
+  const pageDescription =
+    "Azərbaycanda elektrik avtomobillər üçün bütün şarj məntəqələrinin xəritəsi və siyahısı. Yaxınlıqdakı şarj stansiyalarını tapın, ünvan, güc və digər məlumatları öyrənin. Procar.az ilə EV şarj imkanları.";
+  const canonicalUrl = "https://procar.az/charger";
+  const ogImage = "/og-charger.jpg";
+  const keywords =
+    "şarj məntəqəsi, elektrik avtomobil, şarj stansiyası, EV şarj, xəritə, Azərbaycan, procar.az, şarj nöqtələri, elektrik maşın";
 
-      <ChargingStationMap chargingPoints={chargingPoints} />
-      <Footer />
-    </div>
+  return (
+    <>
+      <Head>
+        <title>{pageTitle}</title>
+        <meta name="description" content={pageDescription} />
+        <link rel="canonical" href={canonicalUrl} />
+        <meta property="og:title" content={pageTitle} />
+        <meta property="og:description" content={pageDescription} />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={canonicalUrl} />
+        <meta property="og:image" content={ogImage} />
+        <meta property="og:site_name" content="Procar.az" />
+        <meta name="keywords" content={keywords} />
+        <meta name="robots" content="index, follow" />
+      </Head>
+      <div className="min-h-screen flex flex-col bg-gradient-to-br from-slate-50 to-blue-50">
+        <ChargingStationMap chargingPoints={chargingPoints} />
+      </div>
+    </>
   );
 }
