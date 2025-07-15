@@ -317,15 +317,15 @@ export default function CarFinderPage() {
             Sizə uyğun elektrik vəya hibrid avtomobili tapın!
           </h1>
           <p className="text-gray-600 text-lg">
-            Bir neçə sadə sual cavablandıraraq sizə ən uyğun elektrik vəya avtomobili
-            tapın
+            Bir neçə sadə sual cavablandıraraq sizə ən uyğun elektrik vəya
+            avtomobili tapın
           </p>
         </div>
 
         {/* Progress Steps - Mobile Optimized */}
         <div className="mb-8">
           {/* Desktop Progress */}
-          <div className="flex flex-col md:flex-row lg:flex-row items-center justify-between  mb-8">
+          <div className="hidden md:flex items-center justify-between mb-6">
             {" "}
             {steps.map((step, index) => {
               const Icon = step.icon;
@@ -661,7 +661,6 @@ export default function CarFinderPage() {
             {currentStep === 6 && (
               <div className="space-y-6">
                 <div className="text-center">
-                  
                   <h3 className="text-xl font-semibold mb-2">
                     Əsasən harada şarj edəcəksiniz?
                   </h3>
@@ -699,7 +698,7 @@ export default function CarFinderPage() {
                 </RadioGroup>
 
                 {/* Optional: Brand Preferences */}
-            {/*     <div className="pt-6 border-t">
+                {/*     <div className="pt-6 border-t">
                   <h4 className="font-semibold mb-4">
                     Marka üstünlüyünüz varmı? (İstəyə bağlı)
                   </h4>

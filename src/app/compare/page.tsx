@@ -14,7 +14,7 @@ import {
   Gauge,
   Car,
   Battery,
-/*   Award, */
+  /*   Award, */
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -50,7 +50,7 @@ const CATEGORY_ICONS: Record<string, any> = {
   "engine.engine_type": Zap,
   charging_time: Clock,
   warranty: Shield,
- /*  availability: Award, */
+  /*  availability: Award, */
 };
 
 // Units for each category
@@ -69,7 +69,7 @@ const NEUTRAL_CATEGORIES = [
   "brand",
   "model",
   "engine.engine_type",
-/*   "availability", */
+  /*   "availability", */
 ];
 
 // Categories where lower values are better
@@ -209,17 +209,8 @@ export default function ComparePage() {
           <meta name="keywords" content={keywords} />
           <meta name="robots" content="index, follow" />
         </Head>
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100"
-        >
-          <motion.div
-            initial={{ scale: 0.8 }}
-            animate={{ scale: 1 }}
-            transition={{ delay: 0.2 }}
-            className="text-center p-8 bg-white rounded-2xl shadow-xl border border-slate-200"
-          >
+        <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
+          <div className="text-center p-8 bg-white rounded-2xl shadow-xl border border-slate-200">
             <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
               <Car className="w-8 h-8 text-blue-600" />
             </div>
@@ -234,8 +225,8 @@ export default function ComparePage() {
               <ArrowLeft className="w-4 h-4 mr-2" />
               Geri
             </Button>
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
       </>
     );
   }
@@ -341,7 +332,7 @@ export default function ComparePage() {
                   animate={{ opacity: 1, scale: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.8, y: -20 }}
                   transition={{ delay: index * 0.1 }}
-                  whileHover={{ y: -5, scale: 1.02 }}
+                  whileHover={{ y: -5, scale: 1.001 }}
                   className="relative"
                 >
                   <Card className="overflow-hidden rounded-sm border-2 border-slate-200 hover:border-custom-blue transition-all duration-300 shadow-lg hover:shadow-xl">

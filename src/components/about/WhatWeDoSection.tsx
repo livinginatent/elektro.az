@@ -3,6 +3,8 @@ import type React from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Zap, Calculator } from "lucide-react";
 import { IoCarSport } from "react-icons/io5";
+import { FaMagnifyingGlass } from "react-icons/fa6";
+
 import Link from "next/link";
 
 interface ServiceCard {
@@ -25,6 +27,13 @@ const defaultServices: ServiceCard[] = [
       "Azərbaycanda mövcud olan bütün elektrik və hibrid avtomobillərin ətraflı məlumatları, qiymətləri və spesifikasiyaları.",
     icon: IoCarSport,
     href: "/cars",
+  },
+  {
+    title: "Avtomobilini tap",
+    description:
+      "Sizə ən uyğun olan elektrik və ya hibrid avtomobili 90 saniyə içində tapın.",
+    icon: FaMagnifyingGlass,
+    href: "/find-car",
   },
   {
     title: "Şarj Məntəqələri",
@@ -61,10 +70,10 @@ export function WhatWeDoSection({
         <p className="text-gray-600 max-w-2xl mx-auto">{subtitle}</p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
         {services.map((service, index) => (
           <Link key={index} href={service.href}>
-            <Card className="rounded-sm p-6 bg-white shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 min-h-[220px] flex flex-col">
+            <Card className="rounded-sm p-6 bg-white shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 min-h-[250px] flex flex-col">
               <CardContent className="p-0 flex flex-col h-full">
                 <div className="flex justify-center items-center gap-3 mb-4">
                   <service.icon className="h-12 w-12 text-custom-blue transition-transform duration-300 group-hover:scale-110" />
