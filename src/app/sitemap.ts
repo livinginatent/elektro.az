@@ -43,7 +43,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Combine all routes
   const allRoutes = [...staticRoutes, ...carRoutes, ...blogRoutes];
 
-  const baseUrl = "https://elektro-az.vercel.app";
+  const baseUrl = "https://procar.az";
   const now = new Date().toISOString();
 
   return allRoutes.map((route) => ({
