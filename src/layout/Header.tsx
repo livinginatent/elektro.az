@@ -23,9 +23,9 @@ export function Header() {
   ];
 
   const toolsItems = [
-    { href: "/calculator", label: "Kalkulyator" },
-    { href: "/converter", label: "Konverter" },
-    { href: "/comparison", label: "Müqayisə" },
+    { href: "/find-car", label: "Avtomobilini tap" },
+    { href: "/range-calculator", label: "Yürüş məsafəsi kalkulyatoru" },
+    { href: "/cost", label: "Maliyyət kalkulyatoru" },
   ];
 
   return (
@@ -55,13 +55,13 @@ export function Header() {
             <DropdownMenuTrigger asChild>
               <Button
                 variant="ghost"
-                className="text-md font-medium text-gray-700 hover:!text-custom-blue transition-colors duration-200 h-auto p-0"
+                className="text-md font-medium text-gray-700 hover:!text-custom-blue transition-colors duration-200 cursor-pointer h-auto p-0"
               >
                 Alətlər
                 <ChevronDown className="ml-1 h-4 w-4" />
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-48">
+            <DropdownMenuContent  align="end" className="w-48">
               {toolsItems.map((item) => (
                 <DropdownMenuItem key={item.href} asChild>
                   <Link href={item.href} className="w-full cursor-pointer">
