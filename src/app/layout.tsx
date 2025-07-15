@@ -1,7 +1,7 @@
 import { Lexend } from "next/font/google";
 import "./globals.css";
 import { Metadata } from "next";
-
+import { GoogleAnalytics } from "@next/third-parties/google";
 const lexend = Lexend({
   variable: "--font-lexend",
   subsets: ["latin"],
@@ -23,7 +23,10 @@ export default function RootLayout({
         name="google-site-verification"
         content="tb8nMv-7jPlzcRs5SlVoiQOZbrCJMPqnQ5rvxkm7Jxg"
       />
-      <body className={`${lexend.className} antialiased`}>{children}</body>
+      <body className={`${lexend.className} antialiased`}>
+        {children}
+        <GoogleAnalytics gaId="G-PBSZV3QZ2E" />
+      </body>
     </html>
   );
 }
