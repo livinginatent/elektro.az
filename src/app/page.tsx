@@ -6,9 +6,10 @@ import { createClient } from "./utils/supabase/server";
 import { EVSearchContainer } from "../components/evMain/EVSearchContainer";
 
 export const metadata = {
-  title: "Procar.az - Azərbaycanda Elektrik Avtomobilləri və EV Aləti",
+  title:
+    "Procar.az - Elektrik və hibrid Avtomobillər | Procar.az | Elektromobil & Hibrid ",
   description:
-    "Azərbaycanda elektrik avtomobilləri, müqayisə, qiymətlər və yürüş məsafəsi kalkulyatoru. EV-lər üçün ən yaxşı platforma!",
+    "Azərbaycanda elektrik & hibrid avtomobilləri, müqayisə, qiymətlər və yürüş məsafəsi kalkulyatoru. Elektromobillər üçün ən yaxşı platforma!",
 };
 
 export default async function Homepage() {
