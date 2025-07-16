@@ -27,7 +27,7 @@ export function HeroSection({
     >
       <div className="text-center space-y-6">
         <h1 className="text-4xl md:text-6xl font-bold text-white leading-tight">
-          {title.split("Elektrikli").map((part, index) => (
+          {title.split("Elektrik").map((part, index) => (
             <span key={index}>
               {part}
               {index === 0 && (
