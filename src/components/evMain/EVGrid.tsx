@@ -32,7 +32,7 @@ export function EVGrid({ cars, showViewAll = true, page }: EVGridProps) {
         case "fastest":
           return (b.speed_km || 0) - (a.speed_km || 0);
         case "most_range":
-          return (b.range_km || 0) - (a.range_km || 0);
+          return (b.electric_range || 0) - (a.electric_range || 0);
         case "most_power":
           return (b.engine.engine_power || 0) - (a.engine.engine_power || 0);
 

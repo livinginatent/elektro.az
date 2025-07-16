@@ -10,6 +10,8 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { colors } from "@/utils/colors";
+import Image from "next/image";
+import { StaticImport } from "next/dist/shared/lib/get-img-props";
 
 interface Dealership {
   name: string;
@@ -23,6 +25,7 @@ interface DealershipModalProps {
   dealership: Dealership;
   carBrand?: string | null;
   carModel?: string | null;
+  carImage: string | StaticImport;
 }
 
 export function DealershipModal({
@@ -31,6 +34,7 @@ export function DealershipModal({
   dealership,
   carBrand,
   carModel,
+  carImage,
 }: DealershipModalProps) {
   const handleCallDealer = () => {
     window.open(`tel:${dealership.phone_number}`, "_self");
@@ -55,12 +59,20 @@ export function DealershipModal({
           {/* Car Info */}
           {carBrand && carModel && (
             <Card className="bg-blue-50 border-blue-200 rounded-sm">
-              <CardContent className="p-4">
-                <p className="text-sm text-gray-600">Seçilmiş avtomobil:</p>
-                <p className="font-semibold text-gray-900">
-                  {carBrand} {carModel}
-                </p>
-              </CardContent>
+              <div className="flex justify-between">
+                <CardContent className="p-4">
+                  <p className="text-sm text-gray-600">Seçilmiş avtomobil:</p>
+                  <p className="font-semibold text-gray-900">
+                    {carBrand} {carModel}
+                  </p>
+                </CardContent>
+                <Image
+                  width={150}
+                  height={150}
+                  alt={`${carBrand} ${carModel}`}
+                  src={carImage}
+                />
+              </div>
             </Card>
           )}
 

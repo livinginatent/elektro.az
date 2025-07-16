@@ -20,7 +20,7 @@ export function EVCarCard({ car, onViewDetails, isElectric }: EVCarCardProps) {
   const { addCar, removeCar, isSelected, selectedCars } = useCompareStore();
   const selected = isSelected(car.id);
   const disabled = !selected && selectedCars.length >= 4;
-  console.log(car.availability,'hello');
+  console.log(car.availability, "hello");
   return (
     <Card className="group hover:shadow-xl transition-all duration-300 border-0 shadow-lg overflow-hidden max-w-md">
       <CardHeader className="p-0">
@@ -40,7 +40,7 @@ export function EVCarCard({ car, onViewDetails, isElectric }: EVCarCardProps) {
       <CardContent className="p-4">
         <div className="space-y-3">
           <div>
-            <h3 className="text-lg font-bold text-gray-900">
+            <h3 className="text-lg font-bold text-gray-900 truncate">
               {car.brand || "Naməlum marka"} {car.model || ""}
             </h3>
             <p className="text-xl font-bold text-custom-blue">
@@ -52,10 +52,18 @@ export function EVCarCard({ car, onViewDetails, isElectric }: EVCarCardProps) {
               <div>
                 <div className="flex gap-1 items-center">
                   <MapPin className="h-4 w-4 text-gray-500" />
-                  <p className="text-sm text-gray-500">Məsafə</p>
+                  {car.engine?.engine_type !== "Tam Elektrik" ? (
+                    <p className="text-sm text-gray-500">
+                      Yürüş
+                    </p>
+                  ) : (
+                    <p className="text-sm text-gray-500">Elektrik Yürüş</p>
+                  )}
                 </div>
                 <p className="font-semibold ml-1">
-                  {formatValue(car.range_km, " km")}
+                  {car.engine?.engine_type !== "Tam Elektrik"
+                    ? formatValue(car.total_range, " km")
+                    : formatValue(car.electric_range, " km")}
                 </p>
               </div>
             </div>

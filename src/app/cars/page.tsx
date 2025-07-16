@@ -139,7 +139,7 @@ function ElectricVehiclesClient({
   const [selectedMakes, setSelectedMakes] = useState<string[]>([]);
   const [selectedBodyStyles, setSelectedBodyStyles] = useState<string[]>([]);
   const [selectedSeats, setSelectedSeats] = useState<number[]>([]);
-  const [range, setRange] = useState<[number, number]>([0, 700]);
+  const [range, setRange] = useState<[number, number]>([0, 2000]);
   const [price, setPrice] = useState<[number, number]>([0, 100000]);
   const [page, setPage] = useState(1);
   const perPage = 8;
@@ -160,8 +160,8 @@ function ElectricVehiclesClient({
         selectedSeats.length === 0 ||
         selectedSeats.includes(car?.seating_capacity);
       const matchesRange =
-        !car?.range_km ||
-        (car?.range_km >= range[0] && car.range_km <= range[1]);
+        !car?.total_range ||
+        (car?.total_range >= range[0] && car.total_range <= range[1]);
       const matchesPrice =
         !car.price || (car.price >= price[0] && car.price <= price[1]);
 

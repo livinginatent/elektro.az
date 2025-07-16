@@ -13,6 +13,7 @@ export interface Engine {
   engine_type: "Plug-in Hibrid" | "Tam Elektrik";
   engine_power: number | null;
   engine_displacement: number | null;
+  cyl: number | null;
 }
 export interface Dealership {
   name: string;
@@ -24,7 +25,7 @@ export interface EVCars {
   model: string | null;
   description: string;
   variant: string | null;
-  range_km: number | null;
+  electric_range: number | null;
   speed_km: number | null;
   acceleration: number | null;
   battery_type: string | null;
@@ -46,12 +47,14 @@ export interface EVCars {
   body_type: "Sedan" | "SUV" | "Minivan" | "Sport";
   seating_capacity: number;
   dimensions: CarDimensions;
+  electricity_consumption: number;
   safety: string[];
   id: string | null | number;
   dealership: Dealership;
   exterior: string[];
   interior: string[];
   fuel_consumption: number;
+  total_range: number | null; // Total range for hybrid cars
 }
 
 export interface QuickTool {
@@ -66,13 +69,12 @@ export const COMPARE_CATEGORIES = [
   "brand",
   "model",
   "price",
-  "range_km",
+  "electric_range",
   "acceleration",
   "engine.engine_power",
   "engine.engine_type",
   "charging_time",
   "warranty",
-  
 ] as const;
 
 export interface ChargingPoint {

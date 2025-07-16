@@ -10,14 +10,14 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { EVCars } from "@/app/types";
 import { GiPowerLightning, GiWeight } from "react-icons/gi";
-import { IoCalendarNumber, IoCarSport } from "react-icons/io5";
+import { IoCalendarNumber} from "react-icons/io5";
 import { IoSpeedometer } from "react-icons/io5";
-import { PiCityBold, PiTireBold } from "react-icons/pi";
+import { PiCityBold, PiCylinderBold, PiEngineBold, PiTireBold } from "react-icons/pi";
 import {
   FaCar,
   FaPlugCircleBolt,
   FaRoad,
-  FaRoadBridge,
+
   FaRulerHorizontal,
   FaRulerVertical,
 } from "react-icons/fa6";
@@ -29,7 +29,7 @@ import {
   RiTimerFlashFill,
 } from "react-icons/ri";
 import { BsGearFill } from "react-icons/bs";
-import { MdAirlineSeatReclineNormal,  } from "react-icons/md";
+import { MdAirlineSeatReclineNormal } from "react-icons/md";
 import { useState } from "react";
 import ExtraFeatures from "./ExtraFeatures";
 
@@ -61,14 +61,14 @@ export function CarSpecs({ car }: CarSpecsProps) {
       icon: Zap,
       specs: [
         {
-          label: "Yürüş məsafəsi",
-          value: formatValue(car.range_km, " kilometr"),
-          icon: <FaRoadBridge color={colors.primary.blue} />,
+          label: "Mühərrik həcmi",
+          value: formatValue(car.engine.engine_displacement, " litr"),
+          icon: <PiEngineBold color={colors.primary.blue} />,
         },
         {
-          label: "0-100 km/saat",
-          value: formatValue(car.acceleration, " sn"),
-          icon: <IoCarSport color={colors.primary.blue} />,
+          label: "Silindir sayı",
+          value: formatValue(car.engine.cyl, " "),
+          icon: <PiCylinderBold color={colors.primary.blue} />,
         },
         {
           label: "Maksimal sürət",
@@ -97,26 +97,23 @@ export function CarSpecs({ car }: CarSpecsProps) {
           icon: <FaCarBattery color={colors.primary.blue} />,
         },
         {
-          label: "Şarj müddəti",
-          value: formatValue(car.charging_time, "h (DC Fast)"),
-          icon: <RiTimerFlashFill color={colors.primary.blue} />,
-        },
-        {
-          label: "Şarj portları",
-          value:
-            car.charging_ports && car.charging_ports.length > 0
-              ? car.charging_ports.join(", ")
-              : "Mövcud deyil",
+          label: "Batareya növü",
+          value: car.battery_type ? car.battery_type : "Mövcud deyil",
           icon: <FaPlugCircleBolt color={colors.primary.blue} />,
         },
         {
-          label: "Şəhəriçi sərfiyyat",
-          value: formatValue(car.efficiency_city, " 100"),
+          label: "Şarj müddəti",
+          value: formatValue(car.charging_time, " saat"),
+          icon: <RiTimerFlashFill color={colors.primary.blue} />,
+        },
+        {
+          label: "Yürüş məsafəsi",
+          value: formatValue(car.electric_range, " km"),
           icon: <PiCityBold color={colors.primary.blue} />,
         },
         {
-          label: "Magistral sərfiyyatı",
-          value: formatValue(car.efficiency_highway, " MPGe"),
+          label: "Elektrik sərfiyyatı",
+          value: formatValue(car.electricity_consumption, " kWh/100Km"),
           icon: <FaRoad color={colors.primary.blue} />,
         },
       ],

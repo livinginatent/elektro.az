@@ -91,7 +91,9 @@ export function CarDetailPage({ car, onBack }: CarDetailPageProps) {
                       className="text-center p-4 bg-blue-50  rounded-sm"
                     >
                       <div className="text-2xl font-bold ">
-                        {car.range_km} km
+                        {car.engine.engine_type !== "Tam Elektrik"
+                          ? `${car.total_range} km`
+                          : `${car.electric_range} km`}
                       </div>
                       <div className="text-sm text-gray-600">
                         Yürüş məsafəsi
@@ -198,6 +200,7 @@ export function CarDetailPage({ car, onBack }: CarDetailPageProps) {
         dealership={car.dealership}
         carBrand={car.brand}
         carModel={car.model}
+        carImage={car.mainImage}
       />
       <ShareModal
         isOpen={isShareModalOpen}

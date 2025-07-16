@@ -9,7 +9,6 @@ import {
   Zap,
   Users,
   MapPin,
-
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -27,7 +26,6 @@ import Image from "next/image";
 import { EVCars } from "@/app/types";
 import { Header } from "@/layout/Header";
 import { Footer } from "@/layout/Footer";
-
 
 interface UserPreferences {
   budget: [number, number];
@@ -85,11 +83,14 @@ export function CarFinderResults({
 
     // Range match (20 points)
     maxScore += 20;
-    if (car.range_km && car.range_km >= preferences.rangeRequirement) {
+    if (
+      car.electric_range &&
+      car.electric_range >= preferences.rangeRequirement
+    ) {
       score += 20;
     } else if (
-      car.range_km &&
-      car.range_km >= preferences.rangeRequirement * 0.8
+      car.electric_range &&
+      car.electric_range >= preferences.rangeRequirement * 0.8
     ) {
       score += 10;
     }
@@ -109,7 +110,8 @@ export function CarFinderResults({
     preferences.priorityFeatures.forEach((feature) => {
       switch (feature) {
         case "range":
-          if (car.range_km && car.range_km > 400) score += featureScore;
+          if (car.electric_range && car.electric_range > 400)
+            score += featureScore;
           break;
         case "speed":
           if (car.speed_km && car.speed_km > 180) score += featureScore;
@@ -139,7 +141,7 @@ export function CarFinderResults({
       case "price-high":
         return (b.price || 0) - (a.price || 0);
       case "range":
-        return (b.range_km || 0) - (a.range_km || 0);
+        return (b.electric_range || 0) - (a.electric_range || 0);
       case "efficiency":
         return (b.efficiency_city || 0) - (a.efficiency_city || 0);
       case "relevance":
@@ -322,7 +324,7 @@ export function CarFinderResults({
                           <div>
                             <p className="text-xs text-gray-500">Məsafə</p>
                             <p className="font-semibold">
-                              {car.range_km || "N/A"} km
+                              {car.electric_range || "N/A"} km
                             </p>
                           </div>
                         </div>
@@ -360,12 +362,13 @@ export function CarFinderResults({
                         </p>
                         <div className="flex flex-wrap gap-1">
                           {preferences.bodyTypes.includes(car.body_type) && (
-                            <Badge  variant="secondary" className="text-xs">
+                            <Badge variant="secondary" className="text-xs">
                               Növ uyğun
                             </Badge>
                           )}
-                          {car.range_km &&
-                            car.range_km >= preferences.rangeRequirement && (
+                          {car.electric_range &&
+                            car.electric_range >=
+                              preferences.rangeRequirement && (
                               <Badge variant="secondary" className="text-xs">
                                 Məsafə kifayət
                               </Badge>
@@ -394,8 +397,6 @@ export function CarFinderResults({
                         >
                           Ətraflı bax
                         </Button>
-                  
-                     
                       </div>
                     </div>
                   </CardContent>

@@ -13,7 +13,7 @@ interface HeroSectionProps {
 }
 
 export function HeroSection({
-  title = "Elektrikli və hibrid avtomobillər",
+  title = "Elektrik və hibrid avtomobillər",
   subtitle = "İstəklərinizə cavab verən elektrik & hibrid avtomobili tapın, müqayisə edin. Real qiymətlər, məsafə kalkulyatoru, və ən son yeniliklər bir yerdə.",
   primaryButtonText = "Avtomobillərə bax",
   secondaryButtonText = "Uyğun avtomobil tapın",

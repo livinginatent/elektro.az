@@ -147,7 +147,7 @@ export function StepByStepRangeCalculator({
   const calculateRange = () => {
     if (!selectedCar) return;
 
-    const baseRange = selectedCar.range_km;
+    const baseRange = selectedCar.electric_range;
     let rangeFactor = 1;
 
     // Temperature effect
@@ -452,7 +452,7 @@ export function StepByStepRangeCalculator({
                               {car.brand} {car.model}
                             </p>
                             <p className="text-sm text-gray-500">
-                              {car.range_km} km yürüş məsafəsi
+                              {car.electric_range} km yürüş məsafəsi
                             </p>
                           </div>
                           <Badge
@@ -477,7 +477,7 @@ export function StepByStepRangeCalculator({
                           {selectedCar.brand} {selectedCar.model}
                         </p>
                         <p className="text-gray-600">
-                          Baza yürüş məsafəsi: {selectedCar.range_km} km
+                          Baza yürüş məsafəsi: {selectedCar.electric_range} km
                         </p>
                         <p className="text-gray-600">
                           Batareya tutumu: {selectedCar.battery_capacity} kWh
@@ -552,9 +552,9 @@ export function StepByStepRangeCalculator({
                         Təxmini mövcud məsafə
                       </p>
                       <p className="text-2xl font-bold text-blue-800">
-                        {selectedCar.range_km &&
+                        {selectedCar.electric_range &&
                           Math.round(
-                            (selectedCar.range_km * batteryLevel[0]) / 100
+                            (selectedCar.electric_range * batteryLevel[0]) / 100
                           )}
                         km
                       </p>

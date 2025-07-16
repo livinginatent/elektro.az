@@ -8,7 +8,6 @@ import {
   Zap,
   Users,
   Route,
-
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -119,7 +118,7 @@ const chargingOptions = [
 ];
 
 const priorityFeatures = [
-  { value: "range", label: "Uzun məsafə", icon: <GiBatteryPack/> },
+  { value: "range", label: "Uzun məsafə", icon: <GiBatteryPack /> },
   { value: "speed", label: "Sürət", icon: IoSpeedometerOutline },
   { value: "luxury", label: "Lüks", icon: "✨" },
   { value: "efficiency", label: "Qənaət", icon: "🌱" },
@@ -142,7 +141,7 @@ export default function CarFinderPage() {
   const [showResults, setShowResults] = useState(false);
   const [matchedCars, setMatchedCars] = useState<EVCars[]>([]);
   const [cars, setCars] = useState<EVCars[]>([]);
-/*   function getUnique<T, K extends keyof T>(arr: T[], key: K): T[K][] {
+  /*   function getUnique<T, K extends keyof T>(arr: T[], key: K): T[K][] {
     return Array.from(new Set(arr.map((item) => item[key]))).filter(
       Boolean
     ) as T[K][];
@@ -159,7 +158,7 @@ export default function CarFinderPage() {
   }, []);
 
   // Get filter options only when cars data is available
-/*   const availableBrands = useMemo(
+  /*   const availableBrands = useMemo(
     () => (cars ? getUnique(cars, "brand") : []),
     [cars]
   ); */
@@ -223,7 +222,10 @@ export default function CarFinderPage() {
       }
 
       // Range requirement filter
-      if (car.range_km && car.range_km < preferences.rangeRequirement) {
+      if (
+        car.electric_range &&
+        car.electric_range < preferences.rangeRequirement
+      ) {
         return false;
       }
 
@@ -256,8 +258,8 @@ export default function CarFinderPage() {
       preferences.priorityFeatures.forEach((feature) => {
         switch (feature) {
           case "range":
-            scoreA += (a.range_km || 0) / 10;
-            scoreB += (b.range_km || 0) / 10;
+            scoreA += (a.electric_range || 0) / 10;
+            scoreB += (b.electric_range || 0) / 10;
             break;
           case "speed":
             scoreA += (a.speed_km || 0) / 10;
