@@ -1,21 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import {
-  ChevronRight,
-  ChevronLeft,
-  Search,
-  Zap,
-  Users,
-  Route,
-} from "lucide-react";
+import { ChevronRight, ChevronLeft, Search, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Slider } from "@/components/ui/slider";
-import { Label } from "@/components/ui/label";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Header } from "@/layout/Header";
 import { Footer } from "@/layout/Footer";
 import { EVCars } from "@/app/types";
@@ -41,12 +32,10 @@ interface UserPreferences {
 
 const steps = [
   { id: 1, title: "Büdcə", icon: Manat },
-  { id: 2, title: "İstifadə", icon: Route },
-  { id: 3, title: "Növ", icon: IoCarSport },
-  { id: 4, title: "Oturacaq", icon: Users },
-  { id: 5, title: "Məsafə", icon: FaRoad },
-  { id: 6, title: "Şarj", icon: Zap },
-  { id: 7, title: "Nəticələr", icon: Search },
+  { id: 2, title: "Növ", icon: IoCarSport },
+  { id: 3, title: "Oturacaq", icon: Users },
+  { id: 4, title: "Məsafə", icon: FaRoad },
+  { id: 5, title: "Nəticələr", icon: Search },
 ];
 
 const bodyTypeOptions = [
@@ -73,47 +62,6 @@ const bodyTypeOptions = [
     label: "Sport",
     icon: "🏎️",
     description: "Sürətli və dinamik",
-  },
-];
-
-const usageTypeOptions = [
-  {
-    value: "city",
-    label: "Şəhər içi",
-    description: "Əsasən şəhər daxilində istifadə",
-  },
-  {
-    value: "highway",
-    label: "Uzun məsafə",
-    description: "Tez-tez şəhərlərarası səfər",
-  },
-  {
-    value: "mixed",
-    label: "Qarışıq",
-    description: "Həm şəhər, həm də uzun məsafə",
-  },
-];
-
-const chargingOptions = [
-  {
-    value: "home",
-    label: "Evdə şarj",
-    description: "Əsasən evdə şarj edəcəyəm",
-  },
-  {
-    value: "public",
-    label: "İctimai şarj",
-    description: "İctimai şarj məntəqələrindən istifadə",
-  },
-  {
-    value: "workplace",
-    label: "İş yerində",
-    description: "İş yerində şarj imkanı var",
-  },
-  {
-    value: "mixed",
-    label: "Qarışıq",
-    description: "Müxtəlif yerlərdə şarj edəcəyəm",
   },
 ];
 
@@ -172,20 +120,16 @@ export default function CarFinderPage() {
   const canProceedToNextStep = () => {
     switch (currentStep) {
       case 2:
-        return preferences.usageType !== "";
-      case 3:
         return preferences.bodyTypes.length > 0;
-      case 5:
+      case 4:
         return preferences.rangeRequirement > 0;
-      case 6:
-        return preferences.chargingPreference !== "";
       default:
         return true;
     }
   };
 
   const handleNext = () => {
-    if (currentStep === 7) {
+    if (currentStep === 5) {
       findMatchingCars();
     } else if (canProceedToNextStep()) {
       setCurrentStep((prev) => prev + 1);
@@ -223,8 +167,8 @@ export default function CarFinderPage() {
 
       // Range requirement filter
       if (
-        car.electric_range &&
-        car.electric_range < preferences.rangeRequirement
+        car.total_range &&
+        car.total_range < preferences.rangeRequirement
       ) {
         return false;
       }
@@ -456,50 +400,8 @@ export default function CarFinderPage() {
               </div>
             )}
 
-            {/* Step 2: Usage Type */}
+            {/* Step 2: Body Type */}
             {currentStep === 2 && (
-              <div className="space-y-6">
-                <div className="text-center">
-                  <h3 className="text-xl font-semibold mb-2">
-                    Avtomobili necə istifadə edəcəksiniz?
-                  </h3>
-                  <p className="text-gray-600">
-                    Bu, uyğun məsafə və səmərəlilik seçiminə kömək edəcək
-                  </p>
-                </div>
-
-                <RadioGroup
-                  value={preferences.usageType}
-                  onValueChange={(value) =>
-                    updatePreferences("usageType", value)
-                  }
-                  className="space-y-4"
-                >
-                  {usageTypeOptions.map((option) => (
-                    <div
-                      key={option.value}
-                      className="flex items-center space-x-3"
-                    >
-                      <RadioGroupItem value={option.value} id={option.value} />
-                      <Label
-                        htmlFor={option.value}
-                        className="flex-1 cursor-pointer"
-                      >
-                        <div className="flex flex-col">
-                          <span className="font-medium">{option.label}</span>
-                          <span className="text-sm text-gray-500">
-                            {option.description}
-                          </span>
-                        </div>
-                      </Label>
-                    </div>
-                  ))}
-                </RadioGroup>
-              </div>
-            )}
-
-            {/* Step 3: Body Type */}
-            {currentStep === 3 && (
               <div className="space-y-6">
                 <div className="text-center">
                   <h3 className="text-xl font-semibold mb-2">
@@ -543,8 +445,8 @@ export default function CarFinderPage() {
               </div>
             )}
 
-            {/* Step 4: Seating Capacity */}
-            {currentStep === 4 && (
+            {/* Step 3: Seating Capacity */}
+            {currentStep === 3 && (
               <div className="space-y-6">
                 <div className="text-center">
                   <h3 className="text-xl font-semibold mb-2">
@@ -600,8 +502,8 @@ export default function CarFinderPage() {
               </div>
             )}
 
-            {/* Step 5: Range Requirement */}
-            {currentStep === 5 && (
+            {/* Step 4: Range Requirement */}
+            {currentStep === 4 && (
               <div className="space-y-6">
                 <div className="text-center">
                   <h3 className="text-xl font-semibold mb-2">
@@ -659,119 +561,8 @@ export default function CarFinderPage() {
               </div>
             )}
 
-            {/* Step 6: Charging Preference */}
-            {currentStep === 6 && (
-              <div className="space-y-6">
-                <div className="text-center">
-                  <h3 className="text-xl font-semibold mb-2">
-                    Əsasən harada şarj edəcəksiniz?
-                  </h3>
-                  <p className="text-gray-600">
-                    Bu, uyğun şarj sürəti seçiminə kömək edəcək
-                  </p>
-                </div>
-
-                <RadioGroup
-                  value={preferences.chargingPreference}
-                  onValueChange={(value) =>
-                    updatePreferences("chargingPreference", value)
-                  }
-                  className="space-y-4"
-                >
-                  {chargingOptions.map((option) => (
-                    <div
-                      key={option.value}
-                      className="flex items-center space-x-3"
-                    >
-                      <RadioGroupItem value={option.value} id={option.value} />
-                      <Label
-                        htmlFor={option.value}
-                        className="flex-1 cursor-pointer"
-                      >
-                        <div className="flex flex-col">
-                          <span className="font-medium">{option.label}</span>
-                          <span className="text-sm text-gray-500">
-                            {option.description}
-                          </span>
-                        </div>
-                      </Label>
-                    </div>
-                  ))}
-                </RadioGroup>
-
-                {/* Optional: Brand Preferences */}
-                {/*     <div className="pt-6 border-t">
-                  <h4 className="font-semibold mb-4">
-                    Marka üstünlüyünüz varmı? (İstəyə bağlı)
-                  </h4>
-                  <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-                    {availableBrands.map((brand) => (
-                      <div key={brand} className="flex items-center space-x-2">
-                        <Checkbox
-                          id={brand}
-                          checked={preferences.brandPreferences.includes(brand)}
-                          onCheckedChange={(checked) => {
-                            const newBrands = checked
-                              ? [...preferences.brandPreferences, brand]
-                              : preferences.brandPreferences.filter(
-                                  (b) => b !== brand
-                                );
-                            updatePreferences("brandPreferences", newBrands);
-                          }}
-                        />
-                        <Label
-                          htmlFor={brand}
-                          className="text-sm cursor-pointer"
-                        >
-                          {brand}
-                        </Label>
-                      </div>
-                    ))}
-                  </div>
-                </div> */}
-
-                {/* Priority Features */}
-                <div className="pt-6 border-t">
-                  <h4 className="font-semibold mb-4">
-                    Sizin üçün əhəmiyyətli xüsusiyyətlər
-                  </h4>
-                  <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-                    {priorityFeatures.map((feature) => (
-                      <Card
-                        key={feature.value}
-                        className={`cursor-pointer transition-all rounded-sm ${
-                          preferences.priorityFeatures.includes(feature.value)
-                            ? "ring-2 ring-blue-500 bg-blue-50"
-                            : "hover:shadow-md"
-                        }`}
-                        onClick={() => {
-                          const newFeatures =
-                            preferences.priorityFeatures.includes(feature.value)
-                              ? preferences.priorityFeatures.filter(
-                                  (f) => f !== feature.value
-                                )
-                              : [
-                                  ...preferences.priorityFeatures,
-                                  feature.value,
-                                ];
-                          updatePreferences("priorityFeatures", newFeatures);
-                        }}
-                      >
-                        <CardContent className="p-4 text-center">
-                          {/* <div className="text-2xl mb-1">{feature.icon}</div> */}
-                          <span className="text-sm font-medium">
-                            {feature.label}
-                          </span>
-                        </CardContent>
-                      </Card>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* Step 7: Review */}
-            {currentStep === 7 && (
+            {/* Step 5: Review */}
+            {currentStep === 5 && (
               <div className="space-y-6">
                 <div className="text-center">
                   <div className="text-4xl mb-4">📋</div>
@@ -798,18 +589,6 @@ export default function CarFinderPage() {
                         </div>
                         <div>
                           <span className="font-medium text-gray-600">
-                            İstifadə:
-                          </span>
-                          <span className="ml-2">
-                            {
-                              usageTypeOptions.find(
-                                (o) => o.value === preferences.usageType
-                              )?.label
-                            }
-                          </span>
-                        </div>
-                        <div>
-                          <span className="font-medium text-gray-600">
                             Növ:
                           </span>
                           <span className="ml-2">
@@ -830,19 +609,6 @@ export default function CarFinderPage() {
                           </span>
                           <span className="ml-2">
                             {preferences.rangeRequirement} km
-                          </span>
-                        </div>
-                        <div>
-                          <span className="font-medium text-gray-600">
-                            Şarj:
-                          </span>
-                          <span className="ml-2">
-                            {
-                              chargingOptions.find(
-                                (o) =>
-                                  o.value === preferences.chargingPreference
-                              )?.label
-                            }
                           </span>
                         </div>
                       </div>
@@ -909,12 +675,12 @@ export default function CarFinderPage() {
             disabled={
               !canProceedToNextStep() &&
               currentStep !== 1 &&
-              currentStep !== 4 &&
-              currentStep !== 7
+              currentStep !== 3 &&
+              currentStep !== 5
             }
             className="rounded-sm cursor-pointer"
           >
-            {currentStep === 7 ? (
+            {currentStep === 5 ? (
               <>
                 <Search className="h-4 w-4 mr-2" />
                 Nəticələri Gör

@@ -23,13 +23,17 @@ import Manat from "./manat";
 import { Footer } from "@/layout/Footer";
 import { Header } from "@/layout/Header";
 import Head from "next/head";
+import { GiCarWheel } from "react-icons/gi";
+import { PiCylinderBold, PiEngineBold } from "react-icons/pi";
+import { FaRoad } from "react-icons/fa6";
+import { BsFuelPump } from "react-icons/bs";
 
 // Category labels with units
 const CATEGORY_LABELS: Record<string, string> = {
   brand: "Marka",
   model: "Model",
   price: "Qiymət",
-  electric_range: "Sürüş məsafəsi",
+  electric_range: "Elektrik yürüş məsafəsi",
   acceleration: "0-100 km/saat",
   "engine.engine_power": "Mühərrik gücü",
   "engine.engine_type": "Mühərrik tipi",
@@ -46,7 +50,7 @@ const CATEGORY_ICONS: Record<string, any> = {
   electric_range: Zap,
   acceleration: Gauge,
   "engine.engine_power": Battery,
-  "engine.engine_type": Zap,
+  "engine.engine_type": PiEngineBold,
   charging_time: Clock,
   warranty: Shield,
   /*  availability: Award, */
@@ -72,7 +76,7 @@ const NEUTRAL_CATEGORIES = [
 ];
 
 // Categories where lower values are better
-const LOWER_IS_BETTER = ["price", "acceleration", "charging_time"];
+const LOWER_IS_BETTER = ["price", "acceleration", "charging_time","fuel_consumption"];
 
 // Get value for a car and category
 function getCarValue(car: any, category: string) {
@@ -144,6 +148,85 @@ export default function ComparePage() {
   const keywords =
     "avtomobil müqayisəsi, elektrik avtomobil, hibrid avtomobil, texniki göstəricilər, qiymət, yürüş məsafəsi, Azərbaycan, procar.az";
 
+  // Helper: Determine car types
+  const allElectric = selectedCars.every(
+    (car) => car.engine?.engine_type === "Tam Elektrik"
+  );
+  const allHybrid = selectedCars.every(
+    (car) => car.engine?.engine_type === "Plug-in Hibrid"
+  );
+  const mixed = !allElectric && !allHybrid;
+
+  // Define best specs for each scenario
+  const universalSpecs = [
+    "brand",
+    "model",
+    "price",
+    "acceleration",
+    "engine.engine_power",
+    "engine.engine_type",
+    "drivetrain",
+    "warranty",
+    "total_range",
+  ];
+  const electricSpecs = [
+    "electric_range",
+    "charging_time",
+    "battery_capacity",
+    "electricity_consumption",
+  ];
+  const hybridSpecs = [
+    "electric_range",
+    "total_range",
+    "fuel_consumption",
+    "engine.cyl",
+  ];
+
+  // Decide which categories to show
+  let compareCategories: string[] = [...universalSpecs];
+  if (allElectric) {
+    compareCategories = [...universalSpecs, ...electricSpecs];
+  } else if (allHybrid) {
+    compareCategories = [...universalSpecs, ...hybridSpecs];
+  } else if (mixed) {
+    // Show all, but some values will be N/A
+    compareCategories = [...universalSpecs];
+  }
+
+  // Add labels, icons, and units for new fields
+  const CATEGORY_LABELS_EXT: Record<string, string> = {
+    ...CATEGORY_LABELS,
+    drivetrain: "Ötürücü",
+    battery_capacity: "Batareya tutumu",
+    electricity_consumption: "Elektrik sərfiyyatı",
+    total_range: "Ümumi yürüş",
+    fuel_consumption: "Yanacaq sərfiyyatı",
+    "engine.cyl": "Silindir sayı",
+  };
+  const CATEGORY_ICONS_EXT: Record<string, any> = {
+    ...CATEGORY_ICONS,
+    drivetrain: GiCarWheel,
+    battery_capacity: Battery,
+    electricity_consumption: Zap,
+    total_range: FaRoad,
+    fuel_consumption: BsFuelPump,
+    "engine.cyl": PiCylinderBold,
+  };
+  const CATEGORY_UNITS_EXT: Record<string, string> = {
+    ...CATEGORY_UNITS,
+    drivetrain: "",
+    battery_capacity: "kWh",
+    electricity_consumption: "Wh/100Km",
+    total_range: "km",
+    fuel_consumption: "l/100km",
+    "engine.cyl": "",
+  };
+
+  const onClear = () => {
+    clear();
+  };
+
+  // Fix: Only render the 'select at least 2 cars' message if selectedCars.length < 2
   if (selectedCars.length < 2) {
     return (
       <>
@@ -165,7 +248,6 @@ export default function ComparePage() {
             <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
               <Car className="w-8 h-8 text-blue-600" />
             </div>
-
             <p className="text-slate-600 mb-6">
               Müqayisə üçün ən azı 2 avtomobil seçin.
             </p>
@@ -181,50 +263,6 @@ export default function ComparePage() {
       </>
     );
   }
-
-  // Add new categories for comparison
-  type DynamicCategory = string & {};
-
-  // Dynamic categories based on car types
-  const hasHybrid = selectedCars.some(
-    (car) => car.engine?.engine_type !== "Tam Elektrik"
-  );
-  const hasElectric = selectedCars.some(
-    (car) => car.engine?.engine_type === "Tam Elektrik"
-  );
-
-  const dynamicCategories: DynamicCategory[] = [
-    ...(hasElectric ? ["electric_range"] : []),
-    ...(hasHybrid ? ["electric_range", "total_range", "engine.cyl"] : []),
-    "acceleration",
-    "engine.engine_power",
-    "engine.engine_type",
-    "charging_time",
-    "warranty",
-    "price",
-  ];
-
-  // Add labels, icons, and units for new fields
-  const CATEGORY_LABELS_EXT: Record<string, string> = {
-    ...CATEGORY_LABELS,
-    total_range: "Yürüş (hibrid + yanacaq)",
-    "engine.cyl": "Silindir sayı",
-    electric_range: hasHybrid ? "Elektrik Yürüş" : "Yürüş",
-  };
-  const CATEGORY_ICONS_EXT: Record<string, any> = {
-    ...CATEGORY_ICONS,
-    total_range: Zap,
-    "engine.cyl": Gauge,
-  };
-  const CATEGORY_UNITS_EXT: Record<string, string> = {
-    ...CATEGORY_UNITS,
-    total_range: "km",
-    "engine.cyl": "",
-  };
-
-  const onClear = () => {
-    clear();
-  };
 
   return (
     <>
@@ -393,16 +431,19 @@ export default function ComparePage() {
                 </thead>
                 <tbody>
                   <AnimatePresence>
-                    {dynamicCategories.map(
+                    {compareCategories.map(
                       (category: string, categoryIndex: number) => {
                         const Icon = CATEGORY_ICONS_EXT[category] || Car;
                         const isLowerBetter =
                           LOWER_IS_BETTER.includes(category);
                         // Gather all values for this category
-                        const allValues = selectedCars.map((car) =>
-                          String(getCarValue(car, category))
-                        );
-
+                        const allValues = selectedCars.map((car) => {
+                          const v = getCarValue(car, category);
+                          // Show "-" for null/undefined/empty
+                          return v === null || v === undefined || v === ""
+                            ? "-"
+                            : String(v);
+                        });
                         return (
                           <motion.tr
                             key={category}
@@ -424,14 +465,18 @@ export default function ComparePage() {
                             {selectedCars.map((car, carIndex) => {
                               const value = getCarValue(car, category);
                               const unit = CATEGORY_UNITS_EXT[category] || "";
-                              const valueWithUnit = `${value} ${unit}`;
+                              const valueWithUnit =
+                                value === null ||
+                                value === undefined ||
+                                value === ""
+                                  ? "-"
+                                  : `${value} ${unit}`;
                               const badgeInfo = getValueBadge(
                                 String(value),
                                 category,
                                 allValues,
                                 isLowerBetter
                               );
-
                               return (
                                 <motion.td
                                   key={car.id}
