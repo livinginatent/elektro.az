@@ -9,15 +9,19 @@ import {
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { EVCars } from "@/app/types";
-import { GiPowerLightning, GiWeight } from "react-icons/gi";
-import { IoCalendarNumber} from "react-icons/io5";
+import { GiCarWheel, GiPowerLightning, GiWeight } from "react-icons/gi";
+import { IoCalendarNumber } from "react-icons/io5";
 import { IoSpeedometer } from "react-icons/io5";
-import { PiCityBold, PiCylinderBold, PiEngineBold, PiTireBold } from "react-icons/pi";
+import {
+  PiCityBold,
+  PiCylinderBold,
+  PiEngineBold,
+  PiTireBold,
+} from "react-icons/pi";
 import {
   FaCar,
   FaPlugCircleBolt,
   FaRoad,
-
   FaRulerHorizontal,
   FaRulerVertical,
 } from "react-icons/fa6";
@@ -55,37 +59,70 @@ export function CarSpecs({ car }: CarSpecsProps) {
     return `${value}${unit}`;
   };
 
+  // Define specs for Performans section based on engine type
+  const performanceSpecsElectric = [
+    // Example: You can edit these specs for electric cars
+    {
+      label: "Maksimal sürət",
+      value: formatValue(car.speed_km, " km/saat"),
+      icon: <IoSpeedometer color={colors.primary.blue} />,
+    },
+    {
+      label: "Güc",
+      value: formatValue(car.engine.engine_power, " a.g"),
+      icon: <GiPowerLightning color={colors.primary.blue} />,
+    },
+    {
+      label: "Tork",
+      value: formatValue(car.torque, " n/metr"),
+      icon: <BsGearFill color={colors.primary.blue} />,
+    },
+    {
+      label: "Ötürücü",
+      value: formatValue(car.drivetrain, ""),
+      icon: <GiCarWheel color={colors.primary.blue} />,
+    },
+    // Add more or change as needed
+  ];
+
+  const performanceSpecsNonElectric = [
+    // Example: You can edit these specs for non-electric cars
+    {
+      label: "Mühərrik həcmi",
+      value: formatValue(car.engine.engine_displacement, " litr"),
+      icon: <PiEngineBold color={colors.primary.blue} />,
+    },
+    {
+      label: "Silindir sayı",
+      value: formatValue(car.engine.cyl, " "),
+      icon: <PiCylinderBold color={colors.primary.blue} />,
+    },
+    {
+      label: "Maksimal sürət",
+      value: formatValue(car.speed_km, " km/saat"),
+      icon: <IoSpeedometer color={colors.primary.blue} />,
+    },
+    {
+      label: "Mühərrik gücü",
+      value: formatValue(car.engine.engine_power, " a.g"),
+      icon: <GiPowerLightning color={colors.primary.blue} />,
+    },
+    {
+      label: "Mühərrik tork",
+      value: formatValue(car.torque, " n/metr"),
+      icon: <BsGearFill color={colors.primary.blue} />,
+    },
+    // Add more or change as needed
+  ];
+
   const specSections = [
     {
       title: "Performans",
       icon: Zap,
-      specs: [
-        {
-          label: "Mühərrik həcmi",
-          value: formatValue(car.engine.engine_displacement, " litr"),
-          icon: <PiEngineBold color={colors.primary.blue} />,
-        },
-        {
-          label: "Silindir sayı",
-          value: formatValue(car.engine.cyl, " "),
-          icon: <PiCylinderBold color={colors.primary.blue} />,
-        },
-        {
-          label: "Maksimal sürət",
-          value: formatValue(car.speed_km, " km/saat"),
-          icon: <IoSpeedometer color={colors.primary.blue} />,
-        },
-        {
-          label: "Mühərrik gücü",
-          value: formatValue(car.engine.engine_power, " a.g"),
-          icon: <GiPowerLightning color={colors.primary.blue} />,
-        },
-        {
-          label: "Mühərrik tork",
-          value: formatValue(car.torque, " n/metr"),
-          icon: <BsGearFill color={colors.primary.blue} />,
-        },
-      ],
+      specs:
+        car.engine.engine_type === "Tam Elektrik"
+          ? performanceSpecsElectric
+          : performanceSpecsNonElectric,
     },
     {
       title: "Batareya & Şarj",
@@ -113,7 +150,7 @@ export function CarSpecs({ car }: CarSpecsProps) {
         },
         {
           label: "Elektrik sərfiyyatı",
-          value: formatValue(car.electricity_consumption, " kWh/100Km"),
+          value: formatValue(car.electricity_consumption, " Wh/100Km"),
           icon: <FaRoad color={colors.primary.blue} />,
         },
       ],
@@ -242,6 +279,8 @@ export function CarSpecs({ car }: CarSpecsProps) {
         car={car}
         showAllFeatures={showAllSafety}
         Icon={Shield}
+
+        section="safety"
       />
       <ExtraFeatures
         mainTitle="Eksteryer"
@@ -252,6 +291,7 @@ export function CarSpecs({ car }: CarSpecsProps) {
         car={car}
         showAllFeatures={showAllExterior}
         Icon={GalleryHorizontalEnd}
+        section="exterior"
       />
       <ExtraFeatures
         mainTitle="İnteryer"
@@ -262,6 +302,7 @@ export function CarSpecs({ car }: CarSpecsProps) {
         car={car}
         showAllFeatures={showAllExterior}
         Icon={ScreenShare}
+        section="interior"
       />
     </div>
   );

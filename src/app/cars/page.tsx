@@ -224,7 +224,7 @@ function ElectricVehiclesClient({
     selectedSeats.length +
     (range[0] > 0 || range[1] < 2000 ? 1 : 0) +
     (price[0] > 0 || price[1] < 200000 ? 1 : 0);
-  console.log(makes);
+
   return (
     <>
       <Header />

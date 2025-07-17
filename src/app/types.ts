@@ -55,6 +55,7 @@ export interface EVCars {
   interior: string[];
   fuel_consumption: number;
   total_range: number | null; // Total range for hybrid cars
+  drivetrain:string
 }
 
 export interface QuickTool {

@@ -1,6 +1,6 @@
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
-import { ChevronDown, ChevronUp,  LucideIcon } from "lucide-react";
+import { ChevronDown, ChevronUp, LucideIcon } from "lucide-react";
 import { EVCars } from "@/app/types";
 
 type Props = {
@@ -12,6 +12,7 @@ type Props = {
   showAllFeatures: boolean;
   car: EVCars;
   Icon: LucideIcon;
+  section: string;
 };
 
 const ExtraFeatures = ({
@@ -22,8 +23,15 @@ const ExtraFeatures = ({
   setShowAllFeatures,
   showAllFeatures,
   car,
-  Icon
+  Icon,
+  section,
 }: Props) => {
+  const length =
+    section === "safety"
+      ? car.safety.length
+      : section === "exterior"
+        ? car.exterior.length
+        : car.interior.length;
   return (
     <Card className=" rounded-sm">
       <CardHeader>
@@ -67,7 +75,7 @@ const ExtraFeatures = ({
                 ) : (
                   <>
                     <ChevronDown className="h-4 w-4 " />
-                    Hamısını göstər ({car.exterior?.length - 3} daha)
+                    Hamısını göstər ({length - 3} daha)
                   </>
                 )}
               </button>
