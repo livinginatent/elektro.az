@@ -6,7 +6,7 @@ export const sanityBlocks = {
     image: ({ value }: any) => (
       <div className="my-8">
         <Image
-          src={value.url || "/placeholder.svg"}
+          src={value.url}
           alt={value.alt || "Blog image"}
           className="w-full h-auto border border-slate-200"
         />

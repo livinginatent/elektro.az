@@ -23,7 +23,7 @@ export const getCategoryColor = (category: string) => {
       return "bg-green-500";
     case "Müqayisə":
       return "bg-purple-500";
-    case "Baxım":
+    case "Necə etməli":
       return "bg-orange-500";
     case "Bazar Analizi":
       return "bg-red-500";
