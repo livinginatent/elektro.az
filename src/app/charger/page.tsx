@@ -94,13 +94,13 @@ export default function ChargingPage() {
 
   // SEO meta tags
   const pageTitle =
-    "Şarj Məntəqələri Xəritəsi - Elektrik Avtomobil Şarj Stansiyaları | Procar.az";
+    "Elektrik Doldurma Məntəqələri Xəritəsi - Elektrik Avtomobil Şarj Stansiyaları | Procar.az";
   const pageDescription =
-    "Azərbaycanda elektrik avtomobillər üçün bütün şarj məntəqələrinin xəritəsi və siyahısı. Yaxınlıqdakı şarj stansiyalarını tapın, ünvan, güc və digər məlumatları öyrənin. Procar.az ilə EV şarj imkanları.";
+    "Azərbaycanda elektrik avtomobillər üçün bütün elektrik doldurma məntəqələrinin xəritəsi və siyahısı. Yaxınlıqdakı şarj stansiyalarını tapın, ünvan, güc və digər məlumatları öyrənin. Procar.az ilə EV şarj imkanları.";
   const canonicalUrl = "https://procar.az/charger";
   const ogImage = "/og-charger.jpg";
   const keywords =
-    "şarj məntəqəsi, elektrik avtomobil, şarj stansiyası, EV şarj, xəritə, Azərbaycan, procar.az, şarj nöqtələri, elektrik maşın";
+    "şarj məntəqəsi, elektrik doldurma məntəqələri, elektrik avtomobil, şarj stansiyası, EV şarj, xəritə, Azərbaycan, procar.az, şarj nöqtələri, elektrik maşın";
 
   return (
     <>

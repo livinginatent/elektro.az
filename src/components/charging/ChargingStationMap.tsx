@@ -318,7 +318,7 @@ if (loading) {
           <div className="p-4 border-b border-gray-200">
             <h1 className="text-2xl font-bold text-gray-900 flex items-center gap-2 mb-4">
               <BsFillLightningChargeFill className="h-6 w-6 text-custom-blue" />
-              Şarj Məntəqələri
+              Elektrik Doldurma Məntəqələri
             </h1>
 
             {/* Search */}
