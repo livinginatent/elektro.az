@@ -17,7 +17,7 @@ export function Header() {
 
   const navItems = [
     { href: "/cars", label: "Avtomobillərə bax" },
-    { href: "/charger", label: "Şarj məntəqələri" },
+    { href: "/charger", label: "Elektrik doldurma məntəqələri" },
     { href: "/blog", label: "Blog və xəbərlər" },
     { href: "/about", label: "Haqqımızda" },
   ];

@@ -36,9 +36,9 @@ const defaultServices: ServiceCard[] = [
     href: "/find-car",
   },
   {
-    title: "Şarj Məntəqələri",
+    title: "Elektrik doldurma Məntəqələri",
     description:
-      "Ölkə üzrə bütün şarj məntəqələrinin xəritəsi, real vaxt məlumatları və istifadə təlimatları.",
+      "Ölkə üzrə bütün elektrik doldurma məntəqələrinin xəritəsi, real vaxt məlumatları və istifadə təlimatları.",
     icon: Zap,
     href: "/charger",
   },
@@ -52,7 +52,7 @@ const defaultServices: ServiceCard[] = [
   {
     title: "Yürüş Kalkulyatoru",
     description:
-      "Müxtəlif şəraitlərdə elektrik avtomobilinizin yürüş məsafəsini dəqiq hesablayan alət.",
+      "Müxtəlif şəraitlərdə elektrik avtomobilinizin yürüş məsafəsini dəqiq hesablayan vasitə.",
     icon: Calculator,
     href: "/range-calculator",
   },

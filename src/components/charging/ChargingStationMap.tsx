@@ -517,7 +517,7 @@ if (loading) {
               {filteredAndSortedPoints.length === 0 && (
                 <div className="text-center py-8 text-gray-500">
                   <Zap className="h-12 w-12 mx-auto mb-4 text-gray-300" />
-                  <p>Heç bir şarj məntəqəsi tapılmadı</p>
+                  <p>Heç bir elektrik doldurma məntəqəsi tapılmadı</p>
                   <p className="text-sm mt-1">
                     Axtarış filtrlərini dəyişməyi cəhd edin
                   </p>
@@ -680,7 +680,7 @@ if (loading) {
                     <div className="w-4 h-4 bg-green-500 rounded-full flex items-center justify-center text-white text-xs">
                       ⚡
                     </div>
-                    <span>Şarj məntəqəsi</span>
+                    <span>Elektrik doldurma məntəqəsi</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <div className="w-4 h-4 bg-green-500 rounded-full flex items-center justify-center text-white text-xs relative">

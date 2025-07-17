@@ -23,7 +23,7 @@ const statistics: Statistic[] = [
   },
   {
     number: "186",
-    label: "Şarj Məntəqəsi",
+    label: "Elektrik Doldurma Məntəqəsi",
     icon: Zap,
   },
   {

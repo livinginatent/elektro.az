@@ -4,10 +4,11 @@ import { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Haqqımızda - Procar.az | Elektrik Avtomobil Platformu",
   description:
-    "Procar.az Azərbaycanda elektrik və hibrid avtomobillərin populyarlaşdırılması üçün çalışır. 50+ elektrik avtomobil, 186 şarj məntəqəsi və 1000+ aktiv istifadəçi ilə ölkənin aparıcı EV platformu.",
+    "Procar.az Azərbaycanda elektrik və hibrid avtomobillərin populyarlaşdırılması üçün çalışır. 50+ elektrik avtomobil, 186 elektrik doldurma məntəqəsi və 1000+ aktiv istifadəçi ilə ölkənin aparıcı EV platformu.",
   keywords: [
     "elektrik avtomobil",
     "hibrid avtomobil",
+    "elektrik doldurma məntəqəsi",
     "EV",
     "şarj məntəqəsi",
     "Azərbaycan",
@@ -32,7 +33,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Haqqımızda - Procar.az | Elektrik Avtomobil Platformu",
     description:
-      "Procar.az Azərbaycanda elektrik və hibrid avtomobillərin populyarlaşdırılması üçün çalışır. 50+ elektrik avtomobil, 186 şarj məntəqəsi və 1000+ aktiv istifadəçi ilə ölkənin aparıcı EV platformu.",
+      "Procar.az Azərbaycanda elektrik və hibrid avtomobillərin populyarlaşdırılması üçün çalışır. 50+ elektrik avtomobil, 186 elektrik doldurma məntəqəsi və 1000+ aktiv istifadəçi ilə ölkənin aparıcı EV platformu.",
     url: "https://procar.az/about",
     siteName: "Procar.az",
     locale: "az_AZ",
@@ -104,9 +105,9 @@ export default function AboutPage() {
                   "@type": "Offer",
                   itemOffered: {
                     "@type": "Service",
-                    name: "Şarj Məntəqələri Xəritəsi",
+                    name: "Elektrik Doldurma Məntəqələri Xəritəsi",
                     description:
-                      "Ölkə üzrə bütün şarj məntəqələrinin xəritəsi və real vaxt məlumatları",
+                      "Ölkə üzrə bütün elektrik doldurma məntəqələrinin xəritəsi və real vaxt məlumatları",
                   },
                 },
                 {
