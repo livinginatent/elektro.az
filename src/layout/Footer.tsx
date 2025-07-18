@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { Zap } from "lucide-react";
 
 interface FooterLink {
   label: string;
@@ -53,10 +52,9 @@ export function Footer({
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
             <div className="flex items-center space-x-2 mb-4">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-600">
-                <Zap className="h-5 w-5 text-white" />
-              </div>
-              <span className="text-xl font-bold">{companyName}</span>
+              <Link href={"/"}>
+                <span className="text-xl font-bold">{companyName}</span>
+              </Link>
             </div>
             <p className="text-gray-400">{description}</p>
           </div>
