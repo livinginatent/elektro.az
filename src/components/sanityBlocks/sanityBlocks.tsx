@@ -1,13 +1,18 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { urlFor } from "@/sanity/lib/image";
 import Image from "next/image";
+import { SanityTable } from "./SanityTable";
 
 export const sanityBlocks = {
   types: {
     image: ({ value }: any) => (
       <div className="my-8">
         <Image
-          src={value.url}
-          alt={value.alt || "Blog image"}
+          src={urlFor(value).url()}
+          alt={value.alt || "Image"}
+          width={1000}
+          height={100}
+          style={{ objectFit: "contain" }}
           className="w-full h-auto border border-slate-200"
         />
         {value.caption && (
@@ -16,6 +21,15 @@ export const sanityBlocks = {
           </p>
         )}
       </div>
+    ),
+    table: ({ value }: any) => (
+      <SanityTable
+        title={value.title}
+        rows={value.rows}
+        caption={value.caption}
+        stripedRows={value.stripedRows}
+        compactTable={value.compactTable}
+      />
     ),
     code: ({ value }: any) => (
       <pre className="bg-slate-900 text-slate-100 p-6 overflow-x-auto my-6 font-mono text-sm">

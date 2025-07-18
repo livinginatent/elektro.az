@@ -141,6 +141,103 @@ export default defineType({
             withFilename: true,
           },
         },
+        // Table support
+        {
+          type: "object",
+          name: "table",
+          title: "Table",
+          fields: [
+            {
+              name: "title",
+              title: "Table Title",
+              type: "string",
+              description: "Optional title for the table",
+            },
+            {
+              name: "rows",
+              title: "Table Rows",
+              type: "array",
+              of: [
+                {
+                  type: "object",
+                  name: "row",
+                  title: "Row",
+                  fields: [
+                    {
+                      name: "cells",
+                      title: "Cells",
+                      type: "array",
+                      of: [
+                        {
+                          type: "string",
+                          title: "Cell",
+                        },
+                      ],
+                    },
+                    {
+                      name: "isHeader",
+                      title: "Header Row",
+                      type: "boolean",
+                      description: "Check if this is a header row",
+                      initialValue: false,
+                    },
+                  ],
+                  preview: {
+                    select: {
+                      cells: "cells",
+                      isHeader: "isHeader",
+                    },
+                    prepare({ cells, isHeader }) {
+                      return {
+                        title: isHeader ? "Header Row" : "Data Row",
+                        subtitle: cells ? cells.join(" | ") : "Empty row",
+                      };
+                    },
+                  },
+                },
+              ],
+            },
+            {
+              name: "caption",
+              title: "Table Caption",
+              type: "text",
+              rows: 2,
+              description: "Optional caption or description for the table",
+            },
+            {
+              name: "stripedRows",
+              title: "Striped Rows",
+              type: "boolean",
+              description: "Alternate row colors for better readability",
+              initialValue: true,
+            },
+            {
+              name: "compactTable",
+              title: "Compact Table",
+              type: "boolean",
+              description: "Use smaller padding for more compact appearance",
+              initialValue: false,
+            },
+          ],
+          preview: {
+            select: {
+              title: "title",
+              rows: "rows",
+              caption: "caption",
+            },
+            prepare({ title, rows, caption }) {
+              const rowCount = rows ? rows.length : 0;
+              const columnCount =
+                rows && rows[0] ? rows[0].cells?.length || 0 : 0;
+
+              return {
+                title: title || "Table",
+                subtitle: `${rowCount} rows × ${columnCount} columns${caption ? ` - ${caption}` : ""}`,
+                media: () => "📊", // Table emoji as icon
+              };
+            },
+          },
+        },
       ],
     }),
     defineField({

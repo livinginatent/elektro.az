@@ -23,7 +23,8 @@ import { formatToAzerbaijaniDate } from "@/utils/formatToAzerbaijaniDate";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Bloq və Xəbərlər - Procar.az | Elektrik & Hibrid Avtomobil Yenilikləri",
+  title:
+    "Bloq və Xəbərlər - Procar.az | Elektrik & Hibrid Avtomobil Yenilikləri",
   description:
     "Azərbaycanda elektrik və hibrid avtomobillər haqqında ən son xəbərlər, məqalələr və yeniliklər. Elektrik avtomobil texnologiyaları, təhlillər və ekspert məsləhətləri Procar.az-da.",
   keywords: [
@@ -57,7 +58,7 @@ export const metadata: Metadata = {
       },
     ],
   },
-  
+
   robots: {
     index: true,
     follow: true,
@@ -203,8 +204,11 @@ export default async function BlogPage() {
         <section className="container mx-auto px-4 py-12">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {regularPosts.map((post: SanityDocument) => (
-              <Link href={`/blog/${post.slug.current}`} key={post._id}>
-                <Card className="group hover:shadow-lg rounded-sm transition-all duration-300 border-slate-200 overflow-hidden">
+              <Card
+                key={post._id}
+                className="group hover:shadow-lg rounded-sm transition-all duration-300 border-slate-200 overflow-hidden"
+              >
+                <Link href={`/blog/${post.slug.current}`} className="block">
                   <div className="aspect-video bg-slate-100 relative overflow-hidden">
                     {post.mainImage ? (
                       <Image
@@ -241,38 +245,40 @@ export default async function BlogPage() {
                       </div>
                     </div>
                   </div>
-                  <CardContent className="p-6">
-                    <h3 className="font-bold text-lg text-slate-900 mb-3 group-hover:text-slate-700 transition-colors leading-tight">
+                </Link>
+                <CardContent className="p-6">
+                  <Link href={`/blog/${post.slug.current}`}>
+                    <h3 className="font-bold text-lg text-slate-900 mb-3 group-hover:text-slate-700 transition-colors leading-tight cursor-pointer">
                       {post.title}
                     </h3>
-                    <p className="text-slate-600 mb-4 line-clamp-3 leading-relaxed">
-                      {post.excerpt}
-                    </p>
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center space-x-4 text-sm text-slate-500">
-                        <div className="flex justify-center items-center">
-                          <User className="w-4 h-4 mr-1" />
-                          {post.author?.name || "Procar.az"}
-                        </div>
-                        <div className="flex justify-center items-center">
-                          <Clock className="w-4 h-4 mr-1" />
-                          {formatToAzerbaijaniDate(post.publishedAt)}
-                        </div>
+                  </Link>
+                  <p className="text-slate-600 mb-4 line-clamp-3 leading-relaxed">
+                    {post.excerpt}
+                  </p>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-4 text-sm text-slate-500">
+                      <div className="flex justify-center items-center">
+                        <User className="w-4 h-4 mr-1" />
+                        {post.author?.name || "Procar.az"}
                       </div>
-                      <Link href={`/blog/${post.slug.current}`}>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          className="text-slate-900 hover:text-slate-700 hover:bg-slate-50 p-0 cursor-pointer"
-                        >
-                          Oxu
-                          <ChevronRight className="w-4 h-4 ml-1" />
-                        </Button>
-                      </Link>
+                      <div className="flex justify-center items-center">
+                        <Clock className="w-4 h-4 mr-1" />
+                        {formatToAzerbaijaniDate(post.publishedAt)}
+                      </div>
                     </div>
-                  </CardContent>
-                </Card>
-              </Link>
+                    <Link href={`/blog/${post.slug.current}`}>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="text-slate-900 hover:text-slate-700 hover:bg-slate-50 p-0 cursor-pointer"
+                      >
+                        Oxu
+                        <ChevronRight className="w-4 h-4 ml-1" />
+                      </Button>
+                    </Link>
+                  </div>
+                </CardContent>
+              </Card>
             ))}
           </div>
         </section>
