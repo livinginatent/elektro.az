@@ -11,6 +11,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { RiChargingPileFill } from "react-icons/ri";
 import { useState } from "react";
+import Image from "next/image";
+import logo from "../../public/PROCAR.svg";
 
 export function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -32,10 +34,10 @@ export function Header() {
     <header className="sticky top-0 z-50 w-full border-b bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60">
       <div className=" flex h-16 items-center justify-between px-4">
         {/* Icon on the left */}
-        <div className="flex items-center space-x-4">
+        <div className="flex items-center justify-center space-x-4">
           <Link href="/" className="flex items-center space-x-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg ">
-              <RiChargingPileFill className="h-8 w-8 text-custom-blue" />
+            <div className="flex mt-4 h-24 w-24 items-center justify-center rounded-lg ">
+              <Image width={100} height={100} src={logo} alt="procar" />
             </div>
             <span className="text-xl font-bold text-gray-900">Procar</span>
           </Link>
@@ -61,7 +63,7 @@ export function Header() {
                 <ChevronDown className="ml-1 h-4 w-4" />
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent  align="end" className="w-48">
+            <DropdownMenuContent align="end" className="w-48">
               {toolsItems.map((item) => (
                 <DropdownMenuItem key={item.href} asChild>
                   <Link href={item.href} className="w-full cursor-pointer">
