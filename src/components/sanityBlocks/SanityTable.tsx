@@ -87,7 +87,7 @@ export const SanityTable: React.FC<TableProps> = ({
       </div>
 
       {caption && (
-        <p className="mt-3 text-sm text-slate-600 italic">{caption}</p>
+        <p className="mt-3  text-sm text-slate-600 italic">{caption}</p>
       )}
     </div>
   );
