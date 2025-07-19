@@ -139,6 +139,7 @@ function ElectricVehiclesClient({
   const [selectedMakes, setSelectedMakes] = useState<string[]>([]);
   const [selectedBodyStyles, setSelectedBodyStyles] = useState<string[]>([]);
   const [selectedSeats, setSelectedSeats] = useState<number[]>([]);
+  const [selectedEngineTypes, setSelectedEngineTypes] = useState<string[]>([]);
   const [range, setRange] = useState<[number, number]>([0, 2000]);
   const [price, setPrice] = useState<[number, number]>([0, 100000]);
   const [page, setPage] = useState(1);
@@ -159,6 +160,9 @@ function ElectricVehiclesClient({
       const matchesSeats =
         selectedSeats.length === 0 ||
         selectedSeats.includes(car?.seating_capacity);
+      const matchesEngineType =
+        selectedEngineTypes.length === 0 ||
+        (car.engine && selectedEngineTypes.includes(car.engine.engine_type));
       const matchesRange =
         !car?.total_range ||
         (car?.total_range >= range[0] && car.total_range <= range[1]);
@@ -170,6 +174,7 @@ function ElectricVehiclesClient({
         matchesMake &&
         matchesBody &&
         matchesSeats &&
+        matchesEngineType &&
         matchesRange &&
         matchesPrice
       );
@@ -180,6 +185,7 @@ function ElectricVehiclesClient({
     selectedMakes,
     selectedBodyStyles,
     selectedSeats,
+    selectedEngineTypes,
     range,
     price,
   ]);
@@ -212,6 +218,7 @@ function ElectricVehiclesClient({
     setSelectedMakes([]);
     setSelectedBodyStyles([]);
     setSelectedSeats([]);
+    setSelectedEngineTypes([]);
     setRange([0, 2000]);
     setPrice([0, 100000]);
     setSearch("");
@@ -222,13 +229,14 @@ function ElectricVehiclesClient({
     selectedMakes.length +
     selectedBodyStyles.length +
     selectedSeats.length +
+    selectedEngineTypes.length +
     (range[0] > 0 || range[1] < 2000 ? 1 : 0) +
     (price[0] > 0 || price[1] < 200000 ? 1 : 0);
 
   return (
     <>
       <Header />
-      <div className="container mx-auto px-4 py-8">
+      <div className=" mx-auto px-4 py-8">
         {/* Header */}
         <Button
           variant="outline"
@@ -272,6 +280,37 @@ function ElectricVehiclesClient({
                 </div>
               </CardHeader>
               <CardContent className="space-y-6">
+                {/* Engine Type Filter */}
+                <div>
+                  <h3 className="font-semibold text-gray-900 mb-3">
+                    Mühərrik tipi
+                  </h3>
+                  <div className="space-y-2">
+                    {["Tam Elektrik", "Plug-in Hibrid"].map((type) => (
+                      <div key={type} className="flex items-center space-x-2">
+                        <Checkbox
+                          className="border-2 border-custom-blue"
+                          id={`engine-type-${type}`}
+                          checked={selectedEngineTypes.includes(type)}
+                          onCheckedChange={() =>
+                            handleCheckbox(
+                              type,
+                              selectedEngineTypes,
+                              setSelectedEngineTypes
+                            )
+                          }
+                        />
+                        <Label
+                          htmlFor={`engine-type-${type}`}
+                          className="text-sm font-normal cursor-pointer"
+                        >
+                          {type}
+                        </Label>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <Separator />
                 {/* Make Filter */}
                 <div>
                   <h3 className="font-semibold text-gray-900 mb-3">Marka</h3>

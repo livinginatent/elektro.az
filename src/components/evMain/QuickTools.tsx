@@ -34,7 +34,7 @@ const defaultTools: QuickTool[] = [
     title: "Yürüş məsafəsi kalkulyatoru",
     description:
       "Yol vəziyyəti və sürüş vərdişinizə əsasən elektromobilinizin sürüş məsafəsini hesablayın.",
-    buttonText: "Kalkulyatoru yoxlayın",
+    buttonText: "Məsafəni hesablayın",
     href: "/range-calculator",
   },
   {
