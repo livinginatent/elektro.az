@@ -48,17 +48,15 @@ export function Footer({
 }: FooterProps) {
   return (
     <footer className="bg-gray-900 text-white">
-      <div className="container px-4 py-12">
+      <div className=" px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
-            <div className="flex items-center space-x-2 mb-4">
-              <Link href={"/"}>
-                <span className="text-xl font-bold">{companyName}</span>
-              </Link>
-            </div>
+            <Link href="/" className="flex items-center space-x-3 mb-4 w-fit">
+           
+              <span className="text-xl font-bold">{companyName}</span>
+            </Link>
             <p className="text-gray-400">{description}</p>
           </div>
-
           {sections.map((section, index) => (
             <div key={index}>
               <h4 className="font-semibold mb-4">{section.title}</h4>
@@ -74,7 +72,6 @@ export function Footer({
             </div>
           ))}
         </div>
-
         <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
           <p>&copy; 2025 {companyName}. Bütün hüquqlar qorunur.</p>
         </div>

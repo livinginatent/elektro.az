@@ -14,6 +14,7 @@ export interface Engine {
   engine_power: number | null;
   engine_displacement: number | null;
   cyl: number | null;
+  electric_power: number;
 }
 export interface Dealership {
   name: string;
@@ -55,7 +56,8 @@ export interface EVCars {
   interior: string[];
   fuel_consumption: number;
   total_range: number | null; // Total range for hybrid cars
-  drivetrain:string
+  drivetrain: string;
+  wltc_consumption:number
 }
 
 export interface QuickTool {

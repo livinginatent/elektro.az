@@ -58,10 +58,15 @@ export function CarSpecs({ car }: CarSpecsProps) {
     }
     return `${value}${unit}`;
   };
-
+console.log(car.electric_range,'hell')
   // Define specs for Performans section based on engine type
   const performanceSpecsElectric = [
     // Example: You can edit these specs for electric cars
+    {
+      label: "Mühərrik",
+      value: formatValue(car.engine.engine_type),
+      icon: <PiEngineBold color={colors.primary.blue} />,
+    },
     {
       label: "Maksimal sürət",
       value: formatValue(car.speed_km, " km/saat"),
@@ -89,12 +94,20 @@ export function CarSpecs({ car }: CarSpecsProps) {
     // Example: You can edit these specs for non-electric cars
     {
       label: "Mühərrik həcmi",
-      value: formatValue(car.engine.engine_displacement, " litr"),
+      value: formatValue(
+        car.engine.engine_displacement,
+        ` litr (${car.engine.engine_type})`
+      ),
       icon: <PiEngineBold color={colors.primary.blue} />,
     },
     {
-      label: "Silindir sayı",
-      value: formatValue(car.engine.cyl, " "),
+      label: "Mühərrik gücü",
+      value: formatValue(car.engine.engine_power, " a.g"),
+      icon: <GiPowerLightning color={colors.primary.blue} />,
+    },
+    {
+      label: "Elektrik mühərrik gücü",
+      value: formatValue(car.engine.electric_power, " a.g"),
       icon: <PiCylinderBold color={colors.primary.blue} />,
     },
     {
@@ -103,18 +116,66 @@ export function CarSpecs({ car }: CarSpecsProps) {
       icon: <IoSpeedometer color={colors.primary.blue} />,
     },
     {
-      label: "Mühərrik gücü",
-      value: formatValue(car.engine.engine_power, " a.g"),
-      icon: <GiPowerLightning color={colors.primary.blue} />,
-    },
-    {
       label: "Mühərrik tork",
       value: formatValue(car.torque, " n/metr"),
       icon: <BsGearFill color={colors.primary.blue} />,
     },
     // Add more or change as needed
   ];
-
+  const hybridBatterySection = [
+    {
+      label: "Batareya tutumu",
+      value: formatValue(car.battery_capacity, " kWh"),
+      icon: <FaCarBattery color={colors.primary.blue} />,
+    },
+    {
+      label: "Batareya növü",
+      value: car.battery_type ? car.battery_type : "Mövcud deyil",
+      icon: <FaPlugCircleBolt color={colors.primary.blue} />,
+    },
+    {
+      label: "Şarj müddəti",
+      value: formatValue(car.charging_time, " saat"),
+      icon: <RiTimerFlashFill color={colors.primary.blue} />,
+    },
+    {
+      label: "Elektrik yürüş məsafəsi",
+      value: formatValue(car.electric_range, " km"),
+      icon: <PiCityBold color={colors.primary.blue} />,
+    },
+    {
+      label: "WLTC Sərfiyyat (elektrik + yanacaq)",
+      value: formatValue(car.wltc_consumption, " Lt/100Km"),
+      icon: <FaRoad color={colors.primary.blue} />,
+    },
+  ];
+  const electricBatterySection = [
+    {
+      label: "Batareya tutumu",
+      value: formatValue(car.battery_capacity, " kWh"),
+      icon: <FaCarBattery color={colors.primary.blue} />,
+    },
+    {
+      label: "Batareya növü",
+      value: car.battery_type ? car.battery_type : "Mövcud deyil",
+      icon: <FaPlugCircleBolt color={colors.primary.blue} />,
+    },
+    {
+      label: "Şarj müddəti",
+      value: formatValue(car.charging_time, " saat"),
+      icon: <RiTimerFlashFill color={colors.primary.blue} />,
+    },
+    {
+      label: "Yürüş məsafəsi",
+      value: formatValue(car.electric_range, " km"),
+      icon: <PiCityBold color={colors.primary.blue} />,
+    },
+    {
+      label: "Elektrik sərfiyyatı",
+      value: formatValue(car.electricity_consumption, " Wh/100Km"),
+      icon: <FaRoad color={colors.primary.blue} />,
+    },
+  ];
   const specSections = [
     {
       title: "Performans",
@@ -127,33 +188,9 @@ export function CarSpecs({ car }: CarSpecsProps) {
     {
       title: "Batareya & Şarj",
       icon: Battery,
-      specs: [
-        {
-          label: "Batareya tutumu",
-          value: formatValue(car.battery_capacity, " kWh"),
-          icon: <FaCarBattery color={colors.primary.blue} />,
-        },
-        {
-          label: "Batareya növü",
-          value: car.battery_type ? car.battery_type : "Mövcud deyil",
-          icon: <FaPlugCircleBolt color={colors.primary.blue} />,
-        },
-        {
-          label: "Şarj müddəti",
-          value: formatValue(car.charging_time, " saat"),
-          icon: <RiTimerFlashFill color={colors.primary.blue} />,
-        },
-        {
-          label: "Yürüş məsafəsi",
-          value: formatValue(car.electric_range, " km"),
-          icon: <PiCityBold color={colors.primary.blue} />,
-        },
-        {
-          label: "Elektrik sərfiyyatı",
-          value: formatValue(car.electricity_consumption, " Wh/100Km"),
-          icon: <FaRoad color={colors.primary.blue} />,
-        },
-      ],
+      specs: car.engine.engine_type === "Tam Elektrik"
+          ? electricBatterySection
+          : hybridBatterySection,
     },
     {
       title: "Avtomobil haqqında",
@@ -279,7 +316,6 @@ export function CarSpecs({ car }: CarSpecsProps) {
         car={car}
         showAllFeatures={showAllSafety}
         Icon={Shield}
-
         section="safety"
       />
       <ExtraFeatures

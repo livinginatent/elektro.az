@@ -96,7 +96,9 @@ export function CarDetailPage({ car, onBack }: CarDetailPageProps) {
                           : `${car.electric_range} km`}
                       </div>
                       <div className="text-sm text-gray-600">
-                        Yürüş məsafəsi
+                        {car.engine.engine_type !== "Tam Elektrik"
+                          ? "Yürüş məsafəsi (elektrik + yanacaq)"
+                          : "Yürüş məsafəsi"}
                       </div>
                     </div>
                     <div className="text-center p-4 bg-green-50 rounded-sm">
@@ -124,7 +126,7 @@ export function CarDetailPage({ car, onBack }: CarDetailPageProps) {
                       ) : (
                         <>
                           <div className="text-2xl font-bold text-orange-600">
-                            {car.fuel_consumption} Litr/100Km
+                            {car.fuel_consumption} Lt/100Km
                           </div>
                           <div className="text-sm text-gray-600">Sərfiyyat</div>
                         </>
