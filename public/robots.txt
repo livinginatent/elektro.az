@@ -1,4 +1,4 @@
 User-agent: *
 Disallow: /api/
 Allow: /
-Sitemap: https://elektro-az.vercel.app/sitemap.xml 
+Sitemap: https://procar.az/sitemap.xml 
