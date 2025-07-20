@@ -126,7 +126,7 @@ export function CarDetailPage({ car, onBack }: CarDetailPageProps) {
                       ) : (
                         <>
                           <div className="text-2xl font-bold text-orange-600">
-                            {car.fuel_consumption} Lt/100Km
+                            {car.fuel_consumption} L/100Km
                           </div>
                           <div className="text-sm text-gray-600">Sərfiyyat</div>
                         </>

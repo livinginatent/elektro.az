@@ -58,7 +58,7 @@ export function CarSpecs({ car }: CarSpecsProps) {
     }
     return `${value}${unit}`;
   };
-console.log(car.electric_range,'hell')
+  console.log(car.electric_range, "hell");
   // Define specs for Performans section based on engine type
   const performanceSpecsElectric = [
     // Example: You can edit these specs for electric cars
@@ -145,7 +145,7 @@ console.log(car.electric_range,'hell')
     },
     {
       label: "WLTC Sərfiyyat (elektrik + yanacaq)",
-      value: formatValue(car.wltc_consumption, " Lt/100Km"),
+      value: formatValue(car.wltc_consumption, " L/100Km"),
       icon: <FaRoad color={colors.primary.blue} />,
     },
   ];
@@ -188,7 +188,8 @@ console.log(car.electric_range,'hell')
     {
       title: "Batareya & Şarj",
       icon: Battery,
-      specs: car.engine.engine_type === "Tam Elektrik"
+      specs:
+        car.engine.engine_type === "Tam Elektrik"
           ? electricBatterySection
           : hybridBatterySection,
     },
@@ -288,15 +289,30 @@ console.log(car.electric_range,'hell')
             <CardContent>
               <div className="space-y-3">
                 {section.specs?.map((spec, specIndex) => (
-                  <div
-                    key={specIndex}
-                    className="flex justify-between items-center"
-                  >
-                    <span className="text-gray-600 flex items-center gap-2">
-                      <span>{spec.icon}</span>
-                      {spec.label}
-                    </span>
-                    <span className="font-semibold">{spec.value}</span>
+                  <div key={specIndex} className="space-y-1">
+                    {/* Mobile: Stacked layout */}
+                    <div className="sm:hidden">
+                      <div className="flex items-center gap-2 text-gray-600 text-sm ">
+                        <span className="flex-shrink-0">{spec.icon}</span>
+                        <span className="break-words">{spec.label}</span>
+                      </div>
+                      <div className="font-semibold text-sm ml-6 break-words">
+                        {spec.value}
+                      </div>
+                    </div>
+
+                    {/* Desktop: Side-by-side layout with improved handling */}
+                    <div className="hidden sm:flex sm:justify-between sm:items-start sm:gap-3">
+                      <span className="text-gray-600 flex items-center gap-2 flex-shrink-0 min-w-0">
+                        <span className="flex-shrink-0">{spec.icon}</span>
+                        <span className="break-words text-md">
+                          {spec.label}
+                        </span>
+                      </span>
+                      <span className="font-semibold text-right text-sm break-words max-w-[50%]">
+                        {spec.value}
+                      </span>
+                    </div>
                   </div>
                 ))}
               </div>

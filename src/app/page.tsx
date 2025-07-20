@@ -7,7 +7,7 @@ import { EVSearchContainer } from "../components/evMain/EVSearchContainer";
 
 export const metadata = {
   title:
-    "Procar.az - Elektrik və hibrid Avtomobillər | Procar.az | Elektromobil & Hibrid ",
+    "Procar.az - Elektrik və hibrid Avtomobillər | Avtomobil Bazası",
   description:
     "Azərbaycanda elektrik & hibrid avtomobillərin bazası, müqayisə, qiymətlər və yürüş məsafəsi kalkulyatoru. Elektromobillər üçün ən yaxşı platforma!",
 };
