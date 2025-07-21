@@ -58,7 +58,6 @@ export function CarSpecs({ car }: CarSpecsProps) {
     }
     return `${value}${unit}`;
   };
-  console.log(car.electric_range, "hell");
   // Define specs for Performans section based on engine type
   const performanceSpecsElectric = [
     // Example: You can edit these specs for electric cars
@@ -305,11 +304,11 @@ export function CarSpecs({ car }: CarSpecsProps) {
                     <div className="hidden sm:flex sm:justify-between sm:items-start sm:gap-3">
                       <span className="text-gray-600 flex items-center gap-2 flex-shrink-0 min-w-0">
                         <span className="flex-shrink-0">{spec.icon}</span>
-                        <span className="break-words text-md">
+                        <span className="break-words text-sm lg:text-base">
                           {spec.label}
                         </span>
                       </span>
-                      <span className="font-semibold text-right text-sm break-words max-w-[50%]">
+                      <span className="font-semibold text-right text-sm lg:text-base break-words max-w-[50%]">
                         {spec.value}
                       </span>
                     </div>

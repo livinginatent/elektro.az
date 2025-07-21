@@ -83,7 +83,7 @@ export function CarDetailPage({ car, onBack }: CarDetailPageProps) {
               <Card className="rounded-sm">
                 <CardContent className="p-6">
                   <h3 className="text-lg font-semibold mb-4">
-                    Əsas Spesifikasiyalar
+                    Əsas göstəricilər
                   </h3>
                   <div className="grid grid-cols-2 gap-4">
                     <div
@@ -188,7 +188,7 @@ export function CarDetailPage({ car, onBack }: CarDetailPageProps) {
           {/* Detailed Specifications */}
           <div>
             <h2 className="text-2xl text-center md:text-left lg:text-left font-bold text-gray-900 mb-6">
-              Detallı spesifikasiyalar
+              {`${car.brand} ${car.model}`} detallı spesifikasiyalar
             </h2>
             <CarSpecs car={car} />
           </div>

@@ -150,24 +150,6 @@ Procar.az-da daha çox faydalı məlumat üçün! 🚗⚡`;
     window.open(url, "_blank", "width=600,height=400");
   };
 
-  const handleCopyLink = async () => {
-    try {
-      await navigator.clipboard.writeText(shareUrl);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    } catch (err) {
-      // Fallback for older browsers
-      const textArea = document.createElement("textarea");
-      textArea.value = shareUrl;
-      document.body.appendChild(textArea);
-      textArea.select();
-      document.execCommand("copy");
-      document.body.removeChild(textArea);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    }
-  };
 
   const handleCopyResults = async () => {
     try {
@@ -198,23 +180,14 @@ Procar.az-da daha çox faydalı məlumat üçün! 🚗⚡`;
     }
   };
 
-  const getModalIcon = () => {
-    switch (page) {
-      case "Range":
-        return <Calculator className="h-5 w-5 text-blue-600" />;
-      case "Blog":
-        return <BookOpen className="h-5 w-5 text-blue-600" />;
-      default:
-        return <Car className="h-5 w-5 text-blue-600" />;
-    }
-  };
+
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-md rounded-sm">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
-            <Share2 className="h-5 w-5 text-blue-600" />
+            <Share2 className="h-5 w-5 text-custom-blue" />
             {getModalTitle()}
           </DialogTitle>
         </DialogHeader>
@@ -227,7 +200,7 @@ Procar.az-da daha çox faydalı məlumat üçün! 🚗⚡`;
                 // Range Calculator Results
                 <div className="space-y-3">
                   <div className="flex items-center justify-center gap-2">
-                    <Calculator className="h-5 w-5 text-blue-600" />
+                    <Calculator className="h-5 w-5 text-custom-blue" />
                     <p className="font-semibold text-lg text-gray-900">
                       Yürüş Məsafəsi Hesablaması
                     </p>
@@ -339,7 +312,6 @@ Procar.az-da daha çox faydalı məlumat üçün! 🚗⚡`;
                 <div className="flex items-center justify-center">
                   <div className="flex flex-col justify-center items-center">
                     <div className="flex items-center gap-2 mb-1">
-                      <Car className="h-5 w-5 text-blue-600" />
                       <p className="font-semibold text-xl text-gray-900">
                         {carBrand} {carModel}
                       </p>

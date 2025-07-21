@@ -52,8 +52,14 @@ export function ChargingStationDetails({
       chademo: "CHAdeMO",
       ccs_combo_1: "CCS Combo 1",
       ccs_combo_2: "CCS Combo 2",
+      type_3A: "Type 3A",
+      type_3: "Type 3",
       type_2: "Type 2",
       type_1: "Type 1",
+      TESLA_FAST: "Tesla Sürətli",
+      TESLA: "Tesla",
+      WALL_BS1363: "Wall BS1363",
+      "NEMA_TT-30": "Nema TT-30",
     };
     return connectorNames[type] || type.toUpperCase();
   };

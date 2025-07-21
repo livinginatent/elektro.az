@@ -48,7 +48,7 @@ export function ImageCarousel({
   return (
     <div className={`relative ${className}`}>
       {/* Main Image */}
-      <Card className="relative aspect-video overflow-hidden">
+      <Card className="relative aspect-video overflow-hidden rounded-sm">
         <Image
           src={images[currentIndex] || "/placeholder.svg"}
           alt={`${alt} - Image ${currentIndex + 1}`}
@@ -96,7 +96,7 @@ export function ImageCarousel({
               onClick={() => goToSlide(index)}
               className={`flex-shrink-0 w-20 h-16 rounded-lg overflow-hidden border-2 transition-all ${
                 index === currentIndex
-                  ? "border-blue-500"
+                  ? "border-custom-blue"
                   : "border-gray-200 hover:border-gray-300"
               }`}
             >
