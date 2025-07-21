@@ -27,6 +27,7 @@ import { Header } from "@/layout/Header";
 import { Footer } from "@/layout/Footer";
 import { FadeLoader } from "react-spinners";
 import { colors } from "@/utils/colors";
+
 // Fix for default markers in react-leaflet
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 delete (L.Icon.Default.prototype as any)._getIconUrl;
@@ -116,9 +117,13 @@ export function ChargingStationMap({
   const [connectorFilter, setConnectorFilter] = useState<string>("all");
   const [sortBy, setSortBy] = useState<string>("distance");
   const [loading, setLoading] = useState<boolean>(true);
+  const [geolocationDenied, setGeolocationDenied] = useState<boolean>(false);
 
   // Get user's current location
   useEffect(() => {
+    // Default fallback coordinates (Baku)
+    const defaultCoords: [number, number] = [40.4093, 49.8671];
+
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
@@ -131,9 +136,27 @@ export function ChargingStationMap({
           setLoading(false);
         },
         (error) => {
-          console.log("Location access denied:", error);
+          // Handle geolocation errors
+          console.warn("Geolocation error:", error.message);
+          setGeolocationDenied(true);
+          // Use default location (Baku) when geolocation is denied/fails
+          setUserLocation(defaultCoords);
+          setMapCenter(defaultCoords);
+          setLoading(false);
+        },
+        {
+          enableHighAccuracy: false, // Don't require high accuracy to avoid timeout issues
+          timeout: 10000, // 10 second timeout
+          maximumAge: 300000, // Accept cached position up to 5 minutes old
         }
       );
+    } else {
+      // Geolocation not supported
+      console.warn("Geolocation is not supported by this browser");
+      setGeolocationDenied(true);
+      setUserLocation(defaultCoords);
+      setMapCenter(defaultCoords);
+      setLoading(false);
     }
   }, []);
 
@@ -284,6 +307,7 @@ export function ChargingStationMap({
     setSelectedStation(station);
     setDetailsModalOpen(true);
   };
+
   // Get unique connector types for filter
   const uniqueConnectorTypes = useMemo(() => {
     const types = new Set<string>();
@@ -292,21 +316,23 @@ export function ChargingStationMap({
     });
     return Array.from(types);
   }, [chargingPoints]);
-if (loading) {
-  return (
-    <div className=" bg-gray-50">
-      <div className=" mx-auto px-4 py-8">
-        <div className="flex items-center justify-center h-64">
-          <div className="text-center">
-            <div className="min-h-screen flex items-center justify-center">
-              <FadeLoader color={colors.primary.blue} />
+
+  if (loading) {
+    return (
+      <div className="bg-gray-50">
+        <div className="mx-auto px-4 py-8">
+          <div className="flex items-center justify-center h-64">
+            <div className="text-center">
+              <div className="min-h-screen flex items-center justify-center">
+                <FadeLoader color={colors.primary.blue} />
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  );
-}
+    );
+  }
+
   return (
     <>
       <Header />
@@ -320,6 +346,16 @@ if (loading) {
               <BsFillLightningChargeFill className="h-6 w-6 text-custom-blue" />
               Elektrik Doldurma Məntəqələri
             </h1>
+
+            {/* Geolocation Notice */}
+            {geolocationDenied && (
+              <div className="mb-4 p-3 bg-yellow-50 border border-yellow-200 rounded-sm">
+                <p className="text-sm text-yellow-800">
+                  📍 Yerləşdiyiniz yer təyin edilə bilmədi. Bakı mərkəzindən
+                  məsafələr göstərilir.
+                </p>
+              </div>
+            )}
 
             {/* Search */}
             <div className="relative mb-4">
@@ -438,6 +474,7 @@ if (loading) {
                           {distance && (
                             <Badge variant="outline" className="text-xs">
                               {distance.toFixed(1)} km
+                              {geolocationDenied && "*"}
                             </Badge>
                           )}
                         </div>
@@ -491,22 +528,6 @@ if (loading) {
                           >
                             Ətraflı
                           </Button>
-                          {/*  {station.phone !== " " && (
-                          <Button
-                            size="sm"
-                            variant="outline"
-                            className="text-xs h-7 rounded-sm bg-transparent"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              if (typeof window !== "undefined") {
-                                window.open(`tel:${station.phone}`, "_self");
-                              }
-                            }}
-                          >
-                            <Phone className="h-3 w-3 mr-1" />
-                            Zəng et
-                          </Button>
-                        )} */}
                         </div>
                       </div>
                     </CardContent>
@@ -549,7 +570,7 @@ if (loading) {
                   icon={L.divIcon({
                     html: `
                   <div style="
-                    background-color: #3b82f6;
+                    background-color: ${geolocationDenied ? "#f59e0b" : "#3b82f6"};
                     width: 20px;
                     height: 20px;
                     border-radius: 50%;
@@ -564,7 +585,11 @@ if (loading) {
                 >
                   <Popup>
                     <div className="text-center">
-                      <p className="font-semibold">Sizin yerləşdiyiniz yer</p>
+                      <p className="font-semibold">
+                        {geolocationDenied
+                          ? "Bakı mərkəzi (təxmini yer)"
+                          : "Sizin yerləşdiyiniz yer"}
+                      </p>
                     </div>
                   </Popup>
                 </Marker>
@@ -649,19 +674,6 @@ if (loading) {
                         >
                           Ətraflı
                         </Button>
-                        {/* {station.phone !== " " && (
-                        <Button
-                          size="sm"
-                          variant="outline"
-                          className="rounded-sm bg-transparent"
-                          onClick={() =>
-                            typeof window !== "undefined" &&
-                            window.open(`tel:${station.phone}`, "_self")
-                          }
-                        >
-                          <Phone className="h-4 w-4" />
-                        </Button>
-                      )} */}
                       </div>
                     </div>
                   </Popup>
@@ -697,9 +709,18 @@ if (loading) {
                     <span>Tualet ilə</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
-                    <span>Sizin yeriniz</span>
+                    <div
+                      className={`w-3 h-3 rounded-full ${geolocationDenied ? "bg-amber-500" : "bg-blue-500"}`}
+                    ></div>
+                    <span>
+                      {geolocationDenied ? "Bakı mərkəzi" : "Sizin yeriniz"}
+                    </span>
                   </div>
+                  {geolocationDenied && (
+                    <div className="text-xs text-gray-500 mt-2 pt-2 border-t">
+                      * Məsafələr Bakı mərkəzindən hesablanır
+                    </div>
+                  )}
                 </div>
               </CardContent>
             </Card>
