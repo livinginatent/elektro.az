@@ -25,8 +25,7 @@ import { useScreenSize } from "@/utils/getScreenSize";
 import { BsFillLightningChargeFill } from "react-icons/bs";
 import { Header } from "@/layout/Header";
 import { Footer } from "@/layout/Footer";
-import { FadeLoader } from "react-spinners";
-import { colors } from "@/utils/colors";
+
 
 // Fix for default markers in react-leaflet
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -116,49 +115,50 @@ export function ChargingStationMap({
   const [showOnlyWithWc, setShowOnlyWithWc] = useState(false);
   const [connectorFilter, setConnectorFilter] = useState<string>("all");
   const [sortBy, setSortBy] = useState<string>("distance");
-  const [loading, setLoading] = useState<boolean>(true);
-  const [geolocationDenied, setGeolocationDenied] = useState<boolean>(false);
+  const [geolocationEnabled, setGeolocationEnabled] = useState<boolean>(false);
+  const [gettingLocation, setGettingLocation] = useState<boolean>(false);
 
-  // Get user's current location
+  // Initialize with Baku coordinates - no automatic geolocation
   useEffect(() => {
-    // Default fallback coordinates (Baku)
     const defaultCoords: [number, number] = [40.4093, 49.8671];
-
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const coords: [number, number] = [
-            position.coords.latitude,
-            position.coords.longitude,
-          ];
-          setUserLocation(coords);
-          setMapCenter(coords);
-          setLoading(false);
-        },
-        (error) => {
-          // Handle geolocation errors
-          console.warn("Geolocation error:", error.message);
-          setGeolocationDenied(true);
-          // Use default location (Baku) when geolocation is denied/fails
-          setUserLocation(defaultCoords);
-          setMapCenter(defaultCoords);
-          setLoading(false);
-        },
-        {
-          enableHighAccuracy: false, // Don't require high accuracy to avoid timeout issues
-          timeout: 10000, // 10 second timeout
-          maximumAge: 300000, // Accept cached position up to 5 minutes old
-        }
-      );
-    } else {
-      // Geolocation not supported
-      console.warn("Geolocation is not supported by this browser");
-      setGeolocationDenied(true);
-      setUserLocation(defaultCoords);
-      setMapCenter(defaultCoords);
-      setLoading(false);
-    }
+    setUserLocation(defaultCoords);
+    setMapCenter(defaultCoords);
   }, []);
+
+  // Function to get user's current location when button is clicked
+  const getUserLocation = () => {
+    if (!navigator.geolocation) {
+      alert("Geolocation is not supported by this browser");
+      return;
+    }
+
+    setGettingLocation(true);
+
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const coords: [number, number] = [
+          position.coords.latitude,
+          position.coords.longitude,
+        ];
+        setUserLocation(coords);
+        setMapCenter(coords);
+        setGeolocationEnabled(true);
+        setGettingLocation(false);
+      },
+      (error) => {
+        console.warn("Geolocation error:", error.message);
+        alert(
+          "Yerləşdiyiniz yer təyin edilə bilmədi. Zəhmət olmasa, brauzerin icazəsini yoxlayın."
+        );
+        setGettingLocation(false);
+      },
+      {
+        enableHighAccuracy: true,
+        timeout: 15000,
+        maximumAge: 300000,
+      }
+    );
+  };
 
   // Calculate distance between two points
   const calculateDistance = (
@@ -317,22 +317,6 @@ export function ChargingStationMap({
     return Array.from(types);
   }, [chargingPoints]);
 
-  if (loading) {
-    return (
-      <div className="bg-gray-50">
-        <div className="mx-auto px-4 py-8">
-          <div className="flex items-center justify-center h-64">
-            <div className="text-center">
-              <div className="min-h-screen flex items-center justify-center">
-                <FadeLoader color={colors.primary.blue} />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <>
       <Header />
@@ -347,12 +331,41 @@ export function ChargingStationMap({
               Elektrik Doldurma Məntəqələri
             </h1>
 
-            {/* Geolocation Notice */}
-            {geolocationDenied && (
-              <div className="mb-4 p-3 bg-yellow-50 border border-yellow-200 rounded-sm">
-                <p className="text-sm text-yellow-800">
-                  📍 Yerləşdiyiniz yer təyin edilə bilmədi. Bakı mərkəzindən
-                  məsafələr göstərilir.
+            {/* Location Button */}
+            {!geolocationEnabled && (
+              <div className="mb-4">
+                <Button
+                  onClick={getUserLocation}
+                  disabled={gettingLocation}
+                  className="w-full rounded-sm cursor-pointer"
+                  variant="outline"
+                >
+                  {gettingLocation ? (
+                    <>
+                      <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin mr-2"></div>
+                      Yer təyin edilir...
+                    </>
+                  ) : (
+                    <>
+                      <Navigation className="h-4 w-4 mr-2" />
+                      Mənim yerləşdiyim yeri təyin et
+                    </>
+                  )}
+                </Button>
+              </div>
+            )}
+
+            {/* Location Status */}
+            {geolocationEnabled ? (
+              <div className="mb-4 p-3 bg-green-50 border border-green-200 rounded-sm">
+                <p className="text-sm text-green-800 flex items-center">
+                  ✅ Məntəqələr sizin hazırkı yerinizə görə göstərilir
+                </p>
+              </div>
+            ) : (
+              <div className="mb-4 p-3 bg-blue-50 border border-blue-200 rounded-sm">
+                <p className="text-sm text-blue-800">
+                  📍 Məntəqələr Bakı mərkəzindən göstərilir
                 </p>
               </div>
             )}
@@ -474,7 +487,7 @@ export function ChargingStationMap({
                           {distance && (
                             <Badge variant="outline" className="text-xs">
                               {distance.toFixed(1)} km
-                              {geolocationDenied && "*"}
+                              {!geolocationEnabled && "*"}
                             </Badge>
                           )}
                         </div>
@@ -570,7 +583,7 @@ export function ChargingStationMap({
                   icon={L.divIcon({
                     html: `
                   <div style="
-                    background-color: ${geolocationDenied ? "#f59e0b" : "#3b82f6"};
+                    background-color: ${geolocationEnabled ? "#3b82f6" : "#f59e0b"};
                     width: 20px;
                     height: 20px;
                     border-radius: 50%;
@@ -586,9 +599,9 @@ export function ChargingStationMap({
                   <Popup>
                     <div className="text-center">
                       <p className="font-semibold">
-                        {geolocationDenied
-                          ? "Bakı mərkəzi (təxmini yer)"
-                          : "Sizin yerləşdiyiniz yer"}
+                        {geolocationEnabled
+                          ? "Sizin yerləşdiyiniz yer"
+                          : "Bakı mərkəzi (təxmini yer)"}
                       </p>
                     </div>
                   </Popup>
@@ -710,13 +723,13 @@ export function ChargingStationMap({
                   </div>
                   <div className="flex items-center gap-2">
                     <div
-                      className={`w-3 h-3 rounded-full ${geolocationDenied ? "bg-amber-500" : "bg-blue-500"}`}
+                      className={`w-3 h-3 rounded-full ${geolocationEnabled ? "bg-blue-500" : "bg-amber-500"}`}
                     ></div>
                     <span>
-                      {geolocationDenied ? "Bakı mərkəzi" : "Sizin yeriniz"}
+                      {geolocationEnabled ? "Sizin yeriniz" : "Bakı mərkəzi"}
                     </span>
                   </div>
-                  {geolocationDenied && (
+                  {!geolocationEnabled && (
                     <div className="text-xs text-gray-500 mt-2 pt-2 border-t">
                       * Məsafələr Bakı mərkəzindən hesablanır
                     </div>
