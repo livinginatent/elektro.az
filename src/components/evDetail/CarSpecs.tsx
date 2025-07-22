@@ -161,7 +161,7 @@ export function CarSpecs({ car }: CarSpecsProps) {
     },
     {
       label: "Şarj müddəti",
-      value: formatValue(car.dc_dc_charging_time, " saat"),
+      value: formatValue(car.dc_charging_time, " saat"),
       icon: <RiTimerFlashFill color={colors.primary.blue} />,
     },
     {
