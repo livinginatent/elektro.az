@@ -37,7 +37,7 @@ const CATEGORY_LABELS: Record<string, string> = {
   acceleration: "0-100 km/saat",
   "engine.engine_power": "Mühərrik gücü",
   "engine.engine_type": "Mühərrik tipi",
-  charging_time: "Şarj vaxtı",
+  charging_time: "DC (sürətli) Şarj vaxtı",
   warranty: "Zəmanət",
   /* availability: "Əlçatanlıq", */
 };
@@ -51,7 +51,7 @@ const CATEGORY_ICONS: Record<string, any> = {
   acceleration: Gauge,
   "engine.engine_power": Battery,
   "engine.engine_type": PiEngineBold,
-  charging_time: Clock,
+  dc_charging_time: Clock,
   warranty: Shield,
   /*  availability: Award, */
 };
@@ -62,7 +62,7 @@ const CATEGORY_UNITS: Record<string, string> = {
   electric_range: "km",
   acceleration: "san",
   "engine.engine_power": "a.g",
-  charging_time: "saat",
+  dc_charging_time: "saat",
   warranty: "",
   /* availability: "", // No unit */
 };
@@ -171,7 +171,7 @@ export default function ComparePage() {
   ];
   const electricSpecs = [
     "electric_range",
-    "charging_time",
+    "dc_charging_time",
     "battery_capacity",
     "electricity_consumption",
   ];

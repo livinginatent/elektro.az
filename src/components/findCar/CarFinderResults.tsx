@@ -333,7 +333,7 @@ export function CarFinderResults({
                           <div>
                             <p className="text-xs text-gray-500">Şarj</p>
                             <p className="font-semibold">
-                              {car.charging_time || "N/A"}h
+                              {car.dc_charging_time || "N/A"}h
                             </p>
                           </div>
                         </div>

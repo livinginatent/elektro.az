@@ -96,7 +96,7 @@ export function EVCarCard({ car, onViewDetails, isElectric }: EVCarCardProps) {
                 <p className="font-semibold">
                   {!isElectric
                     ? formatValue(car.fuel_consumption, " L/100km")
-                    : formatValue(car.charging_time, " saat")}
+                    : formatValue(car.dc_charging_time, " saat")}
                 </p>
               </div>
             </div>

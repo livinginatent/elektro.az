@@ -117,7 +117,7 @@ export function CarDetailPage({ car, onBack }: CarDetailPageProps) {
                       {car.engine.engine_type === "Tam Elektrik" ? (
                         <>
                           <div className="text-2xl font-bold text-orange-600">
-                            {car.charging_time} dəqiqə
+                            {car.dc_charging_time} saat
                           </div>
                           <div className="text-sm text-gray-600">
                             Şarj vaxtı

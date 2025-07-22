@@ -32,7 +32,7 @@ export interface EVCars {
   battery_type: string | null;
   charging_speed_kw: number | null;
   battery_capacity: number | null;
-  charging_time: number | null;
+  dc_charging_time: number | null;
   price: number | null;
   availability: "Satışda var" | "Sifariş ilə" | "Satışda yoxdur";
   brand_image: string | null | StaticImageData;
@@ -76,7 +76,7 @@ export const COMPARE_CATEGORIES = [
   "acceleration",
   "engine.engine_power",
   "engine.engine_type",
-  "charging_time",
+  "dc_charging_time",
   "warranty",
 ] as const;
 
