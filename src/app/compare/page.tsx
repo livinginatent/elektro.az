@@ -37,7 +37,7 @@ const CATEGORY_LABELS: Record<string, string> = {
   acceleration: "0-100 km/saat",
   "engine.engine_power": "Mühərrik gücü",
   "engine.engine_type": "Mühərrik tipi",
-  dc_charging_time: "DC (sürətli) Şarj vaxtı",
+  charging_time: "Şarj vaxtı",
   warranty: "Zəmanət",
   /* availability: "Əlçatanlıq", */
 };
