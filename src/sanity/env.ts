@@ -1,4 +1,4 @@
-export const apiVersion =
+/* export const apiVersion =
   process.env.NEXT_PUBLIC_SANITY_API_VERSION || "2025-07-11";
 
 export const dataset = assertValue(
@@ -17,9 +17,9 @@ function assertValue<T>(v: T | undefined, errorMessage: string): T {
   }
 
   return v;
-}
+} */
 
-/* export const apiVersion =
+export const apiVersion =
   process.env.NEXT_PUBLIC_SANITY_API_VERSION || "2025-07-11";
 
 export const dataset = assertValue(
@@ -40,4 +40,4 @@ function assertValue<T>(v: T | undefined, errorMessage: string): T {
   }
 
   return v;
-} */
+}
