@@ -133,7 +133,7 @@ export function CarSpecs({ car }: CarSpecsProps) {
       icon: <FaPlugCircleBolt color={colors.primary.blue} />,
     },
     {
-      label: "Şarj müddəti",
+      label: "DC (sürətli) Şarj müddəti",
       value: formatValue(car.dc_charging_time, " saat"),
       icon: <RiTimerFlashFill color={colors.primary.blue} />,
     },
@@ -160,7 +160,7 @@ export function CarSpecs({ car }: CarSpecsProps) {
       icon: <FaPlugCircleBolt color={colors.primary.blue} />,
     },
     {
-      label: "Şarj müddəti",
+      label: "DC (sürətli) Şarj müddəti",
       value: formatValue(car.dc_charging_time, " saat"),
       icon: <RiTimerFlashFill color={colors.primary.blue} />,
     },
