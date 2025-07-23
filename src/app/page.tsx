@@ -4,10 +4,10 @@ import { QuickTools } from "../components/evMain/QuickTools";
 import { Footer } from "@/layout/Footer";
 import { createClient } from "./utils/supabase/server";
 import { EVSearchContainer } from "../components/evMain/EVSearchContainer";
-/* import { client } from "@/sanity/lib/client";
+import { client } from "@/sanity/lib/client";
 import { type SanityDocument } from "next-sanity";
 import { BlogSection } from "@/components/evMain/BlogSection";
- */
+
 export const metadata = {
   title: "Procar.az - Elektrik və hibrid Avtomobillər | Avtomobil Bazası",
   description:
@@ -19,7 +19,7 @@ export const metadata = {
     canonical: "https://procar.az",
   },
 };
-/* const POSTS_QUERY = `*[_type == "post"] | order(publishedAt desc) {
+const POSTS_QUERY = `*[_type == "post"] | order(publishedAt desc) {
   _id,
   title,
   slug,
@@ -34,15 +34,15 @@ export const metadata = {
   },
   mainImage,
   featured
-}`; */
+}`;
 
 export default async function Homepage() {
   const supabase = await createClient();
   const { data: EVs } = await supabase.from("EVs").select("*");
-/*     const posts = await client.fetch<SanityDocument[]>(POSTS_QUERY);
- */  
- /*    const featuredPost = posts.find((post: SanityDocument) => post.featured);
-    const regularPosts = posts.filter((post: SanityDocument) => !post.featured); */
+    const posts = await client.fetch<SanityDocument[]>(POSTS_QUERY);
+  
+    const featuredPost = posts.find((post: SanityDocument) => post.featured);
+    const regularPosts = posts.filter((post: SanityDocument) => !post.featured);
 
   return (
     <div className="min-h-screen justify-center items-center bg-gradient-to-br from-slate-50 to-blue-50">
@@ -50,7 +50,7 @@ export default async function Homepage() {
       <HeroSection />
       <QuickTools />
       <EVSearchContainer initialCars={EVs || []} />
-      {/* <BlogSection posts={regularPosts} featuredPost={featuredPost} _id={""} _rev={""} _type={""} _createdAt={""} _updatedAt={""}/> */}
+      <BlogSection posts={regularPosts} featuredPost={featuredPost} _id={""} _rev={""} _type={""} _createdAt={""} _updatedAt={""}/>
       <Footer />
     </div>
   );

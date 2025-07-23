@@ -15,6 +15,7 @@ import { ShareModal } from "../modals/ShareModal";
 import { useCompareStore } from "@/lib/compareStore";
 import CompareBar from "../compareBar/CompareBar";
 import { CarSpecs } from "./CarSpecs";
+import { formatPrice } from "@/utils/formatPrice";
 
 interface CarDetailPageProps {
   car: EVCars;
@@ -139,7 +140,7 @@ export function CarDetailPage({ car, onBack }: CarDetailPageProps) {
                 style={{ color: colors.primary.blue }}
                 className="text-4xl font-bold  mb-4"
               >
-                ₼{car.price}
+                {formatPrice(car?.price)}
               </p>
               {/* Action Buttons */}
               <div className="space-y-3">

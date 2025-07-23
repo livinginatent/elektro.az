@@ -115,7 +115,7 @@ export function CarSpecs({ car }: CarSpecsProps) {
       icon: <IoSpeedometer color={colors.primary.blue} />,
     },
     {
-      label: "Mühərrik tork",
+      label: "Ümumi tork (elektrik + mühərrik)",
       value: formatValue(car.torque, " n/metr"),
       icon: <BsGearFill color={colors.primary.blue} />,
     },
